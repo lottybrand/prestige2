@@ -184,7 +184,7 @@ var get_info = function() {
 };
 
 var create_agent_failsafe = function() {
-    if ($("#story").html == '<< loading >>') {
+    if ($("#story").html == '<< Waiting for other participants to join you... >>') {
         create_agent();
     }
 };
