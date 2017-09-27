@@ -42,7 +42,6 @@ $(document).ready(function() {
 
     $("#finish-reading").click(function() {
         $("#stimulus").hide();
-        $("#response-form").show();
         $("#submit-response").removeClass('disabled');
         $("#submit-response").html('Submit');
     });
@@ -184,7 +183,7 @@ var get_info = function() {
 };
 
 var create_agent_failsafe = function() {
-    if ($("#story").html == '<< Waiting for other participants to join you... >>') {
+    if ($("#story").html == '<< loading >>') {
         create_agent();
     }
 };
