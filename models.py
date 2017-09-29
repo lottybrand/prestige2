@@ -15,14 +15,16 @@ class WarOfTheGhostsSource(Source):
         """
         number_transmissions = len(self.infos())
         stories = [
-            "ghosts.md",
-            "cricket.md",
-            "moochi.md",
-            "outwit.md",
-            "raid.md",
-            "species.md",
-            "tennis.md",
-            "vagabond.md"
+            "Q1.md",
+            "Q2.md",
+            "Q3.md",
+            "Q4.md",
+            "Q5.md",
+            "Q6.md",
+            "Q7.md",
+            "Q8.md",
+            "Q9.md",
+            "Q10.md"
         ]
         if number_transmissions < len(stories):
             story = stories[number_transmissions]
