@@ -1,11 +1,11 @@
 from dallinger.nodes import Source
 
 
-class WarOfTheGhostsSource(Source):
+class QuizSource(Source):
     """A Source that reads in a random question from a file and transmits it."""
 
     __mapper_args__ = {
-        "polymorphic_identity": "war_of_the_ghosts_source"
+        "polymorphic_identity": "quiz_source"
     }
 
     def _contents(self):
