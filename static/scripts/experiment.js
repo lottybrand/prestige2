@@ -42,6 +42,7 @@ $(document).ready(function() {
 
     $("#finish-reading").click(function() {
         $("#stimulus").hide();
+        $("#response-form").hide();
         $("#submit-response").removeClass('disabled');
         $("#submit-response").html('Submit');
     });
