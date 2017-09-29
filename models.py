@@ -2,7 +2,7 @@ from dallinger.nodes import Source
 
 
 class WarOfTheGhostsSource(Source):
-    """A Source that reads in a random story from a file and transmits it."""
+    """A Source that reads in a random question from a file and transmits it."""
 
     __mapper_args__ = {
         "polymorphic_identity": "war_of_the_ghosts_source"
@@ -14,7 +14,7 @@ class WarOfTheGhostsSource(Source):
         transmit() -> _what() -> create_information() -> _contents().
         """
         number_transmissions = len(self.infos())
-        stories = [
+        questions = [
             "Q1.md",
             "Q2.md",
             "Q3.md",
@@ -26,9 +26,9 @@ class WarOfTheGhostsSource(Source):
             "Q9.md",
             "Q10.md"
         ]
-        if number_transmissions < len(stories):
-            story = stories[number_transmissions]
+        if number_transmissions < len(questions):
+            question = questions[number_transmissions]
         else:
-            story = stories[-1]
-        with open("static/stimuli/{}".format(story), "r") as f:
+            question = questions[-1]
+        with open("static/stimuli/{}".format(question), "r") as f:
             return f.read()

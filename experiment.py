@@ -33,7 +33,7 @@ class Bartlett1932(Experiment):
         import models
         self.models = models
         self.experiment_repeats = 1
-        self.initial_recruitment_size = 3
+        self.initial_recruitment_size = 2
         if session:
             self.setup()
 
@@ -92,17 +92,17 @@ class Bot(BotBase):
             ready = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.ID, 'finish-reading')))
             stimulus = self.driver.find_element_by_id('stimulus')
-            story = stimulus.find_element_by_id('story')
-            story_text = story.text
+            question = stimulus.find_element_by_id('question')
+            question_text = question.text
             logger.info("Stimulus text:")
-            logger.info(story_text)
+            logger.info(question_text)
             ready.click()
             submit = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.ID, 'submit-response')))
             textarea = WebDriverWait(self.driver, 10).until(
                 EC.element_to_be_clickable((By.ID, 'reproduction')))
             textarea.clear()
-            text = self.transform_text(story_text)
+            text = self.transform_text(question_text)
             logger.info("Transformed text:")
             logger.info(text)
             textarea.send_keys(text)

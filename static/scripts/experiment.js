@@ -42,7 +42,7 @@ $(document).ready(function() {
 
     $("#finish-reading").click(function() {
         $("#stimulus").hide();
-        $("#response-form").hide();
+        $("#response-form").show();
         $("#submit-response").removeClass('disabled');
         $("#submit-response").html('Submit');
     });
@@ -54,7 +54,7 @@ $(document).ready(function() {
         var response = $("#reproduction").val();
 
         $("#reproduction").val("");
-        $("#story").html("Waiting for other players to catch up.");
+        $("#question").html("Waiting for other players to catch up.");
 
         reqwest({
             url: "/info/" + my_node_id,
@@ -78,7 +78,7 @@ $(document).ready(function() {
         $("#submit-response").html('Sending...');
 
         $("#reproduction").val("");
-        $("#story").html("Waiting for other players to catch up.");
+        $("#question").html("Waiting for other players to catch up.");
 
         reqwest({
             url: "/info/" + my_node_id,
@@ -102,7 +102,7 @@ $(document).ready(function() {
         $("#submit-response").html('Sending...');
 
         $("#reproduction").val("");
-        $("#story").html("Waiting for other players to catch up.");
+        $("#question").html("Waiting for other players to catch up.");
 
         reqwest({
             url: "/info/" + my_node_id,
@@ -138,7 +138,7 @@ var create_agent = function() {
             $('#finish-reading').prop('disabled', false);
             my_node_id = resp.node.id;
             get_info(my_node_id);
-            stories_seen = 0;
+            questions_seen = 0;
         },
         error: function (err) {
             console.log(err);
@@ -161,14 +161,14 @@ var get_info = function() {
         type: 'json',
         success: function (resp) {
             infos = resp.infos;
-            if (infos.length > stories_seen) {
-                var story = resp.infos[resp.infos.length-1].contents;
-                var storyHTML = markdown.toHTML(story);
-                $("#story").html(storyHTML);
+            if (infos.length > questions_seen) {
+                var question = resp.infos[resp.infos.length-1].contents;
+                var questionHTML = markdown.toHTML(question);
+                $("#question").html(questionHTML);
                 $("#stimulus").show();
                 $("#response-form").hide();
                 $("#finish-reading").show();
-                stories_seen++;
+                questions_seen++;
             } else {
                 setTimeout(function(){
                     get_info();
@@ -184,7 +184,7 @@ var get_info = function() {
 };
 
 var create_agent_failsafe = function() {
-    if ($("#story").html == '<< loading >>') {
+    if ($("#question").html == '<< loading >>') {
         create_agent();
     }
 };
