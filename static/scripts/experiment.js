@@ -73,7 +73,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#submit-yes").click(function() {
+    $("#submit-a").click(function() {
         $("#submit-response").addClass('disabled');
         $("#submit-response").html('Sending...');
 
@@ -97,7 +97,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#submit-no").click(function() {
+    $("#submit-b").click(function() {
         $("#submit-response").addClass('disabled');
         $("#submit-response").html('Sending...');
 
