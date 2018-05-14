@@ -64,7 +64,7 @@ $(document).ready(function() {
                 info_type: "Info"
             },
             success: function (resp) {
-                if (infos.length < 8) {
+                if (infos.length < 11) {
                     get_info();
                 } else {
                     create_agent();
@@ -88,7 +88,7 @@ $(document).ready(function() {
                 info_type: "Info"
             },
             success: function (resp) {
-                if (infos.length < 8) {
+                if (infos.length < 11) {
                     get_info();
                 } else {
                     create_agent();
@@ -112,7 +112,7 @@ $(document).ready(function() {
                 info_type: "Info"
             },
             success: function (resp) {
-                if (infos.length < 8) {
+                if (infos.length < 11) {
                     get_info();
                 } else {
                     create_agent();
@@ -121,7 +121,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#submit-copy-someone-else").click(function() {
+    $("#submit-copy").click(function() {
         $("#submit-response").addClass('disabled');
         $("#submit-response").html('Sending...');
 
@@ -136,7 +136,7 @@ $(document).ready(function() {
                 info_type: "Info"
             },
             success: function (resp) {
-                if (infos.length < 8) {
+                if (infos.length < 11) {
                     get_info();
                 } else {
                     create_agent();
