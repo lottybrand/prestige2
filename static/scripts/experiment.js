@@ -121,6 +121,30 @@ $(document).ready(function() {
         });
     });
 
+    $("#submit-copy-someone-else").click(function() {
+        $("#submit-response").addClass('disabled');
+        $("#submit-response").html('Sending...');
+
+        $("#reproduction").val("");
+        $("#question").html("Waiting for other players to catch up.");
+
+        reqwest({
+            url: "/info/" + my_node_id,
+            method: 'post',
+            data: {
+                contents: "no",
+                info_type: "Info"
+            },
+            success: function (resp) {
+                if (infos.length < 8) {
+                    get_info();
+                } else {
+                    create_agent();
+                }
+            }
+        });
+    });
+
     // Submit the questionnaire.
     $("#submit-questionnaire").click(function() {
         submitResponses();
