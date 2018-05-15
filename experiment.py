@@ -68,7 +68,7 @@ class Bartlett1932(Experiment):
         num_infos = len(node.infos())
         source = node.neighbors(type=Source, direction="from")[0]
         nodes = source.neighbors()
-        if all([len(n.infos()) == num_infos for n in nodes]) and num_infos < 8:
+        if all([len(n.infos()) == num_infos for n in nodes]) and num_infos < 11:
             source.transmit()
             for n in nodes:
                 n.receive()
