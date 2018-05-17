@@ -2,7 +2,7 @@ from dallinger.nodes import Source
 
 
 class QuizSource(Source):
-    """A Source that reads in a random question from a file and transmits it."""
+    """A Source that reads in a question from a file and transmits it."""
 
     __mapper_args__ = {
         "polymorphic_identity": "quiz_source"
