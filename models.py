@@ -14,17 +14,13 @@ class QuizSource(Source):
         transmit() -> _what() -> create_information() -> _contents().
         """
         number_transmissions = len(self.infos())
+        import json
         questions = [
-            "Q1.md",
-            "Q2.md",
-            "Q3.md",
-            "Q4.md",
-            "Q5.md",
-            "Q6.md",
-            "Q7.md",
-            "Q8.md",
-            "Q9.md",
-            "Q10.md"
+            json.dumps({
+                'question': 'blah blah blah',
+                'answer A': 'blah blah'
+                }),
+            etc. etc.
         ]
         if number_transmissions < len(questions):
             question = questions[number_transmissions]

@@ -40,12 +40,6 @@ $(document).ready(function() {
         submitResponses();
     });
 
-    $("#finish-reading").click(function() {
-        $("#stimulus").hide();
-        $("#response-form").show();
-        $("#submit-response").removeClass('disabled');
-        $("#submit-response").html('Submit');
-    });
 
     $("#submit-response").click(function() {
         $("#submit-response").addClass('disabled');
@@ -152,6 +146,11 @@ $(document).ready(function() {
 });
 
 // Create the agent.
+
+var letter_array = ["A", "B", "C", "D", "E"]
+var network_letter = letter_array[my_network_id - 1]
+var player_id = network_letter+my_network_id
+
 var create_agent = function() {
     $('#finish-reading').prop('disabled', true);
     reqwest({
@@ -159,8 +158,8 @@ var create_agent = function() {
         method: 'post',
         type: 'json',
         success: function (resp) {
-            $('#finish-reading').prop('disabled', false);
             my_node_id = resp.node.id;
+            my_network_id = resp.node.network_id;
             get_info(my_node_id);
             questions_seen = 0;
         },
@@ -189,6 +188,7 @@ var get_info = function() {
                 var question = resp.infos[resp.infos.length-1].contents;
                 var questionHTML = markdown.toHTML(question);
                 $("#question").html(questionHTML);
+                $("#welcome").html("Welcome player " + player_id);
                 $("#stimulus").show();
                 $("#response-form").hide();
                 $("#finish-reading").show();

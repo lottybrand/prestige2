@@ -2,12 +2,7 @@
 
 import logging
 
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
-from dallinger.bots import BotBase
 from dallinger.networks import FullyConnected
 from dallinger.experiment import Experiment
 from dallinger.nodes import Source
@@ -81,36 +76,3 @@ class Bartlett1932(Experiment):
         else:
             self.recruiter().close_recruitment()
 
-
-class Bot(BotBase):
-    """Bot tasks for experiment participation"""
-
-    def participate(self):
-        """Finish reading and send text"""
-        try:
-            logger.info("Entering participate method")
-            ready = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.ID, 'finish-reading')))
-            stimulus = self.driver.find_element_by_id('stimulus')
-            question = stimulus.find_element_by_id('question')
-            question_text = question.text
-            logger.info("Stimulus text:")
-            logger.info(question_text)
-            ready.click()
-            submit = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.ID, 'submit-response')))
-            textarea = WebDriverWait(self.driver, 10).until(
-                EC.element_to_be_clickable((By.ID, 'reproduction')))
-            textarea.clear()
-            text = self.transform_text(question_text)
-            logger.info("Transformed text:")
-            logger.info(text)
-            textarea.send_keys(text)
-            submit.click()
-            return True
-        except TimeoutException:
-            return False
-
-    def transform_text(self, text):
-        """Experimenter decides how to simulate participant response"""
-        return "Some transformation...and %s" % text
