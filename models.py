@@ -19,8 +19,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'blah blah blah',
                 'answer A': 'blah blah'
-                }),
-            etc. etc.
+                })
         ]
         if number_transmissions < len(questions):
             question = questions[number_transmissions]
