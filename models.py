@@ -17,13 +17,12 @@ class QuizSource(Source):
         import json
         questions = [
             json.dumps({
-                'question': 'blah blah blah',
-                'answer A': 'blah blah'
+                'question 1': 'The starry night is a famous painting by',
+                'W answer': 'Jackson Pollock',
+                'R answer': 'Vincent van Gogh'
                 })
         ]
         if number_transmissions < len(questions):
             question = questions[number_transmissions]
         else:
             question = questions[-1]
-        with open("static/stimuli/{}".format(question), "r") as f:
-            return f.read()

@@ -1,0 +1,1 @@
+var Q1 = { "Question":"The Starry night is a famous painting by", "W":"Jackson Pollock", "R":"Vincent van Gogh" }
