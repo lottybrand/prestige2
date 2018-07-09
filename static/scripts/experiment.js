@@ -68,75 +68,18 @@ $(document).ready(function() {
     });
 
     $("#submit-a").click(function() {
-        $("#submit-response").addClass('disabled');
-        $("#submit-response").html('Sending...');
-
-        $("#reproduction").val("");
-        $("#question").html("Waiting for other players to catch up.");
-
-        reqwest({
-            url: "/info/" + my_node_id,
-            method: 'post',
-            data: {
-                contents: "yes",
-                info_type: "Info"
-            },
-            success: function (resp) {
-                if (infos.length < 11) {
-                    get_info();
-                } else {
-                    create_agent();
-                }
-            }
-        });
+        disable_buttons();
+        submit_response($("#submit-a").text());
     });
 
     $("#submit-b").click(function() {
-        $("#submit-response").addClass('disabled');
-        $("#submit-response").html('Sending...');
-
-        $("#reproduction").val("");
-        $("#question").html("Waiting for other players to catch up.");
-
-        reqwest({
-            url: "/info/" + my_node_id,
-            method: 'post',
-            data: {
-                contents: "no",
-                info_type: "Info"
-            },
-            success: function (resp) {
-                if (infos.length < 11) {
-                    get_info();
-                } else {
-                    create_agent();
-                }
-            }
-        });
+        disable_buttons();
+        submit_response($("#submit-b").text());
     });
 
     $("#submit-copy").click(function() {
-        $("#submit-response").addClass('disabled');
-        $("#submit-response").html('Sending...');
-
-        $("#reproduction").val("");
-        $("#question").html("Waiting for other players to catch up.");
-
-        reqwest({
-            url: "/info/" + my_node_id,
-            method: 'post',
-            data: {
-                contents: "no",
-                info_type: "Info"
-            },
-            success: function (resp) {
-                if (infos.length < 11) {
-                    get_info();
-                } else {
-                    create_agent();
-                }
-            }
-        });
+        disable_buttons();
+        submit_response($("#submit-copy").text());
     });
 
     // Submit the questionnaire.
@@ -145,11 +88,36 @@ $(document).ready(function() {
     });
 });
 
+
+disable_buttons = function() {
+    $("#submit-a").addClass('disabled');
+    $("#submit-b").addClass('disabled');
+    $("#submit-copy").addClass('disabled');
+    $("#question").html("Waiting for other players to catch up.");
+}
+
+enable_buttons = function() {
+    $("#submit-a").removeClass('disabled');
+    $("#submit-b").removeClass('disabled');
+    $("#submit-copy").removeClass('disabled');
+}
+
+submit_response = function(response) {
+    reqwest({
+        url: "/info/" + my_node_id,
+        method: 'post',
+        data: {
+            contents: response,
+            info_type: "Info"
+        },
+        success: function (resp) {
+            get_info();
+        }
+    });
+}
+
 // Create the agent.
 
-var letter_array = ["A", "B", "C", "D", "E"]
-var network_letter = letter_array[my_network_id - 1]
-var player_id = network_letter+my_network_id
 
 var create_agent = function() {
     $('#finish-reading').prop('disabled', true);
@@ -160,6 +128,10 @@ var create_agent = function() {
         success: function (resp) {
             my_node_id = resp.node.id;
             my_network_id = resp.node.network_id;
+            letter_array = ["A", "B", "C", "D", "E"]
+            network_letter = letter_array[my_network_id - 1]
+            player_id = network_letter+my_node_id
+            $("#welcome").html("Welcome player " + player_id);
             get_info(my_node_id);
             questions_seen = 0;
         },
@@ -185,13 +157,16 @@ var get_info = function() {
         success: function (resp) {
             infos = resp.infos;
             if (infos.length > questions_seen) {
-                var question = resp.infos[resp.infos.length-1].contents;
-                var questionHTML = markdown.toHTML(question);
-                $("#question").html(questionHTML);
-                $("#welcome").html("Welcome player " + player_id);
-                $("#stimulus").show();
-                $("#response-form").hide();
-                $("#finish-reading").show();
+                question_json = JSON.parse(resp.infos[resp.infos.length-1].contents);
+                question = question_json.question;
+                Wwer = question_json.Wwer;
+                Rwer = question_json.Rwer;
+                number = question_json.number;
+                $("#question").html(question);
+                $("#question_number").html("You are on question " + number);
+                $("#submit-a").html(Wwer);
+                $("#submit-b").html(Rwer);
+                enable_buttons();
                 questions_seen++;
             } else {
                 setTimeout(function(){
@@ -208,7 +183,7 @@ var get_info = function() {
 };
 
 var create_agent_failsafe = function() {
-    if ($("#question").html == '<< loading >>') {
+    if ($("#question").html == '<< trying this >>') {
         create_agent();
     }
 };
