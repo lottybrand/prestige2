@@ -47,6 +47,7 @@ class QuizSource(Source):
                 'Rwer': 'Honduras',
                 })
         ]
+        number_transmissions = len([i for i in self.infos() if i.contents not in ["Bad Luck", "Good Luck"]])
         if number_transmissions < len(questions):
             question = questions[number_transmissions]
         else:

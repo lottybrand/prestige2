@@ -6,6 +6,7 @@ import logging
 from dallinger.networks import FullyConnected
 from dallinger.experiment import Experiment
 from dallinger.nodes import Source
+from dallinger.models import Info
 
 
 logger = logging.getLogger(__file__)
@@ -60,13 +61,54 @@ class Bartlett1932(Experiment):
 
     def info_post_request(self, node, info):
         """Run when a request to create an info is complete."""
-        num_infos = len(node.infos())
-        source = node.neighbors(type=Source, direction="from")[0]
-        nodes = source.neighbors()
-        if all([len(n.infos()) == num_infos for n in nodes]) and num_infos < 11:
-            source.transmit()
-            for n in nodes:
-                n.receive()
+        # what question are we on?
+        question_number = info.property1
+        
+        # have all the other nodes answered this question
+        other_nodes = [n for n in node.network.nodes() if n != node and not isinstance(n, Source)]
+        ready = True
+        for n in other_nodes:
+            if question_number not in [i.property1 for i in n.infos()]:
+                ready = False
+
+        if ready:
+            # has anyone copied?
+            infos = [info]
+            for n in other_nodes:
+                infos.extend([i for i in n.infos() if i.property1 == question_number])
+                answers = [i.contents for i in infos]
+
+            # if no one has copied
+            if not "Ask Someone Else" in answers:
+                source = node.neighbors(type=Source, direction="from")[0]
+                source.transmit()
+                nodes = source.neighbors()
+                for n in nodes:
+                    n.receive()
+            # else if everyone copied
+            elif all([a == "Ask Someone Else" for a in answers]):
+                for i in infos:
+                    i.fail()
+                source = node.neighbors(type=Source, direction="from")[0]
+                source.transmit(what=Info(origin=source, contents="Bad Luck"))
+                for n in source.neighbors():
+                    n.receive()
+            # if some copied
+            else:
+                nodes = [node]
+                for n in other_nodes:
+                    nodes.append(n)
+                for i in infos:
+                    if i.contents == "Ask Someone Else":
+                        i.fail()
+                copiers = [n for n, a in zip(nodes, answers) if a == "Ask Someone Else"]
+                not_copiers = [n for n, a in zip(nodes, answers) if a != "Ask Someone Else"]
+                for n in not_copiers:
+                    n.connect(whom=copiers)
+                    source = node.neighbors(type=Source, direction="from")[0]
+                    source.transmit(what=Info(origin=source, contents="Good Luck"), to_whom=copiers)
+                    for n in copiers:
+                        n.receive()
 
     def recruit(self):
         """Recruit one participant at a time until all networks are full."""

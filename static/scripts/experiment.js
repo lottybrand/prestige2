@@ -1,4 +1,5 @@
 var my_node_id;
+var most_recent_question = 0;
 
 // Consent to the experiment.
 $(document).ready(function() {
@@ -108,10 +109,14 @@ submit_response = function(response) {
         method: 'post',
         data: {
             contents: response,
-            info_type: "Info"
+            info_type: "Info",
+            property1: number,
         },
         success: function (resp) {
-            get_info();
+            most_recent_question = number;
+            setTimeout(function(){
+                get_info();
+            }, 1000);
         }
     });
 }
@@ -133,7 +138,6 @@ var create_agent = function() {
             player_id = network_letter+my_node_id
             $("#welcome").html("Welcome player " + player_id);
             get_info(my_node_id);
-            questions_seen = 0;
         },
         error: function (err) {
             console.log(err);
@@ -156,18 +160,31 @@ var get_info = function() {
         type: 'json',
         success: function (resp) {
             infos = resp.infos;
-            if (infos.length > questions_seen) {
-                question_json = JSON.parse(resp.infos[resp.infos.length-1].contents);
-                question = question_json.question;
-                Wwer = question_json.Wwer;
-                Rwer = question_json.Rwer;
-                number = question_json.number;
-                $("#question").html(question);
-                $("#question_number").html("You are on question " + number);
-                $("#submit-a").html(Wwer);
-                $("#submit-b").html(Rwer);
-                enable_buttons();
-                questions_seen++;
+            if (infos.length > 0) {
+                info = resp.infos[resp.infos.length-1].contents;
+                if (info == "Bad Luck") {
+                    // give feedback here somehow?
+                    submit_response("Bad Luck");
+                } else if (info == "Good Luck") {
+                    check_neighbors();
+                } else {
+                    question_json = JSON.parse(info);
+                    question = question_json.question;
+                    Wwer = question_json.Wwer;
+                    Rwer = question_json.Rwer;
+                    number = question_json.number;
+                    if (number != most_recent_question) {
+                        $("#question").html(question);
+                        $("#question_number").html("You are on question " + number);
+                        $("#submit-a").html(Wwer);
+                        $("#submit-b").html(Rwer);
+                        enable_buttons();
+                    } else {
+                        setTimeout(function(){
+                            get_info();
+                        }, 1000);
+                    }
+                }
             } else {
                 setTimeout(function(){
                     get_info();
@@ -178,6 +195,19 @@ var get_info = function() {
             console.log(err);
             var errorResponse = JSON.parse(err.response);
             $('body').html(errorResponse.html);
+        }
+    });
+};
+
+var check_neighbors = function() {
+    reqwest({
+        url: "/node/" + my_node_id + "/neighbors",
+        method: 'get',
+        type: 'json',
+        data: {connection: "from"},
+        success: function (resp) {
+            neighbors = resp.nodes;
+            console.log(neighbors);
         }
     });
 };
