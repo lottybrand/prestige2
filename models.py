@@ -19,30 +19,35 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'The starry night is a famous painting by',
                 'number':1,
+                'topic': 'Art',
                 'Wwer': 'Jackson Pollock',
                 'Rwer': 'Vincent van Gogh',
                 }),
             json.dumps({
                 'question': 'The singing butler is a famous painting by the Scottish artist',
                 'number':2,
+                'topic': 'Art',
                 'Wwer': 'Andrew Geddes',
                 'Rwer': 'Jack Vettriano',
                 }),
             json.dumps({
                 'question': 'The capital of Hawaii is',
                 'number':3,
+                'topic': 'Geography',
                 'Wwer': 'Waikiki',
                 'Rwer': 'Honolulu',
                 }),
             json.dumps({
                 'question': 'Saint Helena is an island in',
                 'number':4,
+                'topic':'Georgraphy',
                 'Wwer': 'The Indian Ocean',
                 'Rwer': 'The South Atlantic Ocean',
                 }),
             json.dumps({
                 'question': 'Which country shares a border with El Salvador?',
                 'number':5,
+                'topic':'Geography',
                 'Wwer': 'Paraguay',
                 'Rwer': 'Honduras',
                 })

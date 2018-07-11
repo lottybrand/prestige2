@@ -173,9 +173,11 @@ var get_info = function() {
                     Wwer = question_json.Wwer;
                     Rwer = question_json.Rwer;
                     number = question_json.number;
+                    topic = question_json.topic;
                     if (number != most_recent_question) {
                         $("#question").html(question);
                         $("#question_number").html("You are on question " + number);
+                        $("#topic").html("of the " + topic + " topic");
                         $("#submit-a").html(Wwer);
                         $("#submit-b").html(Rwer);
                         enable_buttons();
