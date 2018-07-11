@@ -83,10 +83,6 @@ $(document).ready(function() {
         submit_response($("#submit-copy").text());
     });
 
-    // Submit the questionnaire.
-    $("#submit-questionnaire").click(function() {
-        submitResponses();
-    });
 });
 
 
@@ -125,7 +121,6 @@ submit_response = function(response) {
 
 
 var create_agent = function() {
-    $('#finish-reading').prop('disabled', true);
     reqwest({
         url: "/node/" + participant_id,
         method: 'post',
@@ -136,7 +131,7 @@ var create_agent = function() {
             letter_array = ["A", "B", "C", "D", "E"]
             network_letter = letter_array[my_network_id - 1]
             player_id = network_letter+my_node_id
-            $("#welcome").html("Welcome player " + player_id);
+            $("#welcome").html("Welcome to our quiz, you are player " + player_id);
             get_info(my_node_id);
         },
         error: function (err) {
@@ -164,6 +159,7 @@ var get_info = function() {
                 info = resp.infos[resp.infos.length-1].contents;
                 if (info == "Bad Luck") {
                     // give feedback here somehow?
+                    $("#badluck").html("Sorry, everyone chose to copy, so no one can score points");
                     submit_response("Bad Luck");
                 } else if (info == "Good Luck") {
                     check_neighbors();
