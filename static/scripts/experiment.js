@@ -162,6 +162,7 @@ var get_info = function() {
                     $("#badluck").html("Sorry, everyone chose to copy, so no one can score points");
                     submit_response("Bad Luck");
                 } else if (info == "Good Luck") {
+                    $("#goodluck").html("You have x many people to copy from,");
                     check_neighbors();
                 } else {
                     question_json = JSON.parse(info);
@@ -205,13 +206,9 @@ var check_neighbors = function() {
         data: {connection: "from"},
         success: function (resp) {
             neighbors = resp.nodes;
-            console.log(neighbors);
+            $("#neighbors").html(neighbor[1].id);
+            console.log(neighbors[1].id);
         }
     });
 };
 
-var create_agent_failsafe = function() {
-    if ($("#question").html == '<< trying this >>') {
-        create_agent();
-    }
-};
