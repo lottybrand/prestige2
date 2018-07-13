@@ -1,5 +1,6 @@
 var my_node_id;
 var most_recent_question = 0;
+var player_id;
 
 // Consent to the experiment.
 $(document).ready(function() {
@@ -45,10 +46,6 @@ $(document).ready(function() {
     $("#submit-response").click(function() {
         $("#submit-response").addClass('disabled');
         $("#submit-response").html('Sending...');
-
-        var response = $("#reproduction").val();
-
-        $("#reproduction").val("");
         $("#question").html("Waiting for other players to catch up.");
 
         reqwest({
@@ -206,8 +203,9 @@ var check_neighbors = function() {
         data: {connection: "from"},
         success: function (resp) {
             neighbors = resp.nodes;
-            $("#neighbors").html(neighbor[1].id);
-            console.log(neighbors[1].id);
+            $("#neighbors").html(neighbors[1].participant_id);
+            $("#neighbors2").html(neighbors[2].participant_id);
+            console.log(neighbors[1].participant_id);
         }
     });
 };

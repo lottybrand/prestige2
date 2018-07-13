@@ -29,9 +29,11 @@ class Bartlett1932(Experiment):
         import models
         self.models = models
         self.experiment_repeats = 1
-        self.initial_recruitment_size = 2
+        self.initial_recruitment_size = 3
         if session:
             self.setup()
+
+
 
     def setup(self):
         """Setup the networks.
