@@ -88,14 +88,12 @@ disable_buttons = function() {
     $("#submit-b").addClass('disabled');
     $("#submit-copy").addClass('disabled');
     $("#question").html("Waiting for other players to catch up.");
-    $("#neighbors").addClass('disabled');
 }
 
 enable_buttons = function() {
     $("#submit-a").removeClass('disabled');
     $("#submit-b").removeClass('disabled');
     $("#submit-copy").removeClass('disabled');
-    $("#neighbors").removeClass('disabled');
 }
 
 submit_response = function(response) {
@@ -161,7 +159,6 @@ var get_info = function() {
                     $("#badluck").html("Sorry, everyone chose to copy, so no one can score points");
                     submit_response("Bad Luck");
                 } else if (info == "Good Luck") {
-                    // thought I could use length(neighbors) but it didn't work
                     $("#goodluck").html("You have x many people to copy from,");
                     check_neighbors();
                 } else {
@@ -207,10 +204,8 @@ var check_neighbors = function() {
         success: function (resp) {
             neighbors = resp.nodes;
             $("#neighbors").html(neighbors[1].participant_id);
+            $("#neighbors2").html(neighbors[2].participant_id);
             console.log(neighbors[1].participant_id);
-            submit_response("copied");
-            enable_buttons();
-            get_info();
         }
     });
 };
