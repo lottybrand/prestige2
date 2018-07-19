@@ -177,6 +177,31 @@ var get_info = function(info_id) {
     });
 }
 
+// process an info
+var process_info = function(info) {
+    if (info.contents == "Bad Luck") {
+        // if everyone copied you are forced to submit "bad luck"
+        $("#badluck").html("Sorry, everyone chose to copy, so no one can score points");
+        submit_response("Bad Luck");
+    } else if (info.contents == "Good Luck") {
+        // if there are people to copy you check your neighbors
+        $("#goodluck").html("You have x many people to copy from,");
+        check_neighbors();
+    } else {
+        // if you have received a question
+        question_json = JSON.parse(info.contents);
+        question = question_json.question;
+        Wwer = question_json.Wwer;
+        Rwer = question_json.Rwer;
+        number = question_json.number;
+        topic = question_json.topic;
+        $("#question").html(question);
+        $("#question_number").html("You are on question " + number);
+        $("#topic").html("of the " + topic + " topic");
+        $("#submit-a").html(Wwer);
+        $("#submit-b").html(Rwer);
+        enable_buttons();
+    }
 };
 
 var check_neighbors = function() {
