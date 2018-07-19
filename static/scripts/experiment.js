@@ -106,15 +106,13 @@ submit_response = function(response) {
         property1: number
     }).done(function (resp) {
         most_recent_question = number;
-        setTimeout(function(){
-            get_info();
+        setTimeout(function() {
+            get_transmissions();
         }, 1000);
     });
 }
 
 // Create the agent.
-
-
 var create_agent = function() {
     dallinger.createAgent()
     .done(function (resp) {
