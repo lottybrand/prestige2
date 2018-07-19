@@ -103,7 +103,7 @@ submit_response = function(response) {
     dallinger.createInfo(my_node_id, {
         contents: response,
         info_type: "Info",
-        property1: number,
+        property1: number
     }).done(function (resp) {
         most_recent_question = number;
         setTimeout(function(){
