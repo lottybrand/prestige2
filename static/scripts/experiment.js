@@ -124,7 +124,7 @@ var create_agent = function() {
         network_letter = letter_array[my_network_id - 1]
         player_id = network_letter+my_node_id
         $("#welcome").html("Welcome to our quiz, you are player " + player_id);
-        get_info(my_node_id);
+        get_transmissions(my_node_id);
     })
     .fail(function (rejection) {
       // A 403 is our signal that it's time to go to the questionnaire
@@ -137,45 +137,25 @@ var create_agent = function() {
     });
 };
 
-
-var get_info = function() {
-    console.log("checking for infos...");
-    dallinger.getReceivedInfos(my_node_id)
+// get any pending incoming transmissions
+var get_transmissions = function() {
+    dallinger.getTransmissions(my_node_id, {
+        status: "pending"
+    })
     .done(function (resp) {
-        infos = resp.infos;
-        if (infos.length > 0) {
-            info = resp.infos[resp.infos.length-1].contents;
-            if (info == "Bad Luck") {
-                // give feedback here somehow?
-                $("#badluck").html("Sorry, everyone chose to copy, so no one can score points");
-                submit_response("Bad Luck");
-            } else if (info == "Good Luck") {
-                // thought I could use length(neighbors) but it didn't work
-                $("#goodluck").html("You have x many people to copy from,");
-                check_neighbors();
+        transmissions = resp.transmissions;
+        if (transmissions.length > 0) {
+            if (transmissions.length > 1) {
+                // if there's more than 1 something probably went wrong
+                console.log("More than one transmission - unexpected!");
             } else {
-                question_json = JSON.parse(info);
-                question = question_json.question;
-                Wwer = question_json.Wwer;
-                Rwer = question_json.Rwer;
-                number = question_json.number;
-                topic = question_json.topic;
-                if (number != most_recent_question) {
-                    $("#question").html(question);
-                    $("#question_number").html("You are on question " + number);
-                    $("#topic").html("of the " + topic + " topic");
-                    $("#submit-a").html(Wwer);
-                    $("#submit-b").html(Rwer);
-                    enable_buttons();
-                } else {
-                    setTimeout(function(){
-                        get_info();
-                    }, 1000);
-                }
+                // if there is exactly one, get the info that was sent
+                get_info(transmissions[0].info_id);
             }
         } else {
+            // if there are none wait a second and try again
             setTimeout(function(){
-                get_info();
+                get_transmissions();
             }, 1000);
         }
     })
