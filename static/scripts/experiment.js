@@ -100,20 +100,15 @@ enable_buttons = function() {
 }
 
 submit_response = function(response) {
-    reqwest({
-        url: "/info/" + my_node_id,
-        method: 'post',
-        data: {
-            contents: response,
-            info_type: "Info",
-            property1: number,
-        },
-        success: function (resp) {
-            most_recent_question = number;
-            setTimeout(function(){
-                get_info();
-            }, 1000);
-        }
+    dallinger.createInfo(my_node_id, {
+        contents: response,
+        info_type: "Info",
+        property1: number,
+    }).done(function (resp) {
+        most_recent_question = number;
+        setTimeout(function(){
+            get_info();
+        }, 1000);
     });
 }
 
