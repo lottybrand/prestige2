@@ -29,7 +29,8 @@ class Bartlett1932(Experiment):
         import models
         self.models = models
         self.experiment_repeats = 1
-        self.initial_recruitment_size = 2
+        self.group_size = 5
+        self.initial_recruitment_size = self.experiment_repeats*self.group_size
         if session:
             self.setup()
 
