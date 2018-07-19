@@ -118,9 +118,7 @@ var create_agent = function() {
     .done(function (resp) {
         my_node_id = resp.node.id;
         my_network_id = resp.node.network_id;
-        letter_array = ["A", "B", "C", "D", "E"]
-        network_letter = letter_array[my_network_id - 1]
-        player_id = network_letter+my_node_id
+        player_id = resp.node.property1;
         $("#welcome").html("Welcome to our quiz, you are player " + player_id);
         get_transmissions(my_node_id);
     })
@@ -211,7 +209,7 @@ var check_neighbors = function() {
         success: function (resp) {
             neighbors = resp.nodes;
             $("#neighbors").html(neighbors[1].participant_id);
-            console.log(neighbors[1].participant_id);
+            console.log(neighbors[1].property1);
             //submit_response("copied");
             //enable_buttons();
             //get_info();
