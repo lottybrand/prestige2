@@ -58,8 +58,6 @@ class Bartlett1932(Experiment):
         source = node.neighbors(type=Source, direction="from")[0]
         if network.full:
             source.transmit()
-            for node in source.neighbors():
-                node.receive()
 
     def info_post_request(self, node, info):
         """Run when a request to create an info is complete."""
@@ -85,16 +83,12 @@ class Bartlett1932(Experiment):
                 source = node.neighbors(type=Source, direction="from")[0]
                 source.transmit()
                 nodes = source.neighbors()
-                for n in nodes:
-                    n.receive()
             # else if everyone copied
             elif all([a == "Ask Someone Else" for a in answers]):
                 for i in infos:
                     i.fail()
                 source = node.neighbors(type=Source, direction="from")[0]
                 source.transmit(what=Info(origin=source, contents="Bad Luck"))
-                for n in source.neighbors():
-                    n.receive()
             # if some copied
             else:
                 nodes = [node]
@@ -109,8 +103,6 @@ class Bartlett1932(Experiment):
                     n.connect(whom=copiers)
                     source = node.neighbors(type=Source, direction="from")[0]
                     source.transmit(what=Info(origin=source, contents="Good Luck"), to_whom=copiers)
-                    for n in copiers:
-                        n.receive()
 
     def recruit(self):
         """Recruit one participant at a time until all networks are full."""
