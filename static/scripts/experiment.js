@@ -163,6 +163,20 @@ var get_transmissions = function() {
         console.log(rejection);
         $('body').html(rejection.html);
     });
+}
+
+// get a specific info
+var get_info = function(info_id) {
+    dallinger.getInfo(my_node_id, info_id)
+    .done(function(resp) {
+        process_info(resp.info);
+    })
+    .fail(function (rejection) {
+        console.log(rejection);
+        $('body').html(rejection.html);
+    });
+}
+
 };
 
 var check_neighbors = function() {
