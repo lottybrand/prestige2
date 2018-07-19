@@ -16,24 +16,25 @@ $(document).ready(function() {
 
     // Consent to the experiment.
     $("#consent").click(function() {
-        store.set("hit_id", getUrlParameter("hit_id"));
-        store.set("worker_id", getUrlParameter("worker_id"));
-        store.set("assignment_id", getUrlParameter("assignment_id"));
-        store.set("mode", getUrlParameter("mode"));
+        store.set("recruiter", dallinger.getUrlParameter("recruiter"));
+        store.set("hit_id", dallinger.getUrlParameter("hit_id"));
+        store.set("worker_id", dallinger.getUrlParameter("worker_id"));
+        store.set("assignment_id", dallinger.getUrlParameter("assignment_id"));
+        store.set("mode", dallinger.getUrlParameter("mode"));
 
-        allow_exit();
+        dallinger.allowExit();
         window.location.href = '/instructions';
     });
 
     // Consent to the experiment.
     $("#no-consent").click(function() {
-        allow_exit();
+        dallinger.allow_exit();
         window.close();
     });
 
     // Consent to the experiment.
     $("#go-to-experiment").click(function() {
-        allow_exit();
+        dallinger.allow_exit();
         window.location.href = '/exp';
     });
 
