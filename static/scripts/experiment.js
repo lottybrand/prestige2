@@ -137,55 +137,51 @@ var create_agent = function() {
     });
 };
 
+
 var get_info = function() {
     console.log("checking for infos...");
-    reqwest({
-        url: "/node/" + my_node_id + "/received_infos",
-        method: 'get',
-        type: 'json',
-        success: function (resp) {
-            infos = resp.infos;
-            if (infos.length > 0) {
-                info = resp.infos[resp.infos.length-1].contents;
-                if (info == "Bad Luck") {
-                    // give feedback here somehow?
-                    $("#badluck").html("Sorry, everyone chose to copy, so no one can score points");
-                    submit_response("Bad Luck");
-                } else if (info == "Good Luck") {
-                    // thought I could use length(neighbors) but it didn't work
-                    $("#goodluck").html("You have x many people to copy from,");
-                    check_neighbors();
-                } else {
-                    question_json = JSON.parse(info);
-                    question = question_json.question;
-                    Wwer = question_json.Wwer;
-                    Rwer = question_json.Rwer;
-                    number = question_json.number;
-                    topic = question_json.topic;
-                    if (number != most_recent_question) {
-                        $("#question").html(question);
-                        $("#question_number").html("You are on question " + number);
-                        $("#topic").html("of the " + topic + " topic");
-                        $("#submit-a").html(Wwer);
-                        $("#submit-b").html(Rwer);
-                        enable_buttons();
-                    } else {
-                        setTimeout(function(){
-                            get_info();
-                        }, 1000);
-                    }
-                }
+    dallinger.getReceivedInfos(my_node_id)
+    .done(function (resp) {
+        infos = resp.infos;
+        if (infos.length > 0) {
+            info = resp.infos[resp.infos.length-1].contents;
+            if (info == "Bad Luck") {
+                // give feedback here somehow?
+                $("#badluck").html("Sorry, everyone chose to copy, so no one can score points");
+                submit_response("Bad Luck");
+            } else if (info == "Good Luck") {
+                // thought I could use length(neighbors) but it didn't work
+                $("#goodluck").html("You have x many people to copy from,");
+                check_neighbors();
             } else {
-                setTimeout(function(){
-                    get_info();
-                }, 1000);
+                question_json = JSON.parse(info);
+                question = question_json.question;
+                Wwer = question_json.Wwer;
+                Rwer = question_json.Rwer;
+                number = question_json.number;
+                topic = question_json.topic;
+                if (number != most_recent_question) {
+                    $("#question").html(question);
+                    $("#question_number").html("You are on question " + number);
+                    $("#topic").html("of the " + topic + " topic");
+                    $("#submit-a").html(Wwer);
+                    $("#submit-b").html(Rwer);
+                    enable_buttons();
+                } else {
+                    setTimeout(function(){
+                        get_info();
+                    }, 1000);
+                }
             }
-        },
-        error: function (err) {
-            console.log(err);
-            var errorResponse = JSON.parse(err.response);
-            $('body').html(errorResponse.html);
+        } else {
+            setTimeout(function(){
+                get_info();
+            }, 1000);
         }
+    })
+    .fail(function (rejection) {
+        console.log(rejection);
+        $('body').html(rejection.html);
     });
 };
 
