@@ -212,9 +212,9 @@ var check_neighbors = function() {
             neighbors = resp.nodes;
             $("#neighbors").html(neighbors[1].participant_id);
             console.log(neighbors[1].participant_id);
-            submit_response("copied");
-            enable_buttons();
-            get_info();
+            //submit_response("copied");
+            //enable_buttons();
+            //get_info();
         }
     });
 };
