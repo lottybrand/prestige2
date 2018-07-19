@@ -6,7 +6,7 @@ import logging
 from dallinger.networks import FullyConnected
 from dallinger.experiment import Experiment
 from dallinger.nodes import Source
-from dallinger.models import Info
+from dallinger.models import Info, Node
 
 
 logger = logging.getLogger(__file__)
@@ -51,6 +51,15 @@ class Bartlett1932(Experiment):
     def create_network(self):
         """Return a new network."""
         return FullyConnected(max_size=self.initial_recruitment_size+1)
+
+    def create_node(self, participant, network):
+        """Create a node for a participant."""
+        node = Node(network=network, participant=participant)
+        letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[node.network_id - 1]
+        number = len(network.nodes(failed="all")) - 1
+        name = letter + str(number)
+        node.property1 = name
+        return node
 
     def add_node_to_network(self, node, network):
         """Add node to the chain and receive transmissions."""
