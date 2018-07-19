@@ -116,28 +116,23 @@ submit_response = function(response) {
 
 
 var create_agent = function() {
-    reqwest({
-        url: "/node/" + participant_id,
-        method: 'post',
-        type: 'json',
-        success: function (resp) {
-            my_node_id = resp.node.id;
-            my_network_id = resp.node.network_id;
-            letter_array = ["A", "B", "C", "D", "E"]
-            network_letter = letter_array[my_network_id - 1]
-            player_id = network_letter+my_node_id
-            $("#welcome").html("Welcome to our quiz, you are player " + player_id);
-            get_info(my_node_id);
-        },
-        error: function (err) {
-            console.log(err);
-            errorResponse = JSON.parse(err.response);
-            if (errorResponse.hasOwnProperty('html')) {
-                $('body').html(errorResponse.html);
-            } else {
-                allow_exit();
-                go_to_page('questionnaire');
-            }
+    dallinger.createAgent()
+    .done(function (resp) {
+        my_node_id = resp.node.id;
+        my_network_id = resp.node.network_id;
+        letter_array = ["A", "B", "C", "D", "E"]
+        network_letter = letter_array[my_network_id - 1]
+        player_id = network_letter+my_node_id
+        $("#welcome").html("Welcome to our quiz, you are player " + player_id);
+        get_info(my_node_id);
+    })
+    .fail(function (rejection) {
+      // A 403 is our signal that it's time to go to the questionnaire
+        if (rejection.status === 403) {
+            dallinger.allowExit();
+            dallinger.goToPage('questionnaire');
+        } else {
+            dallinger.error(rejection);
         }
     });
 };
