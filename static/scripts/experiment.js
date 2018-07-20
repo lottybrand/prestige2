@@ -80,9 +80,23 @@ $(document).ready(function() {
         disable_buttons();
         submit_response($("#submit-copy").text());
     });
-
 });
 
+add_neighbor_buttons = function() {
+    dallinger.getExperimentProperty("group_size")
+    .done(function (resp) {
+        group_size = resp.group_size;
+        start = '<button id="neighbor_button_';
+        stop = '" type="button" class="btn btn-primary"></button>';
+        button_string = '';
+        for (i = 1; i <= group_size-1; i++) {
+            button_string = button_string.concat(start);
+            button_string = button_string.concat(i);
+            button_string = button_string.concat(stop);
+        }
+        $("#neighbor_buttons").html(button_string);
+    })
+}
 
 disable_buttons = function() {
     $("#submit-a").addClass('disabled');
