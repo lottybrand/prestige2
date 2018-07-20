@@ -13,12 +13,13 @@
         <button id="submit-a" type="button" class="btn btn-primary">Answer A</button>
         <button id="submit-b" type="button" class="btn btn-primary">Answer B</button>
         <br>
-        <button id="neighbors" type="button" class="btn btn-primary"></button>
+        <div id="neighbor_buttons"></div>
     </div>
 {% endblock %}
 
 {% block scripts %}
     <script>
         create_agent();
+        add_neighbor_buttons();
     </script>
 {% endblock %}
