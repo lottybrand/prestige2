@@ -49,20 +49,24 @@ $(document).ready(function() {
         $("#submit-response").html('Sending...');
         $("#question").html("Waiting for other players to catch up.");
 
-        reqwest({
+// when submit response is submitted, then the contents are posted as an info for that node?
+       reqwest({
             url: "/info/" + my_node_id,
             method: 'post',
             data: {
                 contents: response,
                 info_type: "Info"
             },
-            success: function (resp) {
-                if (infos.length < 11) {
-                    get_info();
-                } else {
-                    create_agent();
-                }
-            }
+            //I don't think the below was doing anything, nothing seemed to change when I commented out
+            // success: function (resp) {
+            //     // if the length of the infos is less than 11 then get another info, otherwise go back to create agent?
+            //     // must be leftover from when I was trying things out with ten questions. 
+            //     if (infos.length < 11) {
+            //         get_info();
+            //     } else {
+            //         create_agent();
+            //     }
+            // }
         });
     });
 
@@ -86,6 +90,7 @@ add_neighbor_buttons = function() {
     dallinger.getExperimentProperty("group_size")
     .done(function (resp) {
         group_size = resp.group_size;
+        // don't know how the below start and stop lines work
         start = '<button id="neighbor_button_';
         stop = '" type="button" class="btn btn-primary"></button>';
         button_string = '';
@@ -222,8 +227,10 @@ var check_neighbors = function() {
         data: {connection: "from"},
         success: function (resp) {
             neighbors = resp.nodes;
-            $("#neighbors").html(neighbors[1].participant_id);
-            console.log(neighbors[1].property1);
+            $("#neighbors").html(button_string);
+            neighbors.forEach(function(entry) {
+                console.log(entry);
+            });
             //submit_response("copied");
             //enable_buttons();
             //get_info();

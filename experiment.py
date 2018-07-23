@@ -25,7 +25,7 @@ class Bartlett1932(Experiment):
 
         Finally, setup() is called.
         """
-        self.group_size = 2
+        self.group_size = 3
         super(Bartlett1932, self).__init__(session)
         import models
         self.models = models
@@ -61,9 +61,13 @@ class Bartlett1932(Experiment):
     def create_node(self, participant, network):
         """Create a node for a participant."""
         node = Node(network=network, participant=participant)
+        # letter is that node's network ID -1 of this string. so a node in network ID 1 would have the zero'th letter of this string; A. 
         letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[node.network_id - 1]
+        # number is the length of the network nodes - 1, so if there are 4 nodes, number is 3 (what is failed doing?)
         number = len(network.nodes(failed="all")) - 1
+        # name is the letter plus the number (turned into a string)
         name = letter + str(number)
+        #name is then assigned to node's property1 in the database
         node.property1 = name
         return node
 
@@ -76,13 +80,17 @@ class Bartlett1932(Experiment):
 
     def info_post_request(self, node, info):
         """Run when a request to create an info is complete."""
-        # what question are we on?
+        # question number is found in info's property1 in the database
         question_number = info.property1
         
         # have all the other nodes answered this question
+        # other nodes are defined as nodes in the network that are not current node, and are not the source. 
         other_nodes = [n for n in node.network.nodes() if n != node and not isinstance(n, Source)]
+        # we're ready to receive next transmission:
         ready = True
+        # unless: 
         for n in other_nodes:
+            # if the question number is not in the corresponding property1 column for the last received info(? not sure what n.infos() does exactly here.
             if question_number not in [i.property1 for i in n.infos()]:
                 ready = False
 
@@ -90,20 +98,26 @@ class Bartlett1932(Experiment):
             # has anyone copied?
             infos = [info]
             for n in other_nodes:
+                #for all other nodes, do something with n.infos if we're on the latest question number.
                 infos.extend([i for i in n.infos() if i.property1 == question_number])
+                #answers are in the contents column in the database for that latest info
                 answers = [i.contents for i in infos]
 
             # if no one has copied
             if not "Ask Someone Else" in answers:
+                #if no one has copied then get the source to transmit to all of its neighbors
                 source = node.neighbors(type=Source, direction="from")[0]
                 source.transmit()
                 nodes = source.neighbors()
             # else if everyone copied
             elif all([a == "Ask Someone Else" for a in answers]):
+                # I don't know what i.fail is doing here, is it preventing another transmission for now...?
                 for i in infos:
                     i.fail()
                 source = node.neighbors(type=Source, direction="from")[0]
+                #then  the source transmits a bad luck message to everyone
                 source.transmit(what=Info(origin=source, contents="Bad Luck"))
+
             # if some copied
             else:
                 nodes = [node]
@@ -112,11 +126,14 @@ class Bartlett1932(Experiment):
                 for i in infos:
                     if i.contents == "Ask Someone Else":
                         i.fail()
+                        #matching nodes to their answers here, and copiers are those nodes that have answered "ask someone else"
                 copiers = [n for n, a in zip(nodes, answers) if a == "Ask Someone Else"]
                 not_copiers = [n for n, a in zip(nodes, answers) if a != "Ask Someone Else"]
                 for n in not_copiers:
+                    #connect the not copiers to the copiers
                     n.connect(whom=copiers)
                     source = node.neighbors(type=Source, direction="from")[0]
+                    #transmit a good luck message from the source to all the copiers 
                     source.transmit(what=Info(origin=source, contents="Good Luck"), to_whom=copiers)
 
     def recruit(self):
