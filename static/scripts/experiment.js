@@ -227,8 +227,17 @@ var check_neighbors = function() {
         data: {connection: "from"},
         success: function (resp) {
             neighbors = resp.nodes;
-            $("#neighbors").html(button_string);
+            current_button = 1;
             neighbors.forEach(function(entry) {
+                if (entry.type != "quiz_source") {
+                    console.log(entry.type);
+                    button_id = "#neighbor_button_" + current_button;
+                    console.log(button_id)
+                    $(button_id).html(entry.property1)
+                    console.log(entry.propety1)
+                    current_button = current_button + 1;
+                    console.log(current_button)
+                }
                 console.log(entry);
             });
             //submit_response("copied");
