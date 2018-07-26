@@ -2,11 +2,11 @@
 
 import logging
 
+from operator import attrgetter
 
-from dallinger.networks import FullyConnected
 from dallinger.experiment import Experiment
 from dallinger.nodes import Source
-from dallinger.models import Info, Node
+from dallinger.models import Info, Node, Network
 
 
 logger = logging.getLogger(__file__)
@@ -56,7 +56,7 @@ class Bartlett1932(Experiment):
 
     def create_network(self):
         """Return a new network."""
-        return FullyConnected(max_size=self.initial_recruitment_size+1)
+        return Star(max_size=self.group_size+1)
 
     def create_node(self, participant, network):
         """Create a node for a participant."""
@@ -143,4 +143,25 @@ class Bartlett1932(Experiment):
 
         else:
             self.recruiter().close_recruitment()
+
+
+class Star(Network):
+    """A star network.
+
+    A star newtork has a central node with a pair of vectors, incoming and
+    outgoing, with all other nodes.
+    """
+
+    __mapper_args__ = {"polymorphic_identity": "star"}
+
+    def add_node(self, node):
+        """Add a node and connect it to the center."""
+        nodes = self.nodes()
+
+        if len(nodes) > 1:
+            first_node = min(nodes, key=attrgetter('creation_time'))
+            if isinstance(first_node, Source):
+                first_node.connect(direction="to", whom=node)
+            else:
+                first_node.connect(direction="both", whom=node)
 
