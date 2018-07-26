@@ -133,8 +133,9 @@ class Bartlett1932(Experiment):
                     #connect the not copiers to the copiers
                     n.connect(whom=copiers)
                     source = node.neighbors(type=Source, direction="from")[0]
-                    #transmit a good luck message from the source to all the copiers 
-                    source.transmit(what=Info(origin=source, contents="Good Luck"), to_whom=copiers)
+                
+                #transmit a good luck message from the source to all the copiers 
+                source.transmit(what=Info(origin=source, contents="Good Luck"), to_whom=copiers)
 
     def recruit(self):
         """Recruit one participant at a time until all networks are full."""
