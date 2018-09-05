@@ -84,13 +84,13 @@ $(document).ready(function() {
         disable_buttons();
         submit_response($("#submit-copy").text());
     });
+
 });
 
 add_neighbor_buttons = function() {
     dallinger.getExperimentProperty("group_size")
     .done(function (resp) {
         group_size = resp.group_size;
-        // don't know how the below start and stop lines work
         start = '<button id="neighbor_button_';
         stop = '" type="button" class="btn btn-primary"></button>';
         button_string = '';
@@ -100,6 +100,7 @@ add_neighbor_buttons = function() {
             button_string = button_string.concat(stop);
         }
         $("#neighbor_buttons").html(button_string);
+    });
     })
 }
 
@@ -108,16 +109,17 @@ disable_buttons = function() {
     $("#submit-b").addClass('disabled');
     $("#submit-copy").addClass('disabled');
     $("#question").html("Waiting for other players to catch up.");
-    $("#neighbors").addClass('disabled');
+    $("#neighbor_buttons").addClass('disabled');
 }
 
 enable_buttons = function() {
     $("#submit-a").removeClass('disabled');
     $("#submit-b").removeClass('disabled');
     $("#submit-copy").removeClass('disabled');
-    $("#neighbors").removeClass('disabled');
+    $("#neighbor_buttons").removeClass('disabled');
 }
 
+//not entirely sure what this does
 submit_response = function(response) {
     dallinger.createInfo(my_node_id, {
         contents: response,
@@ -230,22 +232,15 @@ var check_neighbors = function() {
             current_button = 1;
             neighbors.forEach(function(entry) {
                 if (entry.type != "quiz_source") {
-                    console.log(entry.type);
                     button_id = "#neighbor_button_" + current_button;
-                    console.log(button_id);
                     $(button_id).html(entry.property1);
-                    console.log(entry.propety1);
+                    $(button_id).click(function() {
+                        disable_buttons();
+                        submit_response($(button_id).text());
+                    }
                     current_button = current_button + 1;
-                    console.log(current_button);
-                } else { console.log("I'm a source");
-                console.log(entry);
-            }
-            
+                }; 
             });
-            //submit_response("copied");
-            //enable_buttons();
-            //get_info();
-        }
+        };
     });
 };
-
