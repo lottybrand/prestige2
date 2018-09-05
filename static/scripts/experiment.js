@@ -101,7 +101,6 @@ add_neighbor_buttons = function() {
         }
         $("#neighbor_buttons").html(button_string);
     });
-    })
 }
 
 disable_buttons = function() {
@@ -237,10 +236,10 @@ var check_neighbors = function() {
                     $(button_id).click(function() {
                         disable_buttons();
                         submit_response($(button_id).text());
-                    }
+                    });
                     current_button = current_button + 1;
-                }; 
+                } 
             });
-        };
+        }
     });
 };

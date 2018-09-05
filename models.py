@@ -9,7 +9,7 @@ class QuizSource(Source):
     }
 
     def _contents(self):
-        """Define the contents of new Infos.
+        """Define the contents of new Infos .... (New transmissions??)
 
         transmit() -> _what() -> create_information() -> _contents().
         """
