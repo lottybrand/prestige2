@@ -255,5 +255,4 @@ enable_buttons = function() {
     $("#submit-a").removeClass('disabled');
     $("#submit-b").removeClass('disabled');
     $("#submit-copy").removeClass('disabled');
-    $("#neighbor_buttons").removeClass('disabled');
 }
