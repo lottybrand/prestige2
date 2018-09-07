@@ -71,19 +71,21 @@ $(document).ready(function() {
     });
 
     $("#submit-a").click(function() {
-        disable_buttons();
+        disable_answer_buttons();
         submit_response($("#submit-a").text());
     });
 
     $("#submit-b").click(function() {
-        disable_buttons();
+        disable_answer_buttons();
         submit_response($("#submit-b").text());
     });
 
     $("#submit-copy").click(function() {
-        disable_buttons();
+        disable_answer_buttons();
         submit_response($("#submit-copy").text());
     });
+
+    disable_answer_buttons();
 
 });
 
@@ -202,7 +204,7 @@ var process_info = function(info) {
         $("#question_number").html("You are on question " + number + " of the " + topic + " topic");
         $("#submit-a").html(Wwer);
         $("#submit-b").html(Rwer);
-        enable_buttons();
+        enable_answer_buttons();
     }
 };
 
@@ -222,7 +224,7 @@ var check_neighbors = function() {
                     $(button_id).html(entry.property1);
                     $(button_id).click(function() {
                         submit_response($(this).text());
-                        disable_buttons();
+                        disable_neighbor_buttons();
                     });
                     $(button_id).prop("disabled",false);
                     $(button_id).show();
@@ -234,12 +236,17 @@ var check_neighbors = function() {
     });
 };
 
-
-disable_buttons = function() {
+disable_answer_buttons = function() {
     $("#submit-a").addClass('disabled');
     $("#submit-b").addClass('disabled');
     $("#submit-copy").addClass('disabled');
+    $("#submit-a").hide();
+    $("#submit-b").hide();
+    $("#submit-copy").hide();
     $("#question").html("Waiting for other players to catch up.");
+}
+
+disable_neighbor_buttons = function() {
     $("#neighbor_buttons").hide();
     for (i = 1; i <= group_size-1; i++) {
         button_string = "#neighbor_button_" + i;
@@ -248,10 +255,19 @@ disable_buttons = function() {
         $(button_string).prop("disabled",true);
         $(button_string).off("click");
     }
+    $("#question").html("Waiting for other players to catch up.");
 }
 
-enable_buttons = function() {
+disable_all_buttons = function() {
+    disable_answer_buttons();
+    disable_neighbor_buttons();
+}
+
+enable_answer_buttons = function() {
     $("#submit-a").removeClass('disabled');
     $("#submit-b").removeClass('disabled');
     $("#submit-copy").removeClass('disabled');
+    $("#submit-a").show();
+    $("#submit-b").show();
+    $("#submit-copy").show();
 }
