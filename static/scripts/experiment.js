@@ -103,20 +103,6 @@ add_neighbor_buttons = function() {
     });
 }
 
-disable_buttons = function() {
-    $("#submit-a").addClass('disabled');
-    $("#submit-b").addClass('disabled');
-    $("#submit-copy").addClass('disabled');
-    $("#question").html("Waiting for other players to catch up.");
-    $("#neighbor_buttons").addClass('disabled');
-}
-
-enable_buttons = function() {
-    $("#submit-a").removeClass('disabled');
-    $("#submit-b").removeClass('disabled');
-    $("#submit-copy").removeClass('disabled');
-    $("#neighbor_buttons").removeClass('disabled');
-}
 
 //not entirely sure what this does
 submit_response = function(response) {
@@ -243,3 +229,20 @@ var check_neighbors = function() {
         }
     });
 };
+
+
+disable_buttons = function() {
+    $("#submit-a").addClass('disabled');
+    $("#submit-b").addClass('disabled');
+    $("#submit-copy").addClass('disabled');
+    $("#question").html("Waiting for other players to catch up.");
+    $("#neighbor_buttons").off('click');
+    //$element.off("click");
+}
+
+enable_buttons = function() {
+    $("#submit-a").removeClass('disabled');
+    $("#submit-b").removeClass('disabled');
+    $("#submit-copy").removeClass('disabled');
+    $("#neighbor_buttons").removeClass('disabled');
+}
