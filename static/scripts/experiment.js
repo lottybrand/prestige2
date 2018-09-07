@@ -185,11 +185,10 @@ var get_info = function(info_id) {
 var process_info = function(info) {
     if (info.contents == "Bad Luck") {
         // if everyone copied you are forced to submit "bad luck"
-        $("#badluck").html("Sorry, everyone chose to copy, so no one can score points");
+        $("#question").html("Sorry, everyone chose to copy, so no one can score points");
         submit_response("Bad Luck");
     } else if (info.contents == "Good Luck") {
         // if there are people to copy you check your neighbors
-        $("#goodluck").html("You have x many people to copy from,");
         check_neighbors();
     } else {
         // if you have received a question
@@ -200,8 +199,7 @@ var process_info = function(info) {
         number = question_json.number;
         topic = question_json.topic;
         $("#question").html(question);
-        $("#question_number").html("You are on question " + number);
-        $("#topic").html("of the " + topic + " topic");
+        $("#question_number").html("You are on question " + number + " of the " + topic + " topic");
         $("#submit-a").html(Wwer);
         $("#submit-b").html(Rwer);
         enable_buttons();
@@ -217,6 +215,7 @@ var check_neighbors = function() {
         success: function (resp) {
             neighbors = resp.nodes;
             current_button = 1;
+            $("#question").html("You have " + (neighbors.length - 1) + " many people to copy from,");
             neighbors.forEach(function(entry) {
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
