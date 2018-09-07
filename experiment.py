@@ -105,8 +105,14 @@ class Bartlett1932(Experiment):
 
             # if no one has copied
             if not "Ask Someone Else" in answers:
-                #if no one has copied then get the source to transmit to all of its neighbors
+                # if everone has made a decision
+                # tidy up any old vectors from previous neighbor copying
                 source = node.neighbors(type=Source, direction="from")[0]
+                vectors = node.network.vectors()
+                for v in vectors:
+                    if v.origin_id != source.id:
+                        v.fail()
+                #then get the source to transmit to all of its neighbors
                 source.transmit()
                 nodes = source.neighbors()
             # else if everyone copied
