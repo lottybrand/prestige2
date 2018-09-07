@@ -225,9 +225,12 @@ var check_neighbors = function() {
                         submit_response($(this).text());
                         disable_buttons();
                     });
+                    $(button_id).prop("disabled",false);
+                    $(button_id).show();
                     current_button = current_button + 1;
                 } 
             });
+            $("#neighbor_buttons").show();
         }
     });
 };
