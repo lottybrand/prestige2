@@ -241,8 +241,14 @@ disable_buttons = function() {
     $("#submit-b").addClass('disabled');
     $("#submit-copy").addClass('disabled');
     $("#question").html("Waiting for other players to catch up.");
-    $("#neighbor_buttons").off('click');
-    //$element.off("click");
+    $("#neighbor_buttons").hide();
+    for (i = 1; i <= group_size-1; i++) {
+        button_string = "#neighbor_button_" + i;
+        $(button_string).html("");
+        $(button_string).hide();
+        $(button_string).prop("disabled",true);
+        $(button_string).off("click");
+    }
 }
 
 enable_buttons = function() {
