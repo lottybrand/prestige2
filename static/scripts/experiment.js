@@ -222,9 +222,8 @@ var check_neighbors = function() {
                     button_id = "#neighbor_button_" + current_button;
                     $(button_id).html(entry.property1);
                     $(button_id).click(function() {
-                        $(this).hide();
+                        submit_response($(this).text());
                         disable_buttons();
-                        submit_response($(button_id).text());
                     });
                     current_button = current_button + 1;
                 } 
