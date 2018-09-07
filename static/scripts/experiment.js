@@ -220,6 +220,7 @@ var check_neighbors = function() {
                     button_id = "#neighbor_button_" + current_button;
                     $(button_id).html(entry.property1);
                     $(button_id).click(function() {
+                        $(this).hide();
                         disable_buttons();
                         submit_response($(button_id).text());
                     });
