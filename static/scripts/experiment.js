@@ -100,6 +100,8 @@ add_neighbor_buttons = function() {
             button_string = button_string.concat(stop);
         }
         $("#neighbor_buttons").html(button_string);
+        $("#neighbor_buttons").hide();
+        $(button_string).prop("disabled",true);
     });
 }
 
