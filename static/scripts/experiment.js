@@ -235,7 +235,6 @@ var check_neighbors = function() {
                     $(button_id).prop("disabled",false);
                     $(button_id).show();
                     current_button = current_button + 1;
-                    console.log("property2 is" +(neighbors.property2) + "just length of network for now");
                 } 
             });
             $("#neighbor_buttons").show();

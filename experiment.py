@@ -69,7 +69,7 @@ class Bartlett1932(Experiment):
         name = letter + str(number)
         #name is then assigned to node's property1 in the database
         node.property1 = name
-        node.property2 = len(network.nodes(failed="all"))
+        node.property2 = 0
         return node
 
 
@@ -145,6 +145,10 @@ class Bartlett1932(Experiment):
                 
                 #transmit a good luck message from the source to all the copiers 
                 source.transmit(what=Info(origin=source, contents="Good Luck"), to_whom=copiers)
+
+        for i in infos:
+            if i.contents == node.property1:
+                node.property2 += 1
 
     def recruit(self):
         """Recruit one participant at a time until all networks are full."""
