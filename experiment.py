@@ -69,7 +69,10 @@ class Bartlett1932(Experiment):
         name = letter + str(number)
         #name is then assigned to node's property1 in the database
         node.property1 = name
+        node.property2 = len(network.nodes(failed="all"))
         return node
+
+
 
     def add_node_to_network(self, node, network):
         """Add node to the chain and receive transmissions."""
