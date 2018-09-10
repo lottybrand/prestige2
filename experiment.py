@@ -103,6 +103,18 @@ class Bartlett1932(Experiment):
             neighbor = [n for n in other_nodes if n.property1 == info.contents][0]
             # and increase their number of copies
             neighbor.property2 = str(int(neighbor.property2) + 1)
+            # fail the original info
+            info.fail()
+            # ask the neighbor to transmit their actual decision to the current player.
+            copied_info = neighbor.infos()[0]
+            neighbor.transmit(what=copied_info, to_whom=node)
+            # the current player receives it and copies it.
+            node.receive()
+            node.replicate(info_in=copied_info)
+            # get the newly made info, and copy its properties over as well.
+            new_info = node.infos()[0]
+            new_info.property1 = copied_info.property1
+            new_info.property2 = "true"
 
         if ready:
             # has anyone copied?
