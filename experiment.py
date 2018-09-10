@@ -97,6 +97,13 @@ class Bartlett1932(Experiment):
             if question_number not in [i.property1 for i in n.infos()]:
                 ready = False
 
+        # if property 2 is true this means this is a copying decision
+        if info.property2 == "true":
+            # so find the neighbor to be copied
+            neighbor = [n for n in other_nodes if n.property1 == info.contents][0]
+            # and increase their number of copies
+            neighbor.property2 = str(int(neighbor.property2) + 1)
+
         if ready:
             # has anyone copied?
             infos = [info]
@@ -145,10 +152,6 @@ class Bartlett1932(Experiment):
                 
                 #transmit a good luck message from the source to all the copiers 
                 source.transmit(what=Info(origin=source, contents="Good Luck"), to_whom=copiers)
-
-        for i in infos:
-            if i.contents == node.property1:
-                node.property2 += 1
 
     def recruit(self):
         """Recruit one participant at a time until all networks are full."""
