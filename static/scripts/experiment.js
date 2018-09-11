@@ -57,16 +57,6 @@ $(document).ready(function() {
                 contents: response,
                 info_type: "Info"
             },
-            //I don't think the below was doing anything, nothing seemed to change when I commented out
-            // success: function (resp) {
-            //     // if the length of the infos is less than 11 then get another info, otherwise go back to create agent?
-            //     // must be leftover from when I was trying things out with ten questions. 
-            //     if (infos.length < 11) {
-            //         get_info();
-            //     } else {
-            //         create_agent();
-            //     }
-            // }
         });
     });
 
@@ -115,12 +105,13 @@ add_neighbor_buttons = function() {
 
 
 //not entirely sure what this does
-submit_response = function(response, copy=false) {
+submit_response = function(response, copy=false, correct=false) {
     dallinger.createInfo(my_node_id, {
         contents: response,
         info_type: "Info",
         property1: number,
-        property2: copy
+        property2: copy,
+        property3: correct,
     }).done(function (resp) {
         most_recent_question = number;
         setTimeout(function() {
@@ -210,7 +201,7 @@ var process_info = function(info) {
         $("#question").html(question);
         $("#question_number").html("You are on question " + number + " of the " + topic + " topic");
         $("#submit-a").html(Wwer);
-        $("#submit-b").html(Rwer);
+        $("#submit-b").html(Rwer,false,true);
         enable_answer_buttons();
     }
 };
