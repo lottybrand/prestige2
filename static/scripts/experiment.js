@@ -201,8 +201,13 @@ var process_info = function(info) {
         topic = question_json.topic;
         $("#question").html(question);
         $("#question_number").html("You are on question " + number + " of the " + topic + " topic");
-        $("#submit-a").html(Wwer);
-        $("#submit-b").html(Rwer,false,true);
+        if (Math.random() <0.5) {
+            $("#submit-a").html(Wwer);
+            $("#submit-b").html(Rwer);
+        } else {
+            $("#submit-b").html(Wwer);
+            $("#submit-a").html(Rwer);
+        }
         enable_answer_buttons();
     }
 };
