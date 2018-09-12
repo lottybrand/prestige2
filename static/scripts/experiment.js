@@ -75,6 +75,15 @@ $(document).ready(function() {
         submit_response($("#submit-copy").text());
     });
 
+    $("#info_choice-a").click(function() {
+        disable_info_choice_buttons();
+        check_neighbors($("#info_choice-a").text());
+    });
+
+    $("#info_choice-b").click(function() {
+        disable_info_choice_buttons();
+        check_neighbours($("#info_choice-b").text());
+
     disable_answer_buttons();
 
 });
@@ -189,8 +198,8 @@ var process_info = function(info) {
         $("#question").html("Sorry, everyone chose to copy, so no one can score points");
         submit_response("Bad Luck");
     } else if (info.contents == "Good Luck") {
+        info_choice();
         // if there are people to copy you check your neighbors
-        check_neighbors();
     } else {
         // if you have received a question
         question_json = JSON.parse(info.contents);
@@ -212,6 +221,11 @@ var process_info = function(info) {
     }
 };
 
+var info_choice = function() {
+    $("#question").html("What information do you want to see about your neighbours?");
+
+}
+
 var check_neighbors = function() {
     reqwest({
         url: "/node/" + my_node_id + "/neighbors",
@@ -221,18 +235,33 @@ var check_neighbors = function() {
         success: function (resp) {
             neighbors = resp.nodes;
             current_button = 1;
+            choice = names
             $("#question").html("You have " + (neighbors.length - 1) + " many people to copy from,");
             neighbors.forEach(function(entry) {
                 if (entry.type != "quiz_source") {
-                    button_id = "#neighbor_button_" + current_button;
-                    $(button_id).html(entry.property1);
-                    $(button_id).click(function() {
+                    if (choice = names) { 
+                        button_id = "#neighbor_button_" + current_button;
+                        $(button_id).html(entry.property1);
+                        $(button_id).click(function() {
                         submit_response($(this).text(), true);
                         disable_neighbor_buttons();
-                    });
-                    $(button_id).prop("disabled",false);
-                    $(button_id).show();
-                    current_button = current_button + 1;
+                        });
+                        $(button_id).prop("disabled",false);
+                        $(button_id).show();
+                        current_button = current_button + 1;
+                    }
+                    else if (choice = copies) {
+                        button_id = "#neighbor_button_" + current_button;
+                        $(button_id).html(entry.property2);
+                        $(button_id).click(function() {
+                        submit_response($(this).text(), true);
+                        disable_neighbor_buttons();
+                        });
+                        $(button_id).prop("disabled",false);
+                        $(button_id).show();
+                        current_button = current_button + 1;
+                    }
+                    
                 } 
             });
             $("#neighbor_buttons").show();
