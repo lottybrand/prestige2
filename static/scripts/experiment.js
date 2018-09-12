@@ -105,13 +105,14 @@ add_neighbor_buttons = function() {
 
 
 //not entirely sure what this does
-submit_response = function(response, copy=false, correct=false) {
+submit_response = function(response, copy=false) {
+    score = (response ==Rwer)*1
     dallinger.createInfo(my_node_id, {
         contents: response,
         info_type: "Info",
         property1: number,
         property2: copy,
-        property3: correct,
+        property3: score
     }).done(function (resp) {
         most_recent_question = number;
         setTimeout(function() {
