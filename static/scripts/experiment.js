@@ -76,12 +76,14 @@ $(document).ready(function() {
 
     $("#info-choice-a").click(function() {
         disable_choice_buttons();
-        check_neighbors($("#info-choice-a").text());
+        info_chosen = $("#info-choice-a").text();
+        check_neighbors(info_chosen);
     });
 
     $("#info-choice-b").click(function() {
         disable_choice_buttons();
-        check_neighbors($("#info-choice-b").text());
+        info_chosen = $("#info-choice-b").text();
+        check_neighbors(info_chosen);
 
     });
 
@@ -201,11 +203,12 @@ var process_info = function(info) {
         $("#question").html("Sorry, everyone chose to copy, so no one can score points");
         submit_response("Bad Luck");    
     } else if (info.contents == "Good Luck" && round ==2) {
-                //if it's round 2 and people are copying, give them info choice
+        //if it's round 2 and people are copying, give them info choice
         info_choice();
     } else if (info.contents == "Good Luck" && round ==1) {
         // if it's round 1 and people copy, check neighbors
-        check_neighbors("Their Player ID");
+        info_chosen = "Their Player ID";
+        check_neighbors(info_chosen);
     } else {
         // if you have received a question
         question_json = JSON.parse(info.contents);
@@ -235,7 +238,7 @@ var info_choice = function() {
 };
 
 
-var check_neighbors = function(info_choice) {
+var check_neighbors = function(info_chosen) {
     reqwest({
         url: "/node/" + my_node_id + "/neighbors",
         method: 'get',
@@ -248,9 +251,9 @@ var check_neighbors = function(info_choice) {
             neighbors.forEach(function(entry) {
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
-                    if (info_choice == "Their Player ID") { 
+                    if (info_chosen == "Their Player ID") { 
                         $(button_id).html(entry.property1);
-                    } else if (info_choice = "How many times they were copied in Round 1") {
+                    } else if (info_chosen = "How many times they were copied in Round 1") {
                         $(button_id).html(entry.property2);
                     }    
                     $(button_id).click(function() {
