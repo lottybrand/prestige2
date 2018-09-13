@@ -196,8 +196,6 @@ var get_info = function(info_id) {
 
 // process an info
 var process_info = function(info) {
-    question_json = JSON.parse(info.contents);
-    round = question_json.round;
     if (info.contents == "Bad Luck") {
         // if everyone copied you are forced to submit "bad luck"
         $("#question").html("Sorry, everyone chose to copy, so no one can score points");
@@ -211,6 +209,7 @@ var process_info = function(info) {
     } else {
         // if you have received a question
         question_json = JSON.parse(info.contents);
+        round = question_json.round;
         question = question_json.question;
         Wwer = question_json.Wwer;
         Rwer = question_json.Rwer;
