@@ -288,11 +288,15 @@ disable_answer_buttons = function() {
     $("#submit-a").addClass('disabled');
     $("#submit-b").addClass('disabled');
     $("#submit-copy").addClass('disabled');
-    $("#info-choice-a").addClass('disabled');
-    $("#info-choice-b").addClass('disabled');
     $("#submit-a").hide();
     $("#submit-b").hide();
     $("#submit-copy").hide();
+    $("#question").html("Waiting for other players to catch up.");
+}
+
+disable_choice_buttons = function() {
+    $("#info-choice-a").addClass('disabled');
+    $("#info-choice-b").addClass('disabled');
     $("#info-choice-a").hide();
     $("#info-choice-b").hide();
     $("#question").html("Waiting for other players to catch up.");
@@ -312,6 +316,7 @@ disable_neighbor_buttons = function() {
 
 disable_all_buttons = function() {
     disable_answer_buttons();
+    disable_choice_buttons();
     disable_neighbor_buttons();
 }
 
@@ -319,11 +324,14 @@ enable_answer_buttons = function() {
     $("#submit-a").removeClass('disabled');
     $("#submit-b").removeClass('disabled');
     $("#submit-copy").removeClass('disabled');
-    $("#info-choice-a").removeClass('disabled');
-    $("#info-choice-b").removeClass('disabled');
     $("#submit-a").show();
     $("#submit-b").show();
     $("#submit-copy").show();
+}
+
+enable_choice_buttons = function() {
+    $("#info-choice-a").removeClass('disabled');
+    $("#info-choice-b").removeClass('disabled');
     $("#info-choice-a").show();
     $("#info-choice-b").show();
 }
