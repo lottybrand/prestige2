@@ -111,6 +111,7 @@ add_neighbor_buttons = function() {
                 "margin-right": "12px"
             });
         }
+        disable_neighbor_buttons();
     });
 }
 
