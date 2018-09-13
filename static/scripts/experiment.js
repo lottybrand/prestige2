@@ -119,14 +119,15 @@ add_neighbor_buttons = function() {
 
 
 //not entirely sure what this does
-submit_response = function(response, copy=false) {
-    score = (response ==Rwer)*1
+submit_response = function(response, copy=false, info_chosen="NA") {
+    score = (response == Rwer)*1
     dallinger.createInfo(my_node_id, {
         contents: response,
         info_type: "Info",
         property1: number,
         property2: copy,
-        property3: score
+        property3: score,
+        property4: info_chosen
     }).done(function (resp) {
         most_recent_question = number;
         setTimeout(function() {
@@ -257,7 +258,7 @@ var check_neighbors = function(info_chosen) {
                         $(button_id).html(entry.property2);
                     }    
                     $(button_id).click(function() {
-                        submit_response($(this).text(), true);
+                        submit_response(entry.property1, true, info_chosen);
                         disable_neighbor_buttons();
                     });
                     $(button_id).prop("disabled",false);
