@@ -242,7 +242,7 @@ var info_choice = function() {
 };
 
 
-var check_neighbors = function() {
+var check_neighbors = function(info_choice) {
     reqwest({
         url: "/node/" + my_node_id + "/neighbors",
         method: 'get',
@@ -251,33 +251,22 @@ var check_neighbors = function() {
         success: function (resp) {
             neighbors = resp.nodes;
             current_button = 1;
-            choice = names
             $("#question").html("You have " + (neighbors.length - 1) + " many people to copy from,");
             neighbors.forEach(function(entry) {
                 if (entry.type != "quiz_source") {
-                    if (info.contents = "Their Player ID") { 
-                        button_id = "#neighbor_button_" + current_button;
+                    button_id = "#neighbor_button_" + current_button;
+                    if (info_choice == "Their Player ID") { 
                         $(button_id).html(entry.property1);
-                        $(button_id).click(function() {
-                        submit_response($(this).text(), true);
-                        disable_neighbor_buttons();
-                        });
-                        $(button_id).prop("disabled",false);
-                        $(button_id).show();
-                        current_button = current_button + 1;
-                    }
-                    else if (info.contents = "How many times they were copied in Round 1") {
-                        button_id = "#neighbor_button_" + current_button;
+                    } else if (info_choice = "How many times they were copied in Round 1") {
                         $(button_id).html(entry.property2);
-                        $(button_id).click(function() {
+                    }    
+                    $(button_id).click(function() {
                         submit_response($(this).text(), true);
                         disable_neighbor_buttons();
-                        });
-                        $(button_id).prop("disabled",false);
-                        $(button_id).show();
-                        current_button = current_button + 1;
-                    }
-                    
+                    });
+                    $(button_id).prop("disabled",false);
+                    $(button_id).show();
+                    current_button = current_button + 1;
                 } 
             });
             $("#neighbor_buttons").show();
