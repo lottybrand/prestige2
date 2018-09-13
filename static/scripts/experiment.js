@@ -127,7 +127,8 @@ submit_response = function(response, copy=false, info_chosen="NA") {
         property1: number,
         property2: copy,
         property3: score,
-        property4: info_chosen
+        property4: info_chosen,
+        property5: round
     }).done(function (resp) {
         most_recent_question = number;
         setTimeout(function() {
