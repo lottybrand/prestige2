@@ -114,7 +114,9 @@ class Bartlett1932(Experiment):
             # get the newly made info, and copy its properties over as well.
             new_info = node.infos()[0]
             new_info.property1 = copied_info.property1
-            new_info.property2 = "true"
+            new_info.property2 = info.property2
+            new_info.property3 = copied_info.property3
+            new_info.property2 = info.property4
 
         if ready:
             # has anyone copied?
