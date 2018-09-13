@@ -17,22 +17,25 @@ class QuizSource(Source):
         import json
         questions = [
             json.dumps({
-                'question': 'The starry night is a famous painting by',
+                'question': 'In which country is the red dot located?',
                 'number':1,
-                'topic': 'Art',
-                'Wwer': 'Jackson Pollock',
-                'Rwer': 'Vincent van Gogh',
+                'round': 1,
+                'topic': 'Geography',
+                'Wwer': 'Guatemala',
+                'Rwer': 'Belize',
                 }),
             json.dumps({
-                'question': 'The singing butler is a famous painting by the Scottish artist',
+                'question': 'In which city is the red dot located?',
                 'number':2,
-                'topic': 'Art',
-                'Wwer': 'Andrew Geddes',
-                'Rwer': 'Jack Vettriano',
+                'round':1,
+                'topic': 'Geography',
+                'Wwer': 'Nigeria',
+                'Rwer': 'The Ivory Coast',
                 }),
             json.dumps({
                 'question': 'The capital of Hawaii is',
                 'number':3,
+                'round':1,
                 'topic': 'Geography',
                 'Wwer': 'Waikiki',
                 'Rwer': 'Honolulu',
@@ -40,6 +43,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Saint Helena is an island in',
                 'number':4,
+                'round':1,
                 'topic':'Georgraphy',
                 'Wwer': 'The Indian Ocean',
                 'Rwer': 'The South Atlantic Ocean',
@@ -47,9 +51,50 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Which country shares a border with El Salvador?',
                 'number':5,
-                'topic':'Geography',
+                'round':1,
+                'topic':'Georgraphy',
                 'Wwer': 'Paraguay',
                 'Rwer': 'Honduras',
+                }),
+            json.dumps({
+                'question': 'What is the average weight of a pink salmon?',
+                'number':6,
+                'round': 2,
+                'topic': 'Weight',
+                'Wwer': '17kg',
+                'Rwer': '1.7kg',
+                }),
+            json.dumps({
+                'question': 'A cricket bat weighs',
+                'number':7,
+                'round': 2,
+                'topic': 'Weight',
+                'Wwer': '14kg',
+                'Rwer': '1.4kg',
+                }),
+            json.dumps({
+                'question': 'The average weight of a camel is',
+                'number':8,
+                'round':2,
+                'topic': 'Weight',
+                'Wwer': '48kg',
+                'Rwer': '480kg',
+                }),
+            json.dumps({
+                'question': 'Which dog weighs more, on average',
+                'number':9,
+                'round':2,
+                'topic': 'Weight',
+                'Wwer': 'Labrador',
+                'Rwer': 'Great Dane',
+                }),
+            json.dumps({
+                'question': 'What does a typical (class 1A) fire extinguisher weigh?',
+                'number':10,
+                'round': 2,
+                'topic':'Weight',
+                'Wwer': '115kg',
+                'Rwer': '1.15kg',
                 })
         ]
         number_transmissions = len([i for i in self.infos() if i.contents not in ["Bad Luck", "Good Luck"]])

@@ -43,13 +43,12 @@ $(document).ready(function() {
         submitResponses();
     });
 
-
     $("#submit-response").click(function() {
         $("#submit-response").addClass('disabled');
         $("#submit-response").html('Sending...');
         $("#question").html("Waiting for other players to catch up.");
 
-// when submit response is submitted, then the contents are posted as an info for that node?
+// when submit response is submitted, then the contents are requested/posted as an info for that node??
        reqwest({
             url: "/info/" + my_node_id,
             method: 'post',
@@ -75,14 +74,16 @@ $(document).ready(function() {
         submit_response($("#submit-copy").text());
     });
 
-    $("#info_choice-a").click(function() {
+    $("#info-choice-a").click(function() {
         disable_info_choice_buttons();
-        check_neighbors($("#info_choice-a").text());
+        check_neighbors($("#info-choice-a").text());
     });
 
-    $("#info_choice-b").click(function() {
+    $("#info-choice-b").click(function() {
         disable_info_choice_buttons();
-        check_neighbours($("#info_choice-b").text());
+        check_neighbours($("#info-choice-b").text());
+
+    });
 
     disable_answer_buttons();
 
@@ -194,20 +195,25 @@ var get_info = function(info_id) {
 // process an info
 var process_info = function(info) {
     if (info.contents == "Bad Luck") {
-        // if everyone copied you are forced to submit "bad luck"
-        $("#question").html("Sorry, everyone chose to copy, so no one can score points");
-        submit_response("Bad Luck");
-    } else if (info.contents == "Good Luck") {
-        info_choice();
-        // if there are people to copy you check your neighbors
-    } else {
-        // if you have received a question
+        //I moved this up here, not sure if it can go here but feels like it should be at the beginning 
         question_json = JSON.parse(info.contents);
         question = question_json.question;
         Wwer = question_json.Wwer;
         Rwer = question_json.Rwer;
         number = question_json.number;
         topic = question_json.topic;
+        round = question_json.round;
+        // if everyone copied you are forced to submit "bad luck"
+        $("#question").html("Sorry, everyone chose to copy, so no one can score points");
+        submit_response("Bad Luck");    
+    } else if (info.contents == "Good Luck" && round ==2) {
+                //if it's round 2 and people are copying, give them info choice
+        info_choice();
+    } else if (info.contents == "Good Luck" && round ==1) {
+        // if it's round 1 and people copy, check neighbors
+        check_neighbors();
+    } else {
+        // if you have received a question
         $("#question").html(question);
         $("#question_number").html("You are on question " + number + " of the " + topic + " topic");
         if (Math.random() <0.5) {
@@ -223,6 +229,8 @@ var process_info = function(info) {
 
 var info_choice = function() {
     $("#question").html("What information do you want to see about your neighbours?");
+    $("#info-choice-a").html("Their Player ID");
+    $("#info-choice-b").html("How many times they were copied in Round 1");
 
 }
 
