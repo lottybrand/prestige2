@@ -205,7 +205,7 @@ var process_info = function(info) {
         info_choice();
     } else if (info.contents == "Good Luck" && round ==1) {
         // if it's round 1 and people copy, check neighbors
-        check_neighbors();
+        check_neighbors("Their Player ID");
     } else {
         // if you have received a question
         question_json = JSON.parse(info.contents);
