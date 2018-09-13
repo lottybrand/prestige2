@@ -75,17 +75,18 @@ $(document).ready(function() {
     });
 
     $("#info-choice-a").click(function() {
-        disable_answer_buttons();
+        disable_choice_buttons();
         check_neighbors($("#info-choice-a").text());
     });
 
     $("#info-choice-b").click(function() {
-        disable_answer_buttons();
+        disable_choice_buttons();
         check_neighbours($("#info-choice-b").text());
 
     });
 
     disable_answer_buttons();
+    disable_choice_buttons();
 
 });
 
