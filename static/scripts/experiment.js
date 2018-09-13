@@ -81,7 +81,7 @@ $(document).ready(function() {
 
     $("#info-choice-b").click(function() {
         disable_choice_buttons();
-        check_neighbours($("#info-choice-b").text());
+        check_neighbors($("#info-choice-b").text());
 
     });
 
