@@ -101,8 +101,9 @@ class Bartlett1932(Experiment):
         if info.property2 == "true":
             # so find the neighbor to be copied
             neighbor = [n for n in other_nodes if n.property1 == info.contents][0]
-            # and increase their number of copies
-            neighbor.property2 = str(int(neighbor.property2) + 1)
+            # and increase their number of copies, but only if we're in round 1
+            if (int(info.property5) == 1):
+                neighbor.property2 = str(int(neighbor.property2) + 1)
             # fail the original info
             info.fail()
             # ask the neighbor to transmit their actual decision to the current player.
