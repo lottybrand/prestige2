@@ -231,14 +231,7 @@ var process_info = function(info) {
 
 var info_choice = function() {
     $("#question").html("What information do you want to see about your neighbours?");
-    $("#info-choice-a").click(function(){
-        submit_response($(this).text());
-            disable_answer_buttons();
-        });
-    $("#info-choice-b").click(function(){
-        submit_response($(this).text());
-            disable_answer_buttons();
-        });
+    enable_choice_buttons();
 };
 
 
