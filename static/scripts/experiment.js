@@ -75,12 +75,12 @@ $(document).ready(function() {
     });
 
     $("#info-choice-a").click(function() {
-        disable_info_choice_buttons();
+        disable_answer_buttons();
         check_neighbors($("#info-choice-a").text());
     });
 
     $("#info-choice-b").click(function() {
-        disable_info_choice_buttons();
+        disable_answer_buttons();
         check_neighbours($("#info-choice-b").text());
 
     });
@@ -194,15 +194,9 @@ var get_info = function(info_id) {
 
 // process an info
 var process_info = function(info) {
+    question_json = JSON.parse(info.contents);
+    round = question_json.round;
     if (info.contents == "Bad Luck") {
-        //I moved this up here, not sure if it can go here but feels like it should be at the beginning 
-        question_json = JSON.parse(info.contents);
-        question = question_json.question;
-        Wwer = question_json.Wwer;
-        Rwer = question_json.Rwer;
-        number = question_json.number;
-        topic = question_json.topic;
-        round = question_json.round;
         // if everyone copied you are forced to submit "bad luck"
         $("#question").html("Sorry, everyone chose to copy, so no one can score points");
         submit_response("Bad Luck");    
@@ -214,6 +208,13 @@ var process_info = function(info) {
         check_neighbors();
     } else {
         // if you have received a question
+        question_json = JSON.parse(info.contents);
+        question = question_json.question;
+        Wwer = question_json.Wwer;
+        Rwer = question_json.Rwer;
+        number = question_json.number;
+        topic = question_json.topic;
+        round = question_json.round;
         $("#question").html(question);
         $("#question_number").html("You are on question " + number + " of the " + topic + " topic");
         if (Math.random() <0.5) {
@@ -229,10 +230,16 @@ var process_info = function(info) {
 
 var info_choice = function() {
     $("#question").html("What information do you want to see about your neighbours?");
-    $("#info-choice-a").html("Their Player ID");
-    $("#info-choice-b").html("How many times they were copied in Round 1");
+    $("#info-choice-a").click(function(){
+        submit_response($(this).text());
+            disable_answer_buttons();
+        });
+    $("#info-choice-b").click(function(){
+        submit_response($(this).text());
+            disable_answer_buttons();
+        });
+};
 
-}
 
 var check_neighbors = function() {
     reqwest({
@@ -247,7 +254,7 @@ var check_neighbors = function() {
             $("#question").html("You have " + (neighbors.length - 1) + " many people to copy from,");
             neighbors.forEach(function(entry) {
                 if (entry.type != "quiz_source") {
-                    if (choice = names) { 
+                    if (info.contents = "Their Player ID") { 
                         button_id = "#neighbor_button_" + current_button;
                         $(button_id).html(entry.property1);
                         $(button_id).click(function() {
@@ -258,7 +265,7 @@ var check_neighbors = function() {
                         $(button_id).show();
                         current_button = current_button + 1;
                     }
-                    else if (choice = copies) {
+                    else if (info.contents = "How many times they were copied in Round 1") {
                         button_id = "#neighbor_button_" + current_button;
                         $(button_id).html(entry.property2);
                         $(button_id).click(function() {
@@ -281,9 +288,13 @@ disable_answer_buttons = function() {
     $("#submit-a").addClass('disabled');
     $("#submit-b").addClass('disabled');
     $("#submit-copy").addClass('disabled');
+    $("#info-choice-a").addClass('disabled');
+    $("#info-choice-b").addClass('disabled');
     $("#submit-a").hide();
     $("#submit-b").hide();
     $("#submit-copy").hide();
+    $("#info-choice-a").hide();
+    $("#info-choice-b").hide();
     $("#question").html("Waiting for other players to catch up.");
 }
 
@@ -308,7 +319,11 @@ enable_answer_buttons = function() {
     $("#submit-a").removeClass('disabled');
     $("#submit-b").removeClass('disabled');
     $("#submit-copy").removeClass('disabled');
+    $("#info-choice-a").removeClass('disabled');
+    $("#info-choice-b").removeClass('disabled');
     $("#submit-a").show();
     $("#submit-b").show();
     $("#submit-copy").show();
+    $("#info-choice-a").show();
+    $("#info-choice-b").show();
 }
