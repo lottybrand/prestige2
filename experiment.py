@@ -70,6 +70,7 @@ class Bartlett1932(Experiment):
         #name is then assigned to node's property1 in the database
         node.property1 = name
         node.property2 = 0
+        node.property3 = 0
         return node
 
 
@@ -85,6 +86,11 @@ class Bartlett1932(Experiment):
         """Run when a request to create an info is complete."""
         # question number is found in info's property1 in the database
         question_number = info.property1
+
+        for n in node.property1:
+
+            if (info.property3 == 1) and (node.property1[-1] == participant_id) and (info.property5 ==1):
+                node.property3 += 1
         
         # have all the other nodes answered this question
         # other nodes are defined as nodes in the network that are not current node, and are not the source. 
