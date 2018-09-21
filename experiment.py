@@ -86,11 +86,6 @@ class Bartlett1932(Experiment):
         """Run when a request to create an info is complete."""
         # question number is found in info's property1 in the database
         question_number = info.property1
-
-        for n in node.property1:
-
-            if (info.property3 == 1) and (node.property1[-1] == participant_id) and (info.property5 ==1):
-                node.property3 += 1
         
         # have all the other nodes answered this question
         # other nodes are defined as nodes in the network that are not current node, and are not the source. 
@@ -124,6 +119,12 @@ class Bartlett1932(Experiment):
             new_info.property2 = info.property2
             new_info.property3 = copied_info.property3
             new_info.property2 = info.property4
+
+        if info.property2 =="false":
+
+            for n in n.property3:
+                if (info.property3 == 1) and (node.property1[-1] == info.origin_id) and (info.property5 ==1):
+                    n.property3 += 1
 
         if ready:
             # has anyone copied?
