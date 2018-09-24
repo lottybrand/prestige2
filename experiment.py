@@ -121,10 +121,8 @@ class Bartlett1932(Experiment):
             new_info.property2 = info.property4
 
         if info.property2 =="false":
-
-            for i in info.property3:
-                if (info.property3 == 1) and (node.property1[-1] == info.origin_id) and (info.property5 ==1):
-                    node.property3 += 1
+            if int(info.property5) == 1:
+                node.property3 = str(int(node.property3) + int(info.property3))
 
         if ready:
             # has anyone copied?
