@@ -118,7 +118,7 @@ class Bartlett1932(Experiment):
             new_info.property1 = copied_info.property1
             new_info.property2 = info.property2
             new_info.property3 = copied_info.property3
-            new_info.property2 = info.property4
+            new_info.property4 = info.property4
 
         if info.property2 =="false":
             if int(info.property5) == 1:
