@@ -249,7 +249,12 @@ var check_neighbors = function(info_chosen) {
         success: function (resp) {
             neighbors = resp.nodes;
             current_button = 1;
-            $("#question").html("You have " + (neighbors.length - 1) + " people to copy from:");
+            num_neighbors = neighbors.length - 1;
+            if (num_neighbors == 1) {
+                $("#question").html("You have " + num_neighbors + " person to copy from:");
+            } else {
+                $("#question").html("You have " + num_neighbors + " people to copy from:");
+            }
             neighbors.forEach(function(entry) {
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
