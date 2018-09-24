@@ -122,9 +122,9 @@ class Bartlett1932(Experiment):
 
         if info.property2 =="false":
 
-            for n in n.property3:
+            for i in info.property3:
                 if (info.property3 == 1) and (node.property1[-1] == info.origin_id) and (info.property5 ==1):
-                    n.property3 += 1
+                    node.property3 += 1
 
         if ready:
             # has anyone copied?
