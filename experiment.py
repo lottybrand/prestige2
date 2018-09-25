@@ -101,7 +101,7 @@ class Bartlett1932(Experiment):
         # if property 2 is true this means this is a copying decision
         if info.property2 == "true":
             # so find the neighbor to be copied
-            neighbor = [n for n in other_nodes if n.property1 == info.contents][0]
+            neighbor = [n for n in other_nodes if n.id == int(info.contents)][0]
             # and increase their number of copies, but only if we're in round 1
             if (int(info.property5) == 1):
                 neighbor.property2 = str(int(neighbor.property2) + 1)

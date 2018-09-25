@@ -264,7 +264,7 @@ var check_neighbors = function(info_chosen) {
                         $(button_id).html(entry.property2);
                     }    
                     $(button_id).click(function() {
-                        submit_response(entry.property1, true, info_chosen);
+                        submit_response(entry.id, true, info_chosen);
                         disable_neighbor_buttons();
                     });
                     $(button_id).prop("disabled",false);
