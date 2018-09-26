@@ -210,14 +210,14 @@ var process_info = function(info) {
         // if everyone copied you are forced to submit "bad luck"
         $("#question").html("Sorry, everyone chose to copy, so no one can score points");
         submit_response("Bad Luck");    
-    } else if (info.contents == "Good Luck" && round ==2) {
+    } else if (info.contents == "Good Luck" && round == 2) {
         //if it's round 2 and people are copying, give them info choice
         info_choice();
-    } else if (info.contents == "Good Luck" && round ==1 && condition == "A") {
+    } else if (info.contents == "Good Luck" && round == 1 && condition == "A") {
         // if it's round 1 and people copy, check neighbors
         info_chosen = "Their Player ID";
         check_neighbors(info_chosen);
-    } else if (info.contents == "Good Luck" && round ==1 && (condition =="B"||"C")) {
+    } else if (info.contents == "Good Luck" && round == 1 && (condition =="B" || condition == "C")) {
         info_chosen = "Their total score on Round 1";
         check_neighbors(info_chosen);
     } else {
@@ -336,16 +336,16 @@ enable_answer_buttons = function() {
 }
 
 enable_choice_buttons = function() {
-    if (condition == "A"||"B") {
-    $("#info-choice-a").removeClass('disabled');
-    $("#info-choice-b").removeClass('disabled');
-    $("#info-choice-a").show();
-    $("#info-choice-b").show();
-} else if (condition == "C") {
-    $("#info-choice-b").removeClass('disabled');
-    $("#info-choice-c").removeClass('disabled');
-    $("#info-choice-b").show();
-    $("#info-choice-c").show();
+    if (condition == "A" || condition == "B") {
+        $("#info-choice-a").removeClass('disabled');
+        $("#info-choice-b").removeClass('disabled');
+        $("#info-choice-a").show();
+        $("#info-choice-b").show();
+    } else if (condition == "C") {
+        $("#info-choice-b").removeClass('disabled');
+        $("#info-choice-c").removeClass('disabled');
+        $("#info-choice-b").show();
+        $("#info-choice-c").show();
     } 
 }
 
