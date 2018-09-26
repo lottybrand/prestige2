@@ -77,23 +77,20 @@ $(document).ready(function() {
 
     $("#info-choice-a").click(function() {
         disable_choice_buttons();
-        if (condition == "A"||"B") {
         info_chosen = $("#info-choice-a").text();
-    } else if (condition == "C") {
-        info_chosen = $("info-choice-b").text();
-    }
         check_neighbors(info_chosen);
     });
 
     $("#info-choice-b").click(function() {
-        disable_choice_buttons();
-        if (condition == "A"||"B") {       
+        disable_choice_buttons();   
         info_chosen = $("#info-choice-b").text();
-    } else if (condition == "C") {
-        info_chosen = $("#info-choice-c").text();
-    }
         check_neighbors(info_chosen);
+    });
 
+    $("#info-choice-c").click(function() {
+        disable_choice_buttons();   
+        info_chosen = $("#info-choice-c").text();
+        check_neighbors(info_chosen);
     });
 
     disable_answer_buttons();
@@ -339,10 +336,21 @@ enable_answer_buttons = function() {
 }
 
 enable_choice_buttons = function() {
+    if (condition == "A"||"B") {
     $("#info-choice-a").removeClass('disabled');
     $("#info-choice-b").removeClass('disabled');
-    $("#info-choice-c").removeClass('disabled');
     $("#info-choice-a").show();
     $("#info-choice-b").show();
+} else if (condition == "C") {
+    $("#info-choice-b").removeClass('disabled');
+    $("#info-choice-c").removeClass('disabled');
+    $("#info-choice-b").show();
     $("#info-choice-c").show();
+    } 
 }
+
+
+
+
+
+
