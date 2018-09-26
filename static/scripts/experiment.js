@@ -2,6 +2,7 @@ var my_node_id;
 var most_recent_question = 0;
 var player_id;
 
+var condition = "C";
 // Consent to the experiment.
 $(document).ready(function() {
 
@@ -76,13 +77,21 @@ $(document).ready(function() {
 
     $("#info-choice-a").click(function() {
         disable_choice_buttons();
+        if (condition == "A"||"B") {
         info_chosen = $("#info-choice-a").text();
+    } else if (condition == "C") {
+        info_chosen = $("info-choice-b").text();
+    }
         check_neighbors(info_chosen);
     });
 
     $("#info-choice-b").click(function() {
         disable_choice_buttons();
+        if (condition == "A"||"B") {       
         info_chosen = $("#info-choice-b").text();
+    } else if (condition == "C") {
+        info_chosen = $("#info-choice-c").text();
+    }
         check_neighbors(info_chosen);
 
     });
@@ -207,9 +216,12 @@ var process_info = function(info) {
     } else if (info.contents == "Good Luck" && round ==2) {
         //if it's round 2 and people are copying, give them info choice
         info_choice();
-    } else if (info.contents == "Good Luck" && round ==1) {
+    } else if (info.contents == "Good Luck" && round ==1 && condition == "A") {
         // if it's round 1 and people copy, check neighbors
         info_chosen = "Their Player ID";
+        check_neighbors(info_chosen);
+    } else if (info.contents == "Good Luck" && round ==1 && (condition =="B"||"C")) {
+        info_chosen = "Their total score on Round 1";
         check_neighbors(info_chosen);
     } else {
         // if you have received a question
@@ -260,8 +272,10 @@ var check_neighbors = function(info_chosen) {
                     button_id = "#neighbor_button_" + current_button;
                     if (info_chosen == "Their Player ID") { 
                         $(button_id).html(entry.property1);
-                    } else if (info_chosen = "How many times they were copied in Round 1") {
+                    } else if (info_chosen == "How many times they were copied in Round 1") {
                         $(button_id).html(entry.property2);
+                    } else if (info_chosen == "Their total score on Round 1") {
+                        $(button_id).html(entry.property3);
                     }    
                     $(button_id).click(function() {
                         submit_response(entry.id, true, info_chosen);
@@ -290,8 +304,10 @@ disable_answer_buttons = function() {
 disable_choice_buttons = function() {
     $("#info-choice-a").addClass('disabled');
     $("#info-choice-b").addClass('disabled');
+    $("#info-choice-c").addClass('disabled');
     $("#info-choice-a").hide();
     $("#info-choice-b").hide();
+    $("#info-choice-c").hide();
     $("#question").html("Waiting for other players to catch up.");
 }
 
@@ -325,6 +341,8 @@ enable_answer_buttons = function() {
 enable_choice_buttons = function() {
     $("#info-choice-a").removeClass('disabled');
     $("#info-choice-b").removeClass('disabled');
+    $("#info-choice-c").removeClass('disabled');
     $("#info-choice-a").show();
     $("#info-choice-b").show();
+    $("#info-choice-c").show();
 }
