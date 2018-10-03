@@ -95,6 +95,7 @@ $(document).ready(function() {
 
     disable_answer_buttons();
     disable_choice_buttons();
+    hide_pics();
 
 });
 
@@ -215,7 +216,7 @@ var process_info = function(info) {
         info_choice();
     } else if (info.contents == "Good Luck" && round == 1 && condition == "A") {
         // if it's round 1 and people copy, check neighbors
-        info_chosen = "Their Player ID";
+        info_chosen = "Their player ID";
         check_neighbors(info_chosen);
     } else if (info.contents == "Good Luck" && round == 1 && (condition =="B" || condition == "C")) {
         info_chosen = "Their total score on Round 1";
@@ -230,8 +231,14 @@ var process_info = function(info) {
         number = question_json.number;
         topic = question_json.topic;
         round = question_json.round;
+        pic = question_json.pic;
         $("#question").html(question);
         $("#question_number").html("You are on question " + number + " of the " + topic + " topic");
+        if (pic == true) {
+            show_pics();
+        } else {
+            hide_pics();
+        } 
         if (Math.random() <0.5) {
             $("#submit-a").html(Wwer);
             $("#submit-b").html(Rwer);
@@ -267,9 +274,9 @@ var check_neighbors = function(info_chosen) {
             neighbors.forEach(function(entry) {
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
-                    if (info_chosen == "Their Player ID") { 
+                    if (info_chosen == "Their player ID") { 
                         $(button_id).html(entry.property1);
-                    } else if (info_chosen == "How many times they were copied in Round 1") {
+                    } else if (info_chosen == "How many times they were chosen in Round 1") {
                         $(button_id).html(entry.property2);
                     } else if (info_chosen == "Their total score on Round 1") {
                         $(button_id).html(entry.property3);
@@ -324,6 +331,14 @@ disable_all_buttons = function() {
     disable_answer_buttons();
     disable_choice_buttons();
     disable_neighbor_buttons();
+}
+
+hide_pics = function() {
+    $("#pics").hide();
+}
+
+show_pics = function() {
+    $("#pics").show();
 }
 
 enable_answer_buttons = function() {

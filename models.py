@@ -23,6 +23,7 @@ class QuizSource(Source):
                 'topic': 'Geography',
                 'Wwer': 'Guatemala',
                 'Rwer': 'Belize',
+                'pic': True, 
                 }),
             json.dumps({
                 'question': 'In which city is the red dot located?',
@@ -31,6 +32,7 @@ class QuizSource(Source):
                 'topic': 'Geography',
                 'Wwer': 'Nigeria',
                 'Rwer': 'The Ivory Coast',
+                'pic': True, 
                 }),
             json.dumps({
                 'question': 'The capital of Hawaii is',
@@ -39,6 +41,7 @@ class QuizSource(Source):
                 'topic': 'Geography',
                 'Wwer': 'Waikiki',
                 'Rwer': 'Honolulu',
+                'pic': False, 
                 }),
             json.dumps({
                 'question': 'Saint Helena is an island in',
@@ -47,6 +50,7 @@ class QuizSource(Source):
                 'topic':'Georgraphy',
                 'Wwer': 'The Indian Ocean',
                 'Rwer': 'The South Atlantic Ocean',
+                'pic': False,
                 }),
             json.dumps({
                 'question': 'Which country shares a border with El Salvador?',
@@ -55,6 +59,7 @@ class QuizSource(Source):
                 'topic':'Georgraphy',
                 'Wwer': 'Paraguay',
                 'Rwer': 'Honduras',
+                'pic': False,
                 }),
             json.dumps({
                 'question': 'What is the average weight of a pink salmon?',
@@ -63,6 +68,7 @@ class QuizSource(Source):
                 'topic': 'Weight',
                 'Wwer': '17kg',
                 'Rwer': '1.7kg',
+                'pic': False,
                 }),
             json.dumps({
                 'question': 'A cricket bat weighs',
@@ -71,6 +77,7 @@ class QuizSource(Source):
                 'topic': 'Weight',
                 'Wwer': '14kg',
                 'Rwer': '1.4kg',
+                'pic': False,
                 }),
             json.dumps({
                 'question': 'The average weight of a camel is',
@@ -79,6 +86,7 @@ class QuizSource(Source):
                 'topic': 'Weight',
                 'Wwer': '48kg',
                 'Rwer': '480kg',
+                'pic': False,
                 }),
             json.dumps({
                 'question': 'Which dog weighs more, on average',
@@ -87,6 +95,7 @@ class QuizSource(Source):
                 'topic': 'Weight',
                 'Wwer': 'Labrador',
                 'Rwer': 'Great Dane',
+                'pic': False,
                 }),
             json.dumps({
                 'question': 'What does a typical (class 1A) fire extinguisher weigh?',
@@ -95,6 +104,7 @@ class QuizSource(Source):
                 'topic':'Weight',
                 'Wwer': '115kg',
                 'Rwer': '1.15kg',
+                'pic': False,
                 })
         ]
         number_transmissions = len([i for i in self.infos() if i.contents not in ["Bad Luck", "Good Luck"]])
