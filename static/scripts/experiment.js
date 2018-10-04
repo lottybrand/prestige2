@@ -3,6 +3,7 @@ var most_recent_question = 0;
 var player_id;
 
 var condition = "C";
+$("#round2divC").hide();
 // Consent to the experiment.
 $(document).ready(function() {
 
@@ -92,6 +93,14 @@ $(document).ready(function() {
         info_chosen = $("#info-choice-c").text();
         check_neighbors(info_chosen);
     });
+
+    $("#round2button").click(function() {
+        $("#welcome_div").show();
+        $("#submit_div").show();
+        $("#neighbor_buttons").show();
+        $("#info_choice_buttons").show();
+        $("#round2divC").hide();
+    })
 
     disable_answer_buttons();
     disable_choice_buttons();
@@ -232,10 +241,19 @@ var process_info = function(info) {
         topic = question_json.topic;
         round = question_json.round;
         pic = question_json.pic;
+        if (number ==6) {
+            $("#welcome_div").hide();
+            $("#submit_div").hide();
+            $("#neighbor_buttons").hide();
+            $("#info_choice_buttons").hide();
+            $("#round2divC").show();
+        } else {
+            $("#round2divC").hide();
+        }
         $("#question").html(question);
         $("#question_number").html("You are on question " + number + " of the " + topic + " topic");
         if (pic == true) {
-            show_pics();
+            show_pics(number);
         } else {
             hide_pics();
         } 
@@ -337,7 +355,8 @@ hide_pics = function() {
     $("#pics").hide();
 }
 
-show_pics = function() {
+show_pics = function(number) {
+    $("#pics").attr("src", "/static/images/" + number + ".png");
     $("#pics").show();
 }
 

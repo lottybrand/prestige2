@@ -2,20 +2,29 @@
 
 {% block body %}
     <div class="main_div">
-        <h2 id="welcome"></h2>
-        <br>
-        <p id="question_number"></p>
-        <img id = "pics" src="/static/images/1.png" alt="q1" height="320" width="450">
-        <h3 id="question">Please wait for the other players to catch up.</h3>
-        <button id="submit-copy" type="button" class="btn btn-primary">Ask Someone Else</button>
-        <button id="submit-a" type="button" class="btn btn-primary">Answer A</button>
-        <button id="submit-b" type="button" class="btn btn-primary">Answer B</button>
-        <br>
-        <div id="neighbor_buttons"></div>
+        <div id="welcome_div">
+            <h2 id="welcome"></h2>
+            <br>
+            <p id="question_number"></p>
+            <img id = "pics" src="/static/images/1.png" alt="q1" height="320" width="450">
+            <h3 id="question">Please wait for the other players to catch up.</h3>
+        </div>
+        <div id= "submit_div">
+            <button id="submit-copy" type="button" class="btn btn-primary">Ask Someone Else</button>
+         <button id="submit-a" type="button" class="btn btn-primary">Answer A</button>
+            <button id="submit-b" type="button" class="btn btn-primary">Answer B</button>
+            <br>
+        </div>
+        <div id="neighbor_buttons">
+        </div>
         <div id="info-choice-buttons">
-        <button id="info-choice-a" type="button" class="btn btn-primary">Their player ID</button>
-        <button id="info-choice-b" type="button" class="btn btn-primary">How many times they were chosen in Round 1</button>
-        <button id="info-choice-c" type="button" class="btn btn-primary">Their total score on Round 1</button>
+            <button id="info-choice-a" type="button" class="btn btn-primary">Their player ID</button>
+            <button id="info-choice-b" type="button" class="btn btn-primary">How many times they were chosen in Round 1</button>
+            <button id="info-choice-c" type="button" class="btn btn-primary">Their total score on Round 1</button>
+        </div>
+        <div id="round2divC">
+            <h4 id="r2info">You are now starting Round 2. You will now be given two choices each time you choose to ask someone else. You will be able to choose between seeing the other players' score from Round 1, or how many times they were chosen in Round 1.</h4>
+            <button id="round2button" type="button" class="btn btn-primary">Okay I understand</button>
         </div>
     </div>
 {% endblock %}
