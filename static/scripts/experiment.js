@@ -2,8 +2,9 @@ var my_node_id;
 var most_recent_question = 0;
 var player_id;
 
-var condition = "C";
+var condition = "A";
 $("#round2divC").hide();
+$("#round2divC_check").hide();
 // Consent to the experiment.
 $(document).ready(function() {
 
@@ -95,11 +96,21 @@ $(document).ready(function() {
     });
 
     $("#round2button").click(function() {
+        $("#round2divC_check").show();
+        $("#round2divC").hide();
+    })
+
+    $("#correct_check", "#correct2_check").click(function() {
         $("#welcome_div").show();
         $("#submit_div").show();
         $("#neighbor_buttons").show();
         $("#info_choice_buttons").show();
         $("#round2divC").hide();
+        $("#round2divC_check").hide();
+    })
+
+    $("#incorrect_check").click(function() {
+        $("#question").html("Wrong answer. Please try again");
     })
 
     disable_answer_buttons();
@@ -225,10 +236,10 @@ var process_info = function(info) {
         info_choice();
     } else if (info.contents == "Good Luck" && round == 1 && condition == "A") {
         // if it's round 1 and people copy, check neighbors
-        info_chosen = "Their player ID";
+        info_chosen = "Player ID";
         check_neighbors(info_chosen);
     } else if (info.contents == "Good Luck" && round == 1 && (condition =="B" || condition == "C")) {
-        info_chosen = "Their total score on Round 1";
+        info_chosen = "Total score on Round 1";
         check_neighbors(info_chosen);
     } else {
         // if you have received a question
@@ -292,12 +303,15 @@ var check_neighbors = function(info_chosen) {
             neighbors.forEach(function(entry) {
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
-                    if (info_chosen == "Their player ID") { 
+                    if (info_chosen == "Player ID") { 
                         $(button_id).html(entry.property1);
-                    } else if (info_chosen == "How many times they were chosen in Round 1") {
+                        $("#question").html("Their IDs are:");
+                    } else if (info_chosen == "Times chosen in Round 1") {
                         $(button_id).html(entry.property2);
-                    } else if (info_chosen == "Their total score on Round 1") {
+                        $("#question").html("They were chosen this many times");
+                    } else if (info_chosen == "Total score on Round 1") {
                         $(button_id).html(entry.property3);
+                        $("#question").html("They answered this many questions correctly so far:");
                     }    
                     $(button_id).click(function() {
                         submit_response(entry.id, true, info_chosen);
@@ -370,18 +384,36 @@ enable_answer_buttons = function() {
 }
 
 enable_choice_buttons = function() {
-    if (condition == "A" || condition == "B") {
+
+if (Math.random() <0.5) {
+        if (condition == "A" || condition == "B") {
         $("#info-choice-a").removeClass('disabled');
         $("#info-choice-b").removeClass('disabled');
         $("#info-choice-a").show();
         $("#info-choice-b").show();
-    } else if (condition == "C") {
+            }
+        else if (condition == "C") {
+
         $("#info-choice-b").removeClass('disabled');
         $("#info-choice-c").removeClass('disabled');
         $("#info-choice-b").show();
         $("#info-choice-c").show();
     } 
-}
+        else {
+
+        if (condition == "A" || condition == "B") {
+        $("#info-choice-b").removeClass('disabled');
+        $("#info-choice-a").removeClass('disabled');
+        $("#info-choice-b").show();
+        $("#info-choice-a").show();
+    } else if (condition == "C") {
+        $("#info-choice-c").removeClass('disabled');
+        $("#info-choice-b").removeClass('disabled');
+        $("#info-choice-c").show();
+        $("#info-choice-b").show();
+    } 
+
+
 
 
 
