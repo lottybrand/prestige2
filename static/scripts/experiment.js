@@ -100,17 +100,20 @@ $(document).ready(function() {
         $("#round2divC").hide();
     })
 
-    $("#correct_check", "#correct2_check").click(function() {
+    $("#correct2_check, #correct_check").click(function() {
+        if (this.id == 'correct2_check'&&'correct_check') {
         $("#welcome_div").show();
         $("#submit_div").show();
         $("#neighbor_buttons").show();
         $("#info_choice_buttons").show();
         $("#round2divC").hide();
         $("#round2divC_check").hide();
-    })
+    }
+});
 
     $("#incorrect_check").click(function() {
         $("#question").html("Wrong answer. Please try again");
+        console.log("This is wrong");
     })
 
     disable_answer_buttons();
@@ -276,6 +279,10 @@ var process_info = function(info) {
             $("#submit-a").html(Rwer);
         }
         enable_answer_buttons();
+        setTimeout(function(){
+                get_info();
+            }, 10000);
+
     }
 };
 
@@ -385,33 +392,34 @@ enable_answer_buttons = function() {
 
 enable_choice_buttons = function() {
 
-if (Math.random() <0.5) {
-        if (condition == "A" || condition == "B") {
+if ((condition == "A" || condition == "B") && (Math.random() <0.5)) {
         $("#info-choice-a").removeClass('disabled');
         $("#info-choice-b").removeClass('disabled');
         $("#info-choice-a").show();
         $("#info-choice-b").show();
-            }
-        else if (condition == "C") {
+    }
+        else if ((condition == "C") && (Math.random() <0.5)) {
 
         $("#info-choice-b").removeClass('disabled');
         $("#info-choice-c").removeClass('disabled');
         $("#info-choice-b").show();
         $("#info-choice-c").show();
     } 
-        else {
+        else if ((condition == "A" || condition == "B") && (Math.random()>0.5)) {
 
-        if (condition == "A" || condition == "B") {
         $("#info-choice-b").removeClass('disabled');
         $("#info-choice-a").removeClass('disabled');
         $("#info-choice-b").show();
         $("#info-choice-a").show();
-    } else if (condition == "C") {
+    
+    } else if ((condition == "C") && (Math.random()>0.5)) {
         $("#info-choice-c").removeClass('disabled');
         $("#info-choice-b").removeClass('disabled');
         $("#info-choice-c").show();
         $("#info-choice-b").show();
-    } 
+    }
+}
+
 
 
 
