@@ -306,8 +306,25 @@ var process_info = function(info) {
             $("#submit-a").html(Rwer);
         }
         enable_answer_buttons();
+        countdown = 10
+        start_new_timeout()
     }
 };
+
+var start_new_timeout = function(){
+    answer_timeout = setTimeout(function(){
+        countdown=countdown-1
+        $("#countdown").html(countdown);
+        if (countdown==0){
+            $("#countdown").html("")
+            disable_answer_buttons();
+            submit_response(Wwer);
+        }else{
+            start_new_timeout()
+        }
+    }1000);
+};
+
 
 var info_choice = function() {
     $("#question").html("What information do you want to see about your neighbours?");
@@ -424,12 +441,22 @@ if((condition =="A") || (condition =="B")){
     info_choice_a = "Total Score"
 }
 
-enable_choice_buttons = function() {
-    $("#info-choice-a").removeClass('disabled');
-    $("#info-choice-b").removeClass('disabled');
-    $("#info-choice-a").html("" + info_choice_a);
-    $("#info-choice-a").show();
-    $("#info-choice-b").show();
+if (Math.random() <0.5) {
+    enable_choice_buttons = function() {
+        $("#info-choice-a").removeClass('disabled');
+        $("#info-choice-b").removeClass('disabled');
+        $("#info-choice-a").html("" + info_choice_a);
+        $("#info-choice-a").show();
+        $("#info-choice-b").show();
+    }
+}else{
+    enable_choice_buttons = function() {
+        $("#info-choice-b").removeClass('disabled');
+        $("#info-choice-a").removeClass('disabled');
+        $("#info-choice-b").show();
+        $("#info-choice-a").html("" + info_choice_a);
+        $("#info-choice-a").show();
+    }
 }
 
 
