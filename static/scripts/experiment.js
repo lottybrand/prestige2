@@ -3,8 +3,8 @@ var most_recent_question = 0;
 var player_id;
 
 var condition = "A";
-$("#round2divC").hide();
-$("#round2divC_check").hide();
+$("#round2div").hide();
+$("#round2div_check").hide();
 // Consent to the experiment.
 $(document).ready(function() {
 
@@ -89,38 +89,64 @@ $(document).ready(function() {
         check_neighbors(info_chosen);
     });
 
-    $("#info-choice-c").click(function() {
-        disable_choice_buttons();   
-        info_chosen = $("#info-choice-c").text();
-        check_neighbors(info_chosen);
+    $("#round2okay").click(function() {
+        $("#round2div_check").show();
+        $("#round2div").hide();
     });
 
-    $("#round2button").click(function() {
-        $("#round2divC_check").show();
-        $("#round2divC").hide();
-    })
-
-    $("#correct2_check, #correct_check").click(function() {
-        if (this.id == 'correct2_check'&&'correct_check') {
+if ((condition =="A"||condition=="B")){
+    $("#check_AB").click(function() {
         $("#welcome_div").show();
         $("#submit_div").show();
         $("#neighbor_buttons").show();
         $("#info_choice_buttons").show();
-        $("#round2divC").hide();
-        $("#round2divC_check").hide();
-    }
-});
+        $("#round2div").hide();
+        $("#round2div_check").hide();
+    });
+} else {
+    $("#check_AB").click(function(){
+        $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
+        setTimeout(function() {
+            $("#round2div_check").hide();
+            $("#wrong_check").hide();
+            $("#round2div").show();
+        }, 3000);
+    });
+}
 
-    $("#incorrect_check").click(function() {
-        $("#question").html("Wrong answer. Please try again");
-        console.log("This is wrong");
-    })
+if ((condition=="C")){
+    $("#check_C").click(function() {
+        $("#welcome_div").show();
+        $("#submit_div").show();
+        $("#neighbor_buttons").show();
+        $("#info_choice_buttons").show();
+        $("#round2div").hide();
+        $("#round2div_check").hide();
+    });
+} else {
+    $("#check_C").click(function(){
+        $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
+        setTimeout(function() {
+            $("#round2div_check").hide();
+            $("#wrong_check").hide();
+            $("#round2div").show();
+        }, 3000);
+    });
+}
+
 
     disable_answer_buttons();
     disable_choice_buttons();
     hide_pics();
 
 });
+
+if ((condition =="A" || condition =="B")){
+    check_info = "Their Player ID or the number of times they were chosen in Round 1"
+}else{
+    check_info = "Their total score in Round 1 or the number of times they were chosen in Round 1"
+}
+
 
 add_neighbor_buttons = function() {
     dallinger.getExperimentProperty("group_size")
@@ -260,9 +286,10 @@ var process_info = function(info) {
             $("#submit_div").hide();
             $("#neighbor_buttons").hide();
             $("#info_choice_buttons").hide();
-            $("#round2divC").show();
+            $("#round2div").show();
+            $("#r2info").html("You are now starting Round 2. You will now be given two choices each time you choose to ask someone else. You will be able to choose between seeing either" + check_info);
         } else {
-            $("#round2divC").hide();
+            $("#round2div").hide();
         }
         $("#question").html(question);
         $("#question_number").html("You are on question " + number + " of the " + topic + " topic");
@@ -279,10 +306,6 @@ var process_info = function(info) {
             $("#submit-a").html(Rwer);
         }
         enable_answer_buttons();
-        setTimeout(function(){
-                get_info();
-            }, 10000);
-
     }
 };
 
@@ -390,34 +413,17 @@ enable_answer_buttons = function() {
     $("#submit-copy").show();
 }
 
+if ((condition =="A" || condition =="B")){
+    info_choice_a = "Player ID"
+}else{
+    info_choice_a = "Total Score"
+}
+
 enable_choice_buttons = function() {
-
-if ((condition == "A" || condition == "B") && (Math.random() <0.5)) {
-        $("#info-choice-a").removeClass('disabled');
-        $("#info-choice-b").removeClass('disabled');
-        $("#info-choice-a").show();
-        $("#info-choice-b").show();
-    }
-        else if ((condition == "C") && (Math.random() <0.5)) {
-
-        $("#info-choice-b").removeClass('disabled');
-        $("#info-choice-c").removeClass('disabled');
-        $("#info-choice-b").show();
-        $("#info-choice-c").show();
-    } 
-        else if ((condition == "A" || condition == "B") && (Math.random()>0.5)) {
-
-        $("#info-choice-b").removeClass('disabled');
-        $("#info-choice-a").removeClass('disabled');
-        $("#info-choice-b").show();
-        $("#info-choice-a").show();
-    
-    } else if ((condition == "C") && (Math.random()>0.5)) {
-        $("#info-choice-c").removeClass('disabled');
-        $("#info-choice-b").removeClass('disabled');
-        $("#info-choice-c").show();
-        $("#info-choice-b").show();
-    }
+    $("#info-choice-a").removeClass('disabled');
+    $("#info-choice-b").removeClass('disabled');
+    $("#info-choice-a").show("" + info_choice_a);
+    $("#info-choice-b").show();
 }
 
 
