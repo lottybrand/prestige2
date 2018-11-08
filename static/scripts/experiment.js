@@ -311,8 +311,8 @@ var process_info = function(info) {
     }
 };
 
-var start_new_timeout = function(){
-    answer_timeout = setTimeout(function(){
+var start_new_timeout = function() {
+    answer_timeout = setTimeout(function() {
         countdown=countdown-1
         $("#countdown").html(countdown);
         if (countdown==0){
@@ -320,9 +320,9 @@ var start_new_timeout = function(){
             disable_answer_buttons();
             submit_response(Wwer);
         }else{
-            start_new_timeout()
+            start_new_timeout();
         }
-    }1000);
+    }, 1000);
 };
 
 
@@ -433,29 +433,29 @@ enable_answer_buttons = function() {
     $("#submit-a").show();
     $("#submit-b").show();
     $("#submit-copy").show();
-}
 
-if((condition =="A") || (condition =="B")){
-    info_choice_a = "Player ID"
-}else{
-    info_choice_a = "Total Score"
-}
-
-if (Math.random() <0.5) {
-    enable_choice_buttons = function() {
-        $("#info-choice-a").removeClass('disabled');
-        $("#info-choice-b").removeClass('disabled');
-        $("#info-choice-a").html("" + info_choice_a);
-        $("#info-choice-a").show();
-        $("#info-choice-b").show();
+    if ((condition == "A") || (condition == "B")) {
+        info_choice_a = "Player ID"
+    } else {
+        info_choice_a = "Total Score"
     }
-}else{
-    enable_choice_buttons = function() {
-        $("#info-choice-b").removeClass('disabled');
-        $("#info-choice-a").removeClass('disabled');
-        $("#info-choice-b").show();
-        $("#info-choice-a").html("" + info_choice_a);
-        $("#info-choice-a").show();
+
+    if (Math.random() <0.5) {
+        enable_choice_buttons = function() {
+            $("#info-choice-a").removeClass('disabled');
+            $("#info-choice-b").removeClass('disabled');
+            $("#info-choice-a").html("" + info_choice_a);
+            $("#info-choice-a").show();
+            $("#info-choice-b").show();
+        }
+    }else{
+        enable_choice_buttons = function() {
+            $("#info-choice-b").removeClass('disabled');
+            $("#info-choice-a").removeClass('disabled');
+            $("#info-choice-b").show();
+            $("#info-choice-a").html("" + info_choice_a);
+            $("#info-choice-a").show();
+        }
     }
 }
 
