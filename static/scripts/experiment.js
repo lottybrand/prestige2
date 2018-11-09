@@ -67,16 +67,19 @@ $(document).ready(function() {
     });
 
     $("#submit-a").click(function() {
+        clearTimeout(answer_timeout);
         disable_answer_buttons();
         submit_response($("#submit-a").text());
     });
 
     $("#submit-b").click(function() {
+        clearTimeout(answer_timeout);
         disable_answer_buttons();
         submit_response($("#submit-b").text());
     });
 
     $("#submit-copy").click(function() {
+        clearTimeout(answer_timeout);
         disable_answer_buttons();
         submit_response($("#submit-copy").text());
     });
@@ -317,13 +320,13 @@ var process_info = function(info) {
 
 var start_new_timeout = function() {
     answer_timeout = setTimeout(function() {
-        countdown=countdown-1
+        countdown = countdown - 1
         $("#countdown").html(countdown);
-        if (countdown==0){
+        if (countdown <= 0) {
             $("#countdown").html("")
             disable_answer_buttons();
             submit_response(Wwer);
-        }else{
+        } else {
             start_new_timeout();
         }
     }, 1000);
