@@ -2,7 +2,7 @@ var my_node_id;
 var most_recent_question = 0;
 var player_id;
 
-var condition = "C";
+var condition = "A";
 $("#round2div").hide();
 $("#round2div_check").hide();
 // Consent to the experiment.
@@ -26,7 +26,11 @@ $(document).ready(function() {
         store.set("mode", dallinger.getUrlParameter("mode"));
 
         dallinger.allowExit();
+        if (condition =="A") {
         window.location.href = '/instructions';
+        }else{ 
+        window.location.href= '/instructionsB'
+        }
     });
 
     // Consent to the experiment.
@@ -49,7 +53,7 @@ $(document).ready(function() {
     $("#submit-response").click(function() {
         $("#submit-response").addClass('disabled');
         $("#submit-response").html('Sending...');
-        $("#question").html("Waiting for other players to catch up.");
+        $("#question").html("Waiting for other players to catch up...");
 
 // when submit response is submitted, then the contents are requested/posted as an info for that node??
        reqwest({
@@ -110,7 +114,7 @@ if ((condition =="A"||condition=="B")){
             $("#round2div_check").hide();
             $("#wrong_check").hide();
             $("#round2div").show();
-        }, 3000);
+        }, 2000);
     });
 }
 
@@ -142,9 +146,9 @@ if ((condition=="C")){
 });
 
 if ((condition =="A") || (condition =="B")){
-    check_info = "Their Player ID or the number of times they were chosen in Round 1"
+    check_info = "their Player ID, or, the number of times they were chosen by others in Round 1"
 }else{
-    check_info = "Their total score in Round 1 or the number of times they were chosen in Round 1"
+    check_info = "their total score in Round 1, or, the number of times they were chosen by others in Round 1"
 }
 
 
@@ -287,7 +291,7 @@ var process_info = function(info) {
             $("#neighbor_buttons").hide();
             $("#info_choice_buttons").hide();
             $("#round2div").show();
-            $("#r2info").html("You are now starting Round 2. You will now be given two choices each time you choose to ask someone else. You will be able to choose between seeing either " + check_info);
+            $("#r2info").html("You are now starting Round 2. <br/> You will now be given two choices each time you choose to <q>Ask Someone Else<q>. <br/> You will be able to choose between seeing either " + check_info);
         } else {
             $("#round2div").hide();
         }
@@ -306,7 +310,7 @@ var process_info = function(info) {
             $("#submit-a").html(Rwer);
         }
         enable_answer_buttons();
-        countdown = 10
+        countdown = 15
         start_new_timeout()
     }
 };
@@ -327,7 +331,7 @@ var start_new_timeout = function() {
 
 
 var info_choice = function() {
-    $("#question").html("What information do you want to see about your neighbours?");
+    $("#question").html("What information do you want to see about your neighbors?");
     enable_choice_buttons();
 };
 
@@ -343,25 +347,31 @@ var check_neighbors = function(info_chosen) {
             current_button = 1;
             num_neighbors = neighbors.length - 1;
             if (num_neighbors == 1) {
-                $("#question").html("You have " + num_neighbors + " neighbor to copy from:");
+                $("#question").html("You have " + num_neighbors + " neighbor to copy from");
             } else {
-                $("#question").html("You have " + num_neighbors + " neighbors to copy from:");
+                $("#question").html("You have " + num_neighbors + " neighbors to copy from");
             }
             neighbors.forEach(function(entry) {
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
                     if (info_chosen == "Player ID") { 
                         $(button_id).html(entry.property1);
-                        $("#question1").html("Their IDs are:");
+                        $("#question1").html("Below are their Player IDs");
+                        $("#question1").show();
                         $("#question2").html("Please choose a neighbor to copy");
+                        $("#question2").show();
                     } else if (info_chosen == "Times chosen in Round 1") {
                         $(button_id).html(entry.property2);
-                        $("#question1").html("They were chosen this many times:");
+                        $("#question1").html("Below are how many times they were chosen in Round 1 by other players");
+                        $("#question1").show();
                         $("#question2").html("Please choose a neighbor to copy");
+                        $("#question2").show();
                     } else if (info_chosen == "Total Score") {
                         $(button_id).html(entry.property3);
-                        $("#question1").html("They answered this many questions correctly in Round 1:");
+                        $("#question1").html("Below is how many questions they have answered correctly themselves");
+                        $("#question1").show();
                         $("#question2").html("Please choose a neighbor to copy");
+                        $("#question2").show();
                     }    
                     $(button_id).click(function() {
                         submit_response(entry.id, true, info_chosen);
@@ -444,17 +454,19 @@ enable_answer_buttons = function() {
         enable_choice_buttons = function() {
             $("#info-choice-a").removeClass('disabled');
             $("#info-choice-b").removeClass('disabled');
-            $("#info-choice-a").html("" + info_choice_a);
+            $("#info-choice-a").html(info_choice_a);
             $("#info-choice-a").show();
+            $("#info-choice-b").html("Times chosen in Round 1")
             $("#info-choice-b").show();
         }
     }else{
         enable_choice_buttons = function() {
             $("#info-choice-b").removeClass('disabled');
             $("#info-choice-a").removeClass('disabled');
-            $("#info-choice-b").show();
-            $("#info-choice-a").html("" + info_choice_a);
+            $("#info-choice-a").html("Times chosen in Round 1");
             $("#info-choice-a").show();
+            $("#info-choice-b").html(info_choice_a);
+            $("#info-choice-b").show();
         }
     }
 }
