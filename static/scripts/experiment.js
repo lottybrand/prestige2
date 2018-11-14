@@ -98,6 +98,7 @@ $(document).ready(function() {
 
     $("#round2okay").click(function() {
         $("#round2div_check").show();
+        clearTimeout(answer_timeout);
         $("#round2div").hide();
     });
 
@@ -266,7 +267,9 @@ var process_info = function(info) {
     if (info.contents == "Bad Luck") {
         // if everyone copied you are forced to submit "bad luck"
         $("#question").html("Sorry, everyone chose to copy, so no one can score points");
-        submit_response("Bad Luck");    
+        setTimeout(function() {
+            submit_response("Bad Luck");
+        }, 3000);    
     } else if (info.contents == "Good Luck" && round == 2) {
         //if it's round 2 and people are copying, give them info choice
         info_choice();
@@ -288,12 +291,13 @@ var process_info = function(info) {
         topic = question_json.topic;
         round = question_json.round;
         pic = question_json.pic;
-        if (number ==6) {
+        if (number ==11) {
             $("#welcome_div").hide();
             $("#submit_div").hide();
             $("#neighbor_buttons").hide();
             $("#info_choice_buttons").hide();
             $("#round2div").show();
+            clearTimeout(answer_timeout);
             $("#r2info").html("You are now starting Round 2. <br/> You will now be given two choices each time you choose to <q>Ask Someone Else<q>. <br/> You will be able to choose between seeing either " + check_info);
         } else {
             $("#round2div").hide();
@@ -321,8 +325,10 @@ var process_info = function(info) {
 var start_new_timeout = function() {
     answer_timeout = setTimeout(function() {
         countdown = countdown - 1
+        $("#countdown").show();
         $("#countdown").html(countdown);
         if (countdown <= 0) {
+            $("#countdown").show();
             $("#countdown").html("")
             disable_answer_buttons();
             submit_response(Wwer);
@@ -351,8 +357,10 @@ var check_neighbors = function(info_chosen) {
             num_neighbors = neighbors.length - 1;
             if (num_neighbors == 1) {
                 $("#question").html("You have " + num_neighbors + " neighbor to copy from");
+                $("#countdown").hide();
             } else {
                 $("#question").html("You have " + num_neighbors + " neighbors to copy from");
+                $("#countdown").hide();
             }
             neighbors.forEach(function(entry) {
                 if (entry.type != "quiz_source") {
