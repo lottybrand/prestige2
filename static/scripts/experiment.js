@@ -85,12 +85,14 @@ $(document).ready(function() {
     });
 
     $("#info-choice-a").click(function() {
+        clearTimeout(answer_timeout);
         disable_choice_buttons();
         info_chosen = $("#info-choice-a").text();
         check_neighbors(info_chosen);
     });
 
     $("#info-choice-b").click(function() {
+        clearTimeout(answer_timeout);
         disable_choice_buttons();   
         info_chosen = $("#info-choice-b").text();
         check_neighbors(info_chosen);
@@ -104,6 +106,7 @@ $(document).ready(function() {
 
 if ((condition =="A"||condition=="B")){
     $("#check_AB").click(function() {
+        clearTimeout(answer_timeout);
         $("#welcome_div").show();
         $("#submit_div").show();
         $("#neighbor_buttons").show();
@@ -113,6 +116,7 @@ if ((condition =="A"||condition=="B")){
     });
 } else {
     $("#check_AB").click(function(){
+        clearTimeout(answer_timeout);
         $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
         setTimeout(function() {
             $("#round2div_check").hide();
@@ -124,6 +128,7 @@ if ((condition =="A"||condition=="B")){
 
 if ((condition=="C")){
     $("#check_C").click(function() {
+        clearTimeout(answer_timeout);
         $("#welcome_div").show();
         $("#submit_div").show();
         $("#neighbor_buttons").show();
@@ -133,6 +138,7 @@ if ((condition=="C")){
     });
 } else {
     $("#check_C").click(function(){
+        clearTimeout(answer_timeout);
         $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
         setTimeout(function() {
             $("#round2div_check").hide();
@@ -291,7 +297,7 @@ var process_info = function(info) {
         topic = question_json.topic;
         round = question_json.round;
         pic = question_json.pic;
-        if (number ==11) {
+        if (number ==26) {
             $("#welcome_div").hide();
             $("#submit_div").hide();
             $("#neighbor_buttons").hide();
@@ -340,6 +346,7 @@ var start_new_timeout = function() {
 
 
 var info_choice = function() {
+    clearTimeout(answer_timeout);
     $("#question").html("What information do you want to see about your neighbors?");
     enable_choice_buttons();
 };
@@ -356,13 +363,16 @@ var check_neighbors = function(info_chosen) {
             current_button = 1;
             num_neighbors = neighbors.length - 1;
             if (num_neighbors == 1) {
+                clearTimeout(answer_timeout);
                 $("#question").html("You have " + num_neighbors + " neighbor to copy from");
                 $("#countdown").hide();
             } else {
+                clearTimeout(answer_timeout);
                 $("#question").html("You have " + num_neighbors + " neighbors to copy from");
                 $("#countdown").hide();
             }
             neighbors.forEach(function(entry) {
+                clearTimeout(answer_timeout);
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
                     if (info_chosen == "Player ID") { 
@@ -371,18 +381,21 @@ var check_neighbors = function(info_chosen) {
                         $("#question1").show();
                         $("#question2").html("Please choose a neighbor to copy");
                         $("#question2").show();
+                        $("#countdown").hide();
                     } else if (info_chosen == "Times chosen in Round 1") {
                         $(button_id).html(entry.property2);
                         $("#question1").html("Below are how many times they were chosen in Round 1 by other players");
                         $("#question1").show();
                         $("#question2").html("Please choose a neighbor to copy");
                         $("#question2").show();
+                        $("#countdown").hide();
                     } else if (info_chosen == "Total Score") {
                         $(button_id).html(entry.property3);
                         $("#question1").html("Below is how many questions they have answered correctly themselves");
                         $("#question1").show();
                         $("#question2").html("Please choose a neighbor to copy");
                         $("#question2").show();
+                        $("#countdown").hide();
                     }    
                     $(button_id).click(function() {
                         submit_response(entry.id, true, info_chosen);
@@ -463,6 +476,7 @@ enable_answer_buttons = function() {
 
     if (Math.random() <0.5) {
         enable_choice_buttons = function() {
+            $("#countdown").hide();
             $("#info-choice-a").removeClass('disabled');
             $("#info-choice-b").removeClass('disabled');
             $("#info-choice-a").html(info_choice_a);
@@ -472,6 +486,7 @@ enable_answer_buttons = function() {
         }
     }else{
         enable_choice_buttons = function() {
+            $("#countdown").hide();
             $("#info-choice-b").removeClass('disabled');
             $("#info-choice-a").removeClass('disabled');
             $("#info-choice-a").html("Times chosen in Round 1");
