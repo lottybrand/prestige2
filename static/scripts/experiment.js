@@ -2,7 +2,7 @@ var my_node_id;
 var most_recent_question = 0;
 var player_id;
 
-var condition = "A";
+var condition = "B";
 $("#round2div").hide();
 $("#round2div_check").hide();
 // Consent to the experiment.
@@ -156,9 +156,9 @@ if ((condition=="C")){
 });
 
 if ((condition =="A") || (condition =="B")){
-    check_info = "their Player ID, or, the number of times they were chosen by others in Round 1"
+    check_info = ('their Player ID, or, the number of times they were chosen by others in Round 1')
 }else{
-    check_info = "their total score in Round 1, or, the number of times they were chosen by others in Round 1"
+    check_info = ('their total score in Round 1, or, the number of times they were chosen by others in Round 1')
 }
 
 
@@ -297,7 +297,7 @@ var process_info = function(info) {
         topic = question_json.topic;
         round = question_json.round;
         pic = question_json.pic;
-        if (number ==26) {
+        if (number ==2) {
             $("#welcome_div").hide();
             $("#submit_div").hide();
             $("#neighbor_buttons").hide();
@@ -309,7 +309,7 @@ var process_info = function(info) {
             $("#round2div").hide();
         }
         $("#question").html(question);
-        $("#question_number").html("You are on question " + number + " of the " + topic + " topic");
+        $("#question_number").html("You are in the " + topic + " topic, on question " + number + "/100");
         if (pic == true) {
             show_pics(number);
         } else {
