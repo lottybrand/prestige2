@@ -4,17 +4,17 @@ auto_recruit = true
 webdriver_type = phantomjs
 
 [MTurk]
-title = War of the Ghosts
-description = Read a brief story and answer some questions about it.
-keywords = Psychology, reading, text
-base_payment = 1.00
+title = Quiz!
+description = Answer 100 questions from different topics to win bonus money.
+keywords = Psychology, Quiz, Learning, Team
+base_payment = 5.00
 lifetime = 24
 duration = 0.1
 us_only = false
 approve_requirement = 95
 contact_email_on_error = bartlett1932@mailinator.com
-ad_group = War of the Ghosts
-organization_name = Monsters University
+ad_group = Quiz
+organization_name = University of Exeter
 browser_exclude_rule = MSIE, mobile, tablet
 
 [Database]
@@ -29,3 +29,6 @@ host = 0.0.0.0
 notification_url = None
 clock_on = false
 logfile = -
+
+[Heroku Access]
+heroku_team = dallinger

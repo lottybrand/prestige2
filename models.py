@@ -26,7 +26,7 @@ class QuizSource(Source):
                 'pic': True, 
                 }),
             json.dumps({
-                'question': 'In which city is the red dot located?',
+                'question': 'In which country is the red dot located?',
                 'number':2,
                 'round':1,
                 'topic': 'Geography',
@@ -431,7 +431,7 @@ class QuizSource(Source):
                 'pic': False,
                 }),
             json.dumps({
-                'question': 'Brussels is in:',
+                'question': 'Brussels is a city in:',
                 'number':47,
                 'round':2,
                 'topic': 'Geography',
@@ -440,7 +440,7 @@ class QuizSource(Source):
                 'pic': False,
                 }),
             json.dumps({
-                'question': 'Melbourne is in:',
+                'question': 'Melbourne is a city in:',
                 'number':48,
                 'round':2,
                 'topic': 'Geography',
