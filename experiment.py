@@ -71,6 +71,7 @@ class Bartlett1932(Experiment):
         node.property1 = name
         node.property2 = 0
         node.property3 = 0
+        node.property4 = 0
         return node
 
 
@@ -124,6 +125,8 @@ class Bartlett1932(Experiment):
         if info.property2 =="false":
             if int(info.property5) == 1:
                 node.property3 = str(int(node.property3) + int(info.property3))
+
+        node.property4 = str(int(node.property4) + int(info.property3))        
 
         if ready:
             # has anyone copied?

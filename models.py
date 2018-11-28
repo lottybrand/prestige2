@@ -17,7 +17,7 @@ class QuizSource(Source):
         import json
         questions = [
             json.dumps({
-                'question': 'In which country is the red dot located?',
+                'question': u'In which country is\0103 the red dot located?'.encode('utf-8'),
                 'number':1,
                 'round': 1,
                 'topic': 'Geography',
@@ -197,7 +197,7 @@ class QuizSource(Source):
                 'pic': False,
                 }),
             json.dumps({
-                'question': 'The word means cat in which language?',
+                'question': u'\"Pisic\x98\" means \"cat\" in which language?'.encode('utf-8'),
                 'number':21,
                 'round': 1,
                 'topic': 'Language',
@@ -665,7 +665,7 @@ class QuizSource(Source):
                 'pic': False,
                 }),
              json.dumps({
-                'question': '\"Beke\" means \"peace\" in which language?',
+                'question': u'\"B\xe9ke\" means \"peace\" in which language?'.encode('utf-8'),
                 'number':73,
                 'round': 2,
                 'topic':'Language',

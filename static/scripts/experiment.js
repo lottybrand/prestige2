@@ -297,7 +297,7 @@ var process_info = function(info) {
         topic = question_json.topic;
         round = question_json.round;
         pic = question_json.pic;
-        if (number ==2) {
+        if (number ==41) {
             $("#welcome_div").hide();
             $("#submit_div").hide();
             $("#neighbor_buttons").hide();

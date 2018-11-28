@@ -22,18 +22,9 @@
                     Please provide your age in years:
                 </div>
                 <div class="col-md-4">
-                    <select id="engagement" name="engagement">
-                        <option value="10">10 - Very engaged</option>
-                        <option value="9">9</option>
-                        <option value="8">8</option>
-                        <option value="7">7</option>
-                        <option value="6">6</option>
-                        <option value="5" SELECTED>5 - Moderately engaged</option>
-                        <option value="4">4</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                        <option value="1">1 - Not engaged</option>
-                    </select>
+                    <form> Age :<br>
+                    <input type="text" name="age"><br>
+                    </form>
                 </div>
             </div>
             <div class="row question">
@@ -41,18 +32,19 @@
                     Please provide the gender that was assigned to you at birth:
                 </div>
                 <div class="col-md-4">
-                    <select id="difficulty" name="difficulty">
-                        <option value="10">10 - Very difficult</option>
-                        <option value="9">9</option>
-                        <option value="8">8</option>
-                        <option value="7">7</option>
-                        <option value="6">6</option>
-                        <option value="5" SELECTED>5 - Moderate</option>
-                        <option value="4">4</option>
-                        <option value="3">3</option>
-                        <option value="2">2</option>
-                        <option value="1">1 - Very easy</option>
-                    </select>
+                    <form>
+                    <input type="radio" name="gender" value="male" checked> Male<br>
+                    <input type="radio" name="gender" value="female"> Female<br>
+                    <input type="radio" name="gender" value="other"> Prefer not to say
+                    </form>
+                </div>
+                <div class="col-md-8">
+                    Please provide your nationality:
+                </div>
+                <div class="col-md-4">
+                    <form> Nationality :<br>
+                    <input type="text" name="nationality"><br>
+                    </form>
                 </div>
             </div>
         </form>
