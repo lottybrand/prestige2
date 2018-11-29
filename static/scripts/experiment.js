@@ -47,7 +47,8 @@ $(document).ready(function() {
 
     // Submit the questionnaire.
     $("#submit-questionnaire").click(function() {
-        submitResponses();
+        dallinger.allowExit();
+        dallinger.goToPage('debrief');
     });
 
     $("#submit-response").click(function() {
@@ -68,18 +69,21 @@ $(document).ready(function() {
 
     $("#submit-a").click(function() {
         clearTimeout(answer_timeout);
+        $("#countdown").hide();
         disable_answer_buttons();
         submit_response($("#submit-a").text());
     });
 
     $("#submit-b").click(function() {
         clearTimeout(answer_timeout);
+        $("#countdown").hide();
         disable_answer_buttons();
         submit_response($("#submit-b").text());
     });
 
     $("#submit-copy").click(function() {
         clearTimeout(answer_timeout);
+        $("#countdown").hide();
         disable_answer_buttons();
         submit_response($("#submit-copy").text());
     });
@@ -100,6 +104,7 @@ $(document).ready(function() {
 
     $("#round2okay").click(function() {
         $("#round2div_check").show();
+        enable_R2_buttons();
         clearTimeout(answer_timeout);
         $("#round2div").hide();
     });
@@ -118,6 +123,7 @@ if ((condition =="A"||condition=="B")){
     $("#check_AB").click(function(){
         start_new_timeout();
         $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
+        disable_R2_buttons();
         setTimeout(function() {
             $("#round2div_check").hide();
             $("#wrong_check").hide();
@@ -140,6 +146,7 @@ if ((condition=="C")){
     $("#check_C").click(function(){
         clearTimeout(answer_timeout);
         $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
+        disable_R2_buttons();
         setTimeout(function() {
             $("#round2div_check").hide();
             $("#wrong_check").hide();
@@ -160,6 +167,16 @@ if ((condition =="A") || (condition =="B")){
 }else{
     check_info = 'their total score in Round 1, or, the number of times they were chosen by others in Round 1'
 }
+
+
+// if (node.property5 >= 90) {
+//     bonus_eligible = 'You will receive the $20 bonys payment!'
+// } else {
+//     bonus_eligible = 'but unfortunately you did not score enough points for the bonus payment'
+// }
+
+// $("#bonus_info").html('Well Done! You scored ' + node.property4 + 'points! ' + bonus_eligible);
+
 
 
 add_neighbor_buttons = function() {
@@ -297,16 +314,20 @@ var process_info = function(info) {
         topic = question_json.topic;
         round = question_json.round;
         pic = question_json.pic;
-        if (number ==2) {
+        if (number ==41) {
             $("#welcome_div").hide();
             $("#submit_div").hide();
             $("#neighbor_buttons").hide();
             $("#info_choice_buttons").hide();
             $("#round2div").show();
             clearTimeout(answer_timeout);
-            $("#r2info").html("You are now starting Round 2. <br> You will now be given two choices each time you choose to <q>Ask Someone Else<q>. <br> You will be able to choose between seeing either " + check_info);
+            $("#r2info").html('You are now starting Round 2. <br> You will now be given two choices each time you choose to <q>Ask Someone Else<q>. <br> You will be able to choose between seeing either ' + check_info);
         } else {
             $("#round2div").hide();
+        }
+        if (number ==5) {
+            dallinger.allowExit();
+            dallinger.goToPage('questionnaire');
         }
         $("#question").html(question);
         $("#question_number").html("You are in the " + topic + " topic, on question " + number + "/100");
@@ -324,7 +345,7 @@ var process_info = function(info) {
         }
         enable_answer_buttons();
         countdown = 15
-        if (number !=2) {
+        if (number !=41) {
         start_new_timeout();
     }
     }
@@ -381,21 +402,21 @@ var check_neighbors = function(info_chosen) {
                         $(button_id).html(entry.property1);
                         $("#question1").html("Below are their Player IDs");
                         $("#question1").show();
-                        $("#question2").html("Please choose a neighbor to copy");
+                        $("#question2").html("Please select a neighbor to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Times chosen in Round 1") {
                         $(button_id).html(entry.property2);
                         $("#question1").html("Below are how many times they were chosen in Round 1 by other players");
                         $("#question1").show();
-                        $("#question2").html("Please choose a neighbor to copy");
+                        $("#question2").html("Please select a neighbor to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Total Score") {
                         $(button_id).html(entry.property3);
                         $("#question1").html("Below is how many questions they have answered correctly themselves");
                         $("#question1").show();
-                        $("#question2").html("Please choose a neighbor to copy");
+                        $("#question2").html("Please select a neighbor to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     }    
@@ -414,6 +435,16 @@ var check_neighbors = function(info_chosen) {
         }
     });
 };
+
+disable_R2_buttons = function() {
+    $("#check_AB").addClass('disabled');
+    $("#check_C").addClass('disabled');
+}
+
+enable_R2_buttons = function() {
+    $("#check_AB").removeClass('disabled');
+    $("#check_C").removeClass('disabled');
+}
 
 disable_answer_buttons = function() {
     $("#submit-a").addClass('disabled');

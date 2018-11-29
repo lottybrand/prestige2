@@ -72,6 +72,7 @@ class Bartlett1932(Experiment):
         node.property2 = 0
         node.property3 = 0
         node.property4 = 0
+        node.property5 = 0
         return node
 
 
@@ -126,7 +127,13 @@ class Bartlett1932(Experiment):
             if int(info.property5) == 1:
                 node.property3 = str(int(node.property3) + int(info.property3))
 
-        node.property4 = str(int(node.property4) + int(info.property3))        
+        node.property4 = str(int(node.property4) + int(info.property3)) 
+
+        if (node.property4 >= 90):
+            node.property5 == True
+
+        else: node.property5 == False 
+
 
         if ready:
             # has anyone copied?
@@ -184,6 +191,16 @@ class Bartlett1932(Experiment):
 
         else:
             self.recruiter().close_recruitment()
+
+    def bonus(self, participant):
+        """Calculate a participants bonus."""
+        nodes = participant.nodes()
+
+        bonus = node.property5
+        if (bonus == True):
+            return 20
+        else:
+            return 0
 
 
 class Star(Network):
