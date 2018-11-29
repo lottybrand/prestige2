@@ -106,7 +106,7 @@ $(document).ready(function() {
 
 if ((condition =="A"||condition=="B")){
     $("#check_AB").click(function() {
-        clearTimeout(answer_timeout);
+        start_new_timeout();
         $("#welcome_div").show();
         $("#submit_div").show();
         $("#neighbor_buttons").show();
@@ -116,7 +116,7 @@ if ((condition =="A"||condition=="B")){
     });
 } else {
     $("#check_AB").click(function(){
-        clearTimeout(answer_timeout);
+        start_new_timeout();
         $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
         setTimeout(function() {
             $("#round2div_check").hide();
@@ -156,9 +156,9 @@ if ((condition=="C")){
 });
 
 if ((condition =="A") || (condition =="B")){
-    check_info = ('their Player ID, or, the number of times they were chosen by others in Round 1')
+    check_info = 'their Player ID, or, the number of times they were chosen by others in Round 1'
 }else{
-    check_info = ('their total score in Round 1, or, the number of times they were chosen by others in Round 1')
+    check_info = 'their total score in Round 1, or, the number of times they were chosen by others in Round 1'
 }
 
 
@@ -297,14 +297,14 @@ var process_info = function(info) {
         topic = question_json.topic;
         round = question_json.round;
         pic = question_json.pic;
-        if (number ==41) {
+        if (number ==2) {
             $("#welcome_div").hide();
             $("#submit_div").hide();
             $("#neighbor_buttons").hide();
             $("#info_choice_buttons").hide();
             $("#round2div").show();
             clearTimeout(answer_timeout);
-            $("#r2info").html("You are now starting Round 2. <br/> You will now be given two choices each time you choose to <q>Ask Someone Else<q>. <br/> You will be able to choose between seeing either " + check_info);
+            $("#r2info").html("You are now starting Round 2. <br> You will now be given two choices each time you choose to <q>Ask Someone Else<q>. <br> You will be able to choose between seeing either " + check_info);
         } else {
             $("#round2div").hide();
         }
@@ -324,7 +324,9 @@ var process_info = function(info) {
         }
         enable_answer_buttons();
         countdown = 15
-        start_new_timeout()
+        if (number !=2) {
+        start_new_timeout();
+    }
     }
 };
 

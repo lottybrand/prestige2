@@ -9,13 +9,13 @@ description = Answer 100 questions from different topics to win bonus money.
 keywords = Psychology, Quiz, Learning, Team
 base_payment = 5.00
 lifetime = 24
-duration = 0.1
+duration = 1
 us_only = false
 approve_requirement = 95
-contact_email_on_error = bartlett1932@mailinator.com
+contact_email_on_error = culturalevolution@exeter.ac.uk
 ad_group = Quiz
 organization_name = University of Exeter
-browser_exclude_rule = MSIE, mobile, tablet
+browser_exclude_rule = MSIE, mobile,
 
 [Database]
 database_url = postgresql://postgres@localhost/dallinger
