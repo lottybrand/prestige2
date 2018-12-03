@@ -129,11 +129,11 @@ class Bartlett1932(Experiment):
 
         node.property4 = str(int(node.property4) + int(info.property3)) 
 
-        if (node.property4 >= 90):
-            node.property5 == True
-
-        else: node.property5 == False 
-
+        bonus_score = int(node.property4)
+        if (bonus_score >= 90):
+            node.property5 = True
+        else: 
+            node.property5 = False 
 
         if ready:
             # has anyone copied?

@@ -46,7 +46,7 @@ $(document).ready(function() {
     });
 
     // Submit the questionnaire.
-    $("#submit-questionnaire").click(function() {
+    $("#to_debrief").click(function() {
         dallinger.allowExit();
         dallinger.goToPage('debrief');
     });
@@ -175,7 +175,7 @@ if ((condition =="A") || (condition =="B")){
 //     bonus_eligible = 'but unfortunately you did not score enough points for the bonus payment'
 // }
 
-// $("#bonus_info").html('Well Done! You scored ' + node.property4 + 'points! ' + bonus_eligible);
+//$("#bonus_info").html('Well Done! You scored ' + node.property4 + 'points! ' + bonus_eligible);
 
 
 
@@ -325,7 +325,7 @@ var process_info = function(info) {
         } else {
             $("#round2div").hide();
         }
-        if (number ==5) {
+        if (number ==3) {
             dallinger.allowExit();
             dallinger.goToPage('questionnaire');
         }
