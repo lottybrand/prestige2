@@ -195,6 +195,7 @@ class Bartlett1932(Experiment):
     def bonus(self, participant):
         """Calculate a participants bonus."""
         nodes = participant.nodes()
+        node = nodes[0]
 
         bonus = node.property5
         if (bonus == True):
