@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block body %}
+	<div id="container-not-an-ad">
+		<div id="ad">
+			<div class="row">
+				<div class="col-xs-2">
+					<img id="adlogo" src="/static/images/logo.png" alt="Lab Logo" />
+				</div>
+				<div class="col-xs-10">
+					<h1>Returning to HIT window.</h1>
+					<p>Thank you for taking part in our experiment, we appreciate your time. Our experiment was investigating who people choose to copy from when they are unsure of an answer themselves. We were interested in knowing whether people copy the most successful people, or if that information is no available to them, do they copy those who others have copied previously.
+			    	The quiz questions were intentionally extremely hard, to encourage people to "ask someone else". Please do not feel disheartened if you did not get a high enough score for the bonus, we anticipated this to be extremely rare due to the difficulty of the task.
+			    	If you have any further questions or concerns, please contact culturalevolution@exeter.ac.uk
+			    	You are being redirected back to the HIT window, which should refresh.
+					If you do not see the HIT submission form when you return, try refreshing
+					the page.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script>
+		window.opener.location.reload(true);
+		window.close();
+	</script>
+{% endblock %}
