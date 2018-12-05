@@ -122,12 +122,15 @@ class Bartlett1932(Experiment):
             new_info.property2 = info.property2
             new_info.property3 = copied_info.property3
             new_info.property4 = info.property4
+            node.property4 = str(int(node.property4) + int(new_info.property3))
 
+        #figuring out asocial score
         if info.property2 =="false":
             if int(info.property5) == 1:
                 node.property3 = str(int(node.property3) + int(info.property3))
 
-        node.property4 = str(int(node.property4) + int(info.property3)) 
+        #total score (including social)
+            node.property4 = str(int(node.property4) + int(info.property3)) 
 
         bonus_score = int(node.property4)
         if (bonus_score >= 90):
