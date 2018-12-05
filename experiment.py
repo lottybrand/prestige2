@@ -150,6 +150,11 @@ class Bartlett1932(Experiment):
         else: 
             node.property5 = False 
 
+        # add node properties 4 and 5 to ppt object
+        ppt = node.participant
+        ppt.property1 = node.property4
+        ppt.property2 = node.property5
+
         if ready:
             # if no one has copied
             if not "Ask Someone Else" in answers:
