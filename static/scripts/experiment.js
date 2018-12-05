@@ -168,17 +168,6 @@ if ((condition =="A") || (condition =="B")){
     check_info = 'their total score in Round 1, or, the number of times they were chosen by others in Round 1'
 }
 
-
-// if (node.property5 >= 90) {
-//     bonus_eligible = 'You will receive the $20 bonys payment!'
-// } else {
-//     bonus_eligible = 'but unfortunately you did not score enough points for the bonus payment'
-// }
-
-//$("#bonus_info").html('Well Done! You scored ' + node.property4 + 'points! ' + bonus_eligible);
-
-
-
 add_neighbor_buttons = function() {
     dallinger.getExperimentProperty("group_size")
     .done(function (resp) {
@@ -289,7 +278,7 @@ var get_info = function(info_id) {
 var process_info = function(info) {
     if (info.contents == "Bad Luck") {
         // if everyone copied you are forced to submit "bad luck"
-        $("#question").html("Sorry, everyone chose to copy, so no one can score points");
+        $("#question").html("Sorry, everyone chose to copy, so no one can score points on this question");
         setTimeout(function() {
             submit_response("Bad Luck");
         }, 3000);    
@@ -325,7 +314,7 @@ var process_info = function(info) {
         } else {
             $("#round2div").hide();
         }
-        if (number ==3) {
+        if (number ==101) {
             dallinger.allowExit();
             dallinger.goToPage('questionnaire');
         }

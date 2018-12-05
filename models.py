@@ -800,7 +800,7 @@ class QuizSource(Source):
                 'pic': True,
                 }),
             json.dumps({
-                'question': 'The above is an image of a painting by which artist?',
+                'question': 'The above is an image associated with which artist?',
                 'number':88,
                 'round':2,
                 'topic': 'Art',
