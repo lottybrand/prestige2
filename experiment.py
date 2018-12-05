@@ -104,6 +104,7 @@ class Bartlett1932(Experiment):
         # are we ready to receive next transmission?
         ready = False
         if len(infos) == self.group_size:
+            from operator import attrgetter
             if info == max(infos, key=attrgetter("creation_time")):
                 ready = True
 
