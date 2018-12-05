@@ -92,13 +92,20 @@ class Bartlett1932(Experiment):
         # have all the other nodes answered this question
         # other nodes are defined as nodes in the network that are not current node, and are not the source. 
         other_nodes = [n for n in node.network.nodes() if n != node and not isinstance(n, Source)]
-        # we're ready to receive next transmission:
-        ready = True
-        # unless: 
+
+        # get a list of everyones submitted info and answer
+        infos = [info]
         for n in other_nodes:
-            # if the question number is not in the corresponding property1 column for the last received info(? not sure what n.infos() does exactly here.
-            if question_number not in [i.property1 for i in n.infos()]:
-                ready = False
+            #for all other nodes, do something with n.infos if we're on the latest question number.
+            infos.extend([i for i in n.infos() if i.property1 == question_number])
+            #answers are in the contents column in the database for that latest info
+            answers = [i.contents for i in infos]
+
+        # are we ready to receive next transmission?
+        ready = False
+        if len(infos) == self.group_size:
+            if info == max(infos, key=attrgetter("creation_time")):
+                ready = True
 
         # if property 2 is true this means this is a copying decision
         if info.property2 == "true":
@@ -135,6 +142,7 @@ class Bartlett1932(Experiment):
             # regardless of round, update node.property4 which is the total score across all rounds.
             node.property4 = str(int(node.property4) + int(info.property3)) 
 
+        # update property5 to reflect whether or not the ppt has earned the bonus
         bonus_score = int(node.property4)
         if (bonus_score >= 90):
             node.property5 = True
@@ -142,14 +150,6 @@ class Bartlett1932(Experiment):
             node.property5 = False 
 
         if ready:
-            # has anyone copied?
-            infos = [info]
-            for n in other_nodes:
-                #for all other nodes, do something with n.infos if we're on the latest question number.
-                infos.extend([i for i in n.infos() if i.property1 == question_number])
-                #answers are in the contents column in the database for that latest info
-                answers = [i.contents for i in infos]
-
             # if no one has copied
             if not "Ask Someone Else" in answers:
                 # if everone has made a decision
