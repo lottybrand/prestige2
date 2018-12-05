@@ -122,14 +122,17 @@ class Bartlett1932(Experiment):
             new_info.property2 = info.property2
             new_info.property3 = copied_info.property3
             new_info.property4 = info.property4
+            # update the nodes score according to the score of the new_info
             node.property4 = str(int(node.property4) + int(new_info.property3))
 
-        #figuring out asocial score
+        # if its not a copying decision
         if info.property2 =="false":
+            # if its round 1
             if int(info.property5) == 1:
+                # update node property3 which is the asocial score in round 1
                 node.property3 = str(int(node.property3) + int(info.property3))
 
-        #total score (including social)
+            # regardless of round, update node.property4 which is the total score across all rounds.
             node.property4 = str(int(node.property4) + int(info.property3)) 
 
         bonus_score = int(node.property4)
