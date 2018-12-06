@@ -105,7 +105,7 @@ class Bartlett1932(Experiment):
         ready = False
         if len(infos) == self.group_size:
             from operator import attrgetter
-            if info == max(infos, key=attrgetter("creation_time")):
+            if info == max(infos, key=attrgetter("id")):
                 ready = True
 
         # if property 2 is true this means this is a copying decision
