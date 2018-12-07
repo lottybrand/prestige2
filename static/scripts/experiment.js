@@ -298,18 +298,18 @@ var process_info = function(info) {
         topic = question_json.topic;
         round = question_json.round;
         pic = question_json.pic;
-        if (number ==41) {
+        if (number ==2) {
             $("#welcome_div").hide();
             $("#submit_div").hide();
             $("#neighbor_buttons").hide();
             $("#info_choice_buttons").hide();
             $("#round2div").show();
             clearTimeout(answer_timeout);
-            $("#r2info").html('You are now starting Round 2. <br> You will now be given two choices each time you choose to <q>Ask Someone Else<q>. <br> You will be able to choose between seeing either ' + check_info);
+            $("#r2info").html('You are now starting Round 2.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either ' + check_info);
         } else {
             $("#round2div").hide();
         }
-        if (number ==101) {
+        if (number ==3) {
             dallinger.allowExit();
             dallinger.goToPage('questionnaire');
         }
@@ -329,7 +329,7 @@ var process_info = function(info) {
         }
         enable_answer_buttons();
         countdown = 15
-        if (number !=41) {
+        if (number !=2) {
         start_new_timeout();
     }
     }
@@ -383,21 +383,21 @@ var check_neighbors = function(info_chosen) {
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
                     if (info_chosen == "Player ID") { 
-                        $(button_id).html("<img src='stick.png'><br>" + entry.property1);
+                        $(button_id).html("<img src='/static/images/stick.png'><br>" + entry.property1);
                         $("#question1").html("Below are their Player IDs");
                         $("#question1").show();
                         $("#question2").html("Please select a player to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Times chosen in Round 1") {
-                        $(button_id).html(entry.property2);
+                        $(button_id).html("<img src='/static/images/stick.png'><br>" + entry.property2);
                         $("#question1").html("Below are how many times they were chosen in Round 1 by other players");
                         $("#question1").show();
                         $("#question2").html("Please select a player to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Total Score") {
-                        $(button_id).html(entry.property3);
+                        $(button_id).html("<img src='/static/images/stick.png'><br>" + entry.property3);
                         $("#question1").html("Below is how many questions they have answered correctly themselves");
                         $("#question1").show();
                         $("#question2").html("Please select a player to copy");
@@ -409,7 +409,6 @@ var check_neighbors = function(info_chosen) {
                         disable_neighbor_buttons();
                         $("#question1").hide();
                         $("#question2").hide();
-                        $("#sticks").hide();
                     });
                     $(button_id).prop("disabled",false);
                     $(button_id).show();

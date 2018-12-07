@@ -25,7 +25,7 @@ class Bartlett1932(Experiment):
 
         Finally, setup() is called.
         """
-        self.group_size = 3
+        self.group_size = 2
         super(Bartlett1932, self).__init__(session)
         import models
         self.models = models
@@ -61,7 +61,8 @@ class Bartlett1932(Experiment):
     def create_node(self, participant, network):
         """Create a node for a participant."""
         node = Node(network=network, participant=participant)
-        name = random.randint(100,999)
+        import random
+        name = random.randint(100, 999)
         #name is then assigned to node's property1 in the database
         node.property1 = name
         node.property2 = 0
