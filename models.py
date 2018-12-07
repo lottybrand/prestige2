@@ -197,7 +197,7 @@ class QuizSource(Source):
                 'pic': False,
                 }),
             json.dumps({
-                'question': u'\"Pisic\xe3\" means \"cat\" in which language?'.encode('utf-8'),
+                'question': '\"Cal\" means \"horse\" in which language?',
                 'number':21,
                 'round': 1,
                 'topic': 'Language',

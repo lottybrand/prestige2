@@ -45,11 +45,6 @@ $(document).ready(function() {
         window.location.href = '/exp';
     });
 
-    // Submit the questionnaire.
-    $("#to_debrief").click(function() {
-        dallinger.allowExit();
-        dallinger.goToPage('debrief');
-    });
 
     $("#submit-response").click(function() {
         $("#submit-response").addClass('disabled');
@@ -278,7 +273,7 @@ var get_info = function(info_id) {
 var process_info = function(info) {
     if (info.contents == "Bad Luck") {
         // if everyone copied you are forced to submit "bad luck"
-        $("#question").html("Sorry, everyone chose to copy, so no one can score points on this question");
+        $("#question").html("Sorry, everyone chose to Ask Someone Else, so no one can score points for this question");
         setTimeout(function() {
             submit_response("Bad Luck");
         }, 3000);    
@@ -359,7 +354,7 @@ var start_new_timeout = function() {
 
 var info_choice = function() {
     clearTimeout(answer_timeout);
-    $("#question").html("What information do you want to see about your neighbors?");
+    $("#question").html("What information do you want to see about the other players?");
     enable_choice_buttons();
 };
 
@@ -376,11 +371,11 @@ var check_neighbors = function(info_chosen) {
             num_neighbors = neighbors.length - 1;
             if (num_neighbors == 1) {
                 clearTimeout(answer_timeout);
-                $("#question").html("You have " + num_neighbors + " neighbor to copy from");
+                $("#question").html("You have " + num_neighbors + " player to copy from");
                 $("#countdown").hide();
             } else {
                 clearTimeout(answer_timeout);
-                $("#question").html("You have " + num_neighbors + " neighbors to copy from");
+                $("#question").html("You have " + num_neighbors + " players to copy from");
                 $("#countdown").hide();
             }
             neighbors.forEach(function(entry) {
@@ -391,21 +386,21 @@ var check_neighbors = function(info_chosen) {
                         $(button_id).html(entry.property1);
                         $("#question1").html("Below are their Player IDs");
                         $("#question1").show();
-                        $("#question2").html("Please select a neighbor to copy");
+                        $("#question2").html("Please select a player to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Times chosen in Round 1") {
                         $(button_id).html(entry.property2);
                         $("#question1").html("Below are how many times they were chosen in Round 1 by other players");
                         $("#question1").show();
-                        $("#question2").html("Please select a neighbor to copy");
+                        $("#question2").html("Please select a player to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Total Score") {
                         $(button_id).html(entry.property3);
                         $("#question1").html("Below is how many questions they have answered correctly themselves");
                         $("#question1").show();
-                        $("#question2").html("Please select a neighbor to copy");
+                        $("#question2").html("Please select a player to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     }    
@@ -414,6 +409,7 @@ var check_neighbors = function(info_chosen) {
                         disable_neighbor_buttons();
                         $("#question1").hide();
                         $("#question2").hide();
+                        $("#sticks").hide();
                     });
                     $(button_id).prop("disabled",false);
                     $(button_id).show();
