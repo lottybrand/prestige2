@@ -7,12 +7,13 @@ $(document).ready(function() {
 		score = resp.participant.property1;
 		bonus = resp.participant.property2;
 		$("#score_info").html(score);
+		if (bonus == "true") {
+     	bonus_eligible = 'and will receive the $20 bonus payment!'
+ 		} else {
+     	bonus_eligible = 'but unfortunately you did not score enough points for the bonus payment'
+ 		}
+ 		$("#bonus_info").html(bonus_eligible);
 	})
 });
 
-if (bonus == "true") {
-     bonus_eligible = 'and will receive the $20 bonus payment!'
- 	} else {
-     bonus_eligible = 'but unfortunately you did not score enough points for the bonus payment'
- 	}
-$("#bonus_info").html(bonus_eligible);
+

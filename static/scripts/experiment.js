@@ -383,7 +383,7 @@ var check_neighbors = function(info_chosen) {
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
                     if (info_chosen == "Player ID") { 
-                        $(button_id).html(entry.property1);
+                        $(button_id).html("<img src='stick.png'><br>" + entry.property1);
                         $("#question1").html("Below are their Player IDs");
                         $("#question1").show();
                         $("#question2").html("Please select a player to copy");

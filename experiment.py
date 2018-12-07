@@ -61,12 +61,7 @@ class Bartlett1932(Experiment):
     def create_node(self, participant, network):
         """Create a node for a participant."""
         node = Node(network=network, participant=participant)
-        # letter is that node's network ID -1 of this string. so a node in network ID 1 would have the zero'th letter of this string; A. 
-        letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[node.network_id - 1]
-        # number is the length of the network nodes - 1, so if there are 4 nodes, number is 3 (what is failed doing?)
-        number = len(network.nodes(failed="all")) - 1
-        # name is the letter plus the number (turned into a string)
-        name = letter + str(number)
+        name = random.randint(100,999)
         #name is then assigned to node's property1 in the database
         node.property1 = name
         node.property2 = 0
