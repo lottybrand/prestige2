@@ -17,6 +17,33 @@ class QuizSource(Source):
         import json
         questions = [
             json.dumps({
+                'question': 'How many letters are in the alphabet?',
+                'number':'practice1',
+                'round': 6,
+                'topic': 'Practice',
+                'Wwer': '32',
+                'Rwer': '26',
+                'pic': False, 
+                }),
+            json.dumps({
+                'question': 'How many letters are in the alphabet?',
+                'number':'practice2',
+                'round': 6,
+                'topic': 'Practice',
+                'Wwer': '32',
+                'Rwer': '26',
+                'pic': False, 
+                }),
+            json.dumps({
+                'question': 'How many letters are in the alphabet?',
+                'number':'practice3',
+                'round': 6,
+                'topic': 'Practice',
+                'Wwer': '32',
+                'Rwer': '26',
+                'pic': False, 
+                }),
+            json.dumps({
                 'question': 'In which country is the red dot located?',
                 'number':1,
                 'round': 1,
@@ -28,7 +55,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'In which country is the red dot located?',
                 'number':2,
-                'round':1,
+                'round':2,
                 'topic': 'Geography',
                 'Wwer': 'Nigeria',
                 'Rwer': 'The Ivory Coast',
@@ -37,7 +64,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'The capital of Hawaii is',
                 'number':3,
-                'round':1,
+                'round':2,
                 'topic': 'Geography',
                 'Wwer': 'Waikiki',
                 'Rwer': 'Honolulu',

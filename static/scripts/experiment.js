@@ -3,6 +3,7 @@ var most_recent_question = 0;
 var player_id;
 
 var condition = "B";
+$("#practice").hide();
 $("#round2div").hide();
 $("#round2div_check").hide();
 // Consent to the experiment.
@@ -104,6 +105,17 @@ $(document).ready(function() {
         $("#round2div").hide();
     });
 
+    $("#practiceButton").click(function(){
+        start_new_timeout();
+        $("#welcome_div").show();
+        $("#submit_div").show();
+        $("#neighbor_buttons").show();
+        $("#info_choice_buttons").show();
+        $("#round2div").hide();
+        $("#round2div_check").hide();
+        $("#practice").hide();
+    });
+
 if ((condition =="A"||condition=="B")){
     $("#check_AB").click(function() {
         start_new_timeout();
@@ -158,9 +170,9 @@ if ((condition=="C")){
 });
 
 if ((condition =="A") || (condition =="B")){
-    check_info = 'their Player ID, or, the number of times they were chosen by others in Round 1'
+    check_info = 'their Player ID, or, the number of times they were chosen by others in Round 1.'
 }else{
-    check_info = 'their total score in Round 1, or, the number of times they were chosen by others in Round 1'
+    check_info = 'their total score in Round 1, or, the number of times they were chosen by others in Round 1.'
 }
 
 add_neighbor_buttons = function() {
@@ -181,7 +193,7 @@ add_neighbor_buttons = function() {
         for (i = 1; i <= group_size-1; i++) {
             button_string = "#neighbor_button_" + i;
             $(button_string).css({
-                "margin-right": "12px"
+                "margin-right": "14px"
             });
         }
         disable_neighbor_buttons();
@@ -298,7 +310,19 @@ var process_info = function(info) {
         topic = question_json.topic;
         round = question_json.round;
         pic = question_json.pic;
-        if (number ==2) {
+        if (number ==1) {
+            $("#welcome_div").hide();
+            $("#submit_div").hide();
+            $("#neighbor_buttons").hide();
+            $("#info_choice_buttons").hide();
+            $("#round2div").hide();
+            $("#practice").show();
+            clearTimeout(answer_timeout);
+            $("#practiceInfo").html('The first three questions were practice questions. You are now starting the quiz for real');
+        } else {
+            $("#practice").hide();
+        }
+        if (number ==20) {
             $("#welcome_div").hide();
             $("#submit_div").hide();
             $("#neighbor_buttons").hide();
@@ -309,7 +333,7 @@ var process_info = function(info) {
         } else {
             $("#round2div").hide();
         }
-        if (number ==3) {
+        if (number ==25) {
             dallinger.allowExit();
             dallinger.goToPage('questionnaire');
         }
@@ -383,21 +407,21 @@ var check_neighbors = function(info_chosen) {
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
                     if (info_chosen == "Player ID") { 
-                        $(button_id).html("<img src='/static/images/stick.png'><br>" + entry.property1);
+                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "player ID:" + entry.property1);
                         $("#question1").html("Below are their Player IDs");
                         $("#question1").show();
                         $("#question2").html("Please select a player to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Times chosen in Round 1") {
-                        $(button_id).html("<img src='/static/images/stick.png'><br>" + entry.property2);
+                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "chosen " + entry.property2 + "times");
                         $("#question1").html("Below are how many times they were chosen in Round 1 by other players");
                         $("#question1").show();
                         $("#question2").html("Please select a player to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Total Score") {
-                        $(button_id).html("<img src='/static/images/stick.png'><br>" + entry.property3);
+                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + entry.property3 + "correct");
                         $("#question1").html("Below is how many questions they have answered correctly themselves");
                         $("#question1").show();
                         $("#question2").html("Please select a player to copy");
