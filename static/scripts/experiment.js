@@ -180,7 +180,7 @@ add_neighbor_buttons = function() {
     .done(function (resp) {
         group_size = resp.group_size;
         start = '<button id="neighbor_button_';
-        stop = '" type="button" class="btn btn-primary"></button>';
+        stop = '" type="button" class="btn btn-success"></button>';
         button_string = '';
         for (i = 1; i <= group_size-1; i++) {
             button_string = button_string.concat(start);
@@ -289,14 +289,14 @@ var process_info = function(info) {
         setTimeout(function() {
             submit_response("Bad Luck");
         }, 3000);    
-    } else if (info.contents == "Good Luck" && round == 2) {
+    } else if (info.contents == "Good Luck" && round == 2|0) {
         //if it's round 2 and people are copying, give them info choice
         info_choice();
-    } else if (info.contents == "Good Luck" && round == 1 && condition == "A") {
+    } else if (info.contents == "Good Luck" && round == 1|0 && condition == "A") {
         // if it's round 1 and people copy, check neighbors
         info_chosen = "Player ID";
         check_neighbors(info_chosen);
-    } else if (info.contents == "Good Luck" && round == 1 && (condition =="B" || condition == "C")) {
+    } else if (info.contents == "Good Luck" && round == 1|0 && (condition =="B" || condition == "C")) {
         info_chosen = "Total Score";
         check_neighbors(info_chosen);
     } else {
@@ -407,21 +407,21 @@ var check_neighbors = function(info_chosen) {
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
                     if (info_chosen == "Player ID") { 
-                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "player ID:" + entry.property1);
+                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "player ID: " + entry.property1);
                         $("#question1").html("Below are their Player IDs");
                         $("#question1").show();
                         $("#question2").html("Please select a player to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Times chosen in Round 1") {
-                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "chosen " + entry.property2 + "times");
+                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "chosen " + entry.property2 + " times");
                         $("#question1").html("Below are how many times they were chosen in Round 1 by other players");
                         $("#question1").show();
                         $("#question2").html("Please select a player to copy");
                         $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Total Score") {
-                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + entry.property3 + "correct");
+                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + entry.property3 + " correct");
                         $("#question1").html("Below is how many questions they have answered correctly themselves");
                         $("#question1").show();
                         $("#question2").html("Please select a player to copy");

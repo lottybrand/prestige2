@@ -19,7 +19,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'How many letters are in the alphabet?',
                 'number':'practice1',
-                'round': 6,
+                'round': 0,
                 'topic': 'Practice',
                 'Wwer': '32',
                 'Rwer': '26',
@@ -28,7 +28,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'How many letters are in the alphabet?',
                 'number':'practice2',
-                'round': 6,
+                'round': 0,
                 'topic': 'Practice',
                 'Wwer': '32',
                 'Rwer': '26',
@@ -37,7 +37,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'How many letters are in the alphabet?',
                 'number':'practice3',
-                'round': 6,
+                'round': 0,
                 'topic': 'Practice',
                 'Wwer': '32',
                 'Rwer': '26',
