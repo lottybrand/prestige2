@@ -317,7 +317,6 @@ var process_info = function(info) {
             $("#info_choice_buttons").hide();
             $("#round2div").hide();
             $("#practice").show();
-            clearTimeout(answer_timeout);
             $("#practiceInfo").html('The first three questions were practice questions. You are now starting the quiz for real');
         } else {
             $("#practice").hide();
@@ -328,7 +327,6 @@ var process_info = function(info) {
             $("#neighbor_buttons").hide();
             $("#info_choice_buttons").hide();
             $("#round2div").show();
-            clearTimeout(answer_timeout);
             $("#r2info").html('You are now starting Round 2.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either ' + check_info);
         } else {
             $("#round2div").hide();
@@ -353,9 +351,9 @@ var process_info = function(info) {
         }
         enable_answer_buttons();
         countdown = 15
-        if (number !=2) {
-        start_new_timeout();
-    }
+        if (number !=1 && number!=20) {
+            start_new_timeout();
+        }
     }
 };
 
