@@ -127,7 +127,8 @@ class Bartlett1932(Experiment):
             new_info.property3 = copied_info.property3
             new_info.property4 = info.property4
             # update the nodes score according to the score of the new_info
-            node.property4 = str(int(node.property4) + int(new_info.property3))
+            if int(info.property5) !=0:
+                node.property4 = str(int(node.property4) + int(new_info.property3))
 
         # if its not a copying decision
         if info.property2 =="false":

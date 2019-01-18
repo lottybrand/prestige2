@@ -289,7 +289,7 @@ var process_info = function(info) {
         setTimeout(function() {
             submit_response("Bad Luck");
         }, 3000);    
-    } else if (info.contents == "Good Luck" && (round == 2) {
+    } else if (info.contents == "Good Luck" && round == 2) {
         //if it's round 2 and people are copying, give them info choice
         info_choice();
     } else if (info.contents == "Good Luck" && (round == 1 || round == 0) && condition == "A") {
