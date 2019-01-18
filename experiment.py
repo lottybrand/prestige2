@@ -137,7 +137,8 @@ class Bartlett1932(Experiment):
                 node.property3 = str(int(node.property3) + int(info.property3))
 
             # regardless of round, update node.property4 which is the total score across all rounds.
-            node.property4 = str(int(node.property4) + int(info.property3)) 
+            if int(info.property5) !=0:
+                node.property4 = str(int(node.property4) + int(info.property3)) 
 
         # update property5 to reflect whether or not the ppt has earned the bonus
         bonus_score = int(node.property4)

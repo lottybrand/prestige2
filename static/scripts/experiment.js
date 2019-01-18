@@ -289,14 +289,14 @@ var process_info = function(info) {
         setTimeout(function() {
             submit_response("Bad Luck");
         }, 3000);    
-    } else if (info.contents == "Good Luck" && (round == 2 || round == 0)) {
+    } else if (info.contents == "Good Luck" && (round == 2) {
         //if it's round 2 and people are copying, give them info choice
         info_choice();
-    } else if (info.contents == "Good Luck" && round == 1|0 && condition == "A") {
+    } else if (info.contents == "Good Luck" && (round == 1 || round == 0) && condition == "A") {
         // if it's round 1 and people copy, check neighbors
         info_chosen = "Player ID";
         check_neighbors(info_chosen);
-    } else if (info.contents == "Good Luck" && round == 1|0 && (condition =="B" || condition == "C")) {
+    } else if (info.contents == "Good Luck" && (round == 1 || round == 0) && (condition =="B" || condition == "C")) {
         info_chosen = "Total Score";
         check_neighbors(info_chosen);
     } else {
