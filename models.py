@@ -18,7 +18,7 @@ class QuizSource(Source):
         questions = [
             json.dumps({
                 'question': 'How many letters are in the alphabet?',
-                'number':'Practice 1',
+                'number':'practice1',
                 'round': 0,
                 'topic': 'Practice',
                 'Wwer': '32',
@@ -27,7 +27,7 @@ class QuizSource(Source):
                 }),
             json.dumps({
                 'question': 'How many letters are in the alphabet?',
-                'number':'Practice 2',
+                'number':'practice2',
                 'round': 0,
                 'topic': 'Practice',
                 'Wwer': '32',
