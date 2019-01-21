@@ -317,7 +317,7 @@ var process_info = function(info) {
             $("#info_choice_buttons").hide();
             $("#round2div").hide();
             $("#practice").show();
-            $("#practiceInfo").html('The first three questions were practice questions. You are now starting the quiz for real');
+            $("#practiceInfo").html('The first three questions were practice questions. You are now starting the real quiz and your score will be counted');
         } else {
             $("#practice").hide();
         }
@@ -331,7 +331,7 @@ var process_info = function(info) {
         } else {
             $("#round2div").hide();
         }
-        if (number ==25) {
+        if (number ==30) {
             dallinger.allowExit();
             dallinger.goToPage('questionnaire');
         }
