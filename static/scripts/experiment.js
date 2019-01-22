@@ -336,7 +336,11 @@ var process_info = function(info) {
             dallinger.goToPage('questionnaire');
         }
         $("#question").html(question);
-        $("#question_number").html("You are in the " + topic + " topic, on question " + number + "/100");
+        if (round != 0) {
+            $("#question_number").html("You are in the " + topic + " topic, on question " + number + "/100");
+        } else {
+            $("#question_number").html("You are in the " + topic + " Round, on question " + number + "/3");
+        }
         if (pic == true) {
             show_pics(number);
         } else {

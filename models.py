@@ -18,7 +18,7 @@ class QuizSource(Source):
         questions = [
             json.dumps({
                 'question': 'How many letters are in the alphabet?',
-                'number':'practice1',
+                'number':'practice 1',
                 'round': 0,
                 'topic': 'Practice',
                 'Wwer': '32',
@@ -27,7 +27,7 @@ class QuizSource(Source):
                 }),
             json.dumps({
                 'question': 'What is the capital of France?',
-                'number':'practice2',
+                'number':'practice 2',
                 'round': 0,
                 'topic': 'Practice',
                 'Wwer': 'Paris',
@@ -36,7 +36,7 @@ class QuizSource(Source):
                 }),
             json.dumps({
                 'question': 'How many days does February have?',
-                'number':'practice3',
+                'number':'practice 3',
                 'round': 0,
                 'topic': 'Practice',
                 'Wwer': '30',
