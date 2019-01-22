@@ -91,7 +91,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'The capital of the Philippines is?',
                 'number':6,
-                'round':1,
+                'round':2,
                 'topic':'Georgraphy',
                 'Wwer': 'Davao',
                 'Rwer': 'Manila',
@@ -100,7 +100,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Which is closest to Finland?',
                 'number':7,
-                'round':1,
+                'round':2,
                 'topic':'Georgraphy',
                 'Wwer': 'Moscow',
                 'Rwer': 'St Petersburg',
@@ -109,7 +109,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Which is the largest of The Canary Islands?',
                 'number':8,
-                'round':1,
+                'round':2,
                 'topic':'Georgraphy',
                 'Wwer': 'Gran Canaria',
                 'Rwer': 'Tenerife',
@@ -118,7 +118,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Oklahoma state shares a border with?',
                 'number':9,
-                'round':1,
+                'round':2,
                 'topic':'Georgraphy',
                 'Wwer': 'Arizona',
                 'Rwer': 'New Mexico',
@@ -127,7 +127,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Amsterdam is nearer to?',
                 'number':10,
-                'round':1,
+                'round':2,
                 'topic':'Georgraphy',
                 'Wwer': 'Antwerp',
                 'Rwer': 'Rotterdam',
@@ -217,7 +217,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Which weighs more?',
                 'number':20,
-                'round': 2,
+                'round': 1,
                 'topic': 'Weight',
                 'Wwer': 'The London Eye',
                 'Rwer': 'The Eiffel Tower',
@@ -226,7 +226,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': '\"Cal\" means \"horse\" in which language?',
                 'number':21,
-                'round': 2,
+                'round': 1,
                 'topic': 'Language',
                 'Wwer': 'Hungarian',
                 'Rwer': 'Romanian',
@@ -235,7 +235,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': '\"Kieselstein\" means \"pebbles\" in which language?',
                 'number':22,
-                'round': 2,
+                'round': 1,
                 'topic': 'Language',
                 'Wwer': 'Russian',
                 'Rwer': 'German',
@@ -244,7 +244,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': '\"Gobierno\" means \"government\" in which language?',
                 'number':23,
-                'round': 2,
+                'round': 1,
                 'topic': 'Language',
                 'Wwer': 'Portugese',
                 'Rwer': 'Spanish',
@@ -253,7 +253,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': '\"Verre\" means \"glass\" in which language?',
                 'number':24,
-                'round': 2,
+                'round': 1,
                 'topic': 'Language',
                 'Wwer': 'Italian',
                 'Rwer': 'French',
@@ -262,7 +262,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': '\"Bere\" means \"drink\" in which language?',
                 'number':25,
-                'round': 2,
+                'round': 1,
                 'topic': 'Language',
                 'Wwer': 'German',
                 'Rwer': 'Italian',
@@ -271,7 +271,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': '\"Kabaha\" means \"shoes\" in which language?',
                 'number':26,
-                'round':2,
+                'round':1,
                 'topic': 'Language',
                 'Wwer': 'Swahili',
                 'Rwer': 'Somali',
@@ -280,7 +280,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': '\"Bocadillo\" means \"snack\" in which language?',
                 'number':27,
-                'round':2,
+                'round':1,
                 'topic': 'Language',
                 'Wwer': 'French',
                 'Rwer': 'Spanish',
@@ -289,7 +289,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': '\"Rzeka\" means \"river\" in which language?',
                 'number':28,
-                'round': 2,
+                'round': 1,
                 'topic':'Language',
                 'Wwer': 'Latvian',
                 'Rwer': 'Polish',
@@ -298,7 +298,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'The above means \"fire\" in which language?',
                 'number':29,
-                'round':2,
+                'round':1,
                 'topic': 'Language',
                 'Wwer': 'Bulgarian',
                 'Rwer': 'Russian',

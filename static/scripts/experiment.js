@@ -2,7 +2,7 @@ var my_node_id;
 var most_recent_question = 0;
 var player_id;
 
-var condition = "B";
+var condition = "C";
 $("#practice").hide();
 $("#round2div").hide();
 $("#round2div_check").hide();
@@ -321,7 +321,7 @@ var process_info = function(info) {
         } else {
             $("#practice").hide();
         }
-        if (number ==20) {
+        if (number ==6) {
             $("#welcome_div").hide();
             $("#submit_div").hide();
             $("#neighbor_buttons").hide();
@@ -331,7 +331,7 @@ var process_info = function(info) {
         } else {
             $("#round2div").hide();
         }
-        if (number ==30) {
+        if (number ==11) {
             dallinger.allowExit();
             dallinger.goToPage('questionnaire');
         }
@@ -351,7 +351,7 @@ var process_info = function(info) {
         }
         enable_answer_buttons();
         countdown = 15
-        if (number !=1 && number!=20) {
+        if (number !=1 && number!=6) {
             start_new_timeout();
         }
     }
@@ -393,11 +393,11 @@ var check_neighbors = function(info_chosen) {
             num_neighbors = neighbors.length - 1;
             if (num_neighbors == 1) {
                 clearTimeout(answer_timeout);
-                $("#question").html("You have " + num_neighbors + " player to copy from");
+                $("#question").html("You have " + num_neighbors + " player to copy from, please select a player to copy");
                 $("#countdown").hide();
             } else {
                 clearTimeout(answer_timeout);
-                $("#question").html("You have " + num_neighbors + " players to copy from");
+                $("#question").html("You have " + num_neighbors + " players to copy from, please select a player to copy");
                 $("#countdown").hide();
             }
             neighbors.forEach(function(entry) {
@@ -408,29 +408,22 @@ var check_neighbors = function(info_chosen) {
                         $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "player ID: " + entry.property1);
                         $("#question1").html("Below are their Player IDs");
                         $("#question1").show();
-                        $("#question2").html("Please select a player to copy");
-                        $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Times chosen in Round 1") {
                         $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "chosen " + entry.property2 + " times");
                         $("#question1").html("Below are how many times they were chosen in Round 1 by other players");
                         $("#question1").show();
-                        $("#question2").html("Please select a player to copy");
-                        $("#question2").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Total Score") {
                         $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + entry.property3 + " correct");
                         $("#question1").html("Below is how many questions they have answered correctly themselves");
                         $("#question1").show();
-                        $("#question2").html("Please select a player to copy");
-                        $("#question2").show();
                         $("#countdown").hide();
                     }    
                     $(button_id).click(function() {
                         submit_response(entry.id, true, info_chosen);
                         disable_neighbor_buttons();
                         $("#question1").hide();
-                        $("#question2").hide();
                     });
                     $(button_id).prop("disabled",false);
                     $(button_id).show();
