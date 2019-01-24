@@ -1,21 +1,21 @@
-var my_node_id;
-var most_recent_question = 0;
-var player_id;
+var my_node_id; // setting the node id but maybe can delete 
+var most_recent_question = 0; //maybe delete this
+var player_id;// maybe don't need to declare here
 
-var condition = "C";
-$("#practice").hide();
+var condition = "B";
+$("#practice").hide(); //move these three lines into document.ready function, it means run all this once document fully loaded. best practice to put this stuff in there. 
 $("#round2div").hide();
 $("#round2div_check").hide();
 // Consent to the experiment.
 $(document).ready(function() {
 
     // do not allow user to close or reload
-    prevent_exit = true;
+    prevent_exit = true; //it's been replaced in latest dallinger, so can delete here. 
 
     // Print the consent form.
-    $("#print-consent").click(function() {
-        console.log("hello");
-        window.print();
+    $("#print-consent").click(function() {// delete all this
+        console.log("hello");//
+        window.print();//
     });
 
     // Consent to the experiment.
@@ -27,33 +27,33 @@ $(document).ready(function() {
         store.set("mode", dallinger.getUrlParameter("mode"));
 
         dallinger.allowExit();
-        if (condition =="A") {
-        window.location.href = '/instructions';
-        }else{ 
-        window.location.href= '/instructionsB'
+        if (condition == "A") {
+            window.location.href = '/instructions';
+        } else { 
+            window.location.href= '/instructionsB';
         }
     });
 
     // Consent to the experiment.
-    $("#no-consent").click(function() {
+    $("#no-consent").click(function() { //can get rid of these as well as 17,18,19 in consent.html as it will reset to dallinger basics
         dallinger.allow_exit();
         window.close();
     });
 
-    // Consent to the experiment.
-    $("#go-to-experiment").click(function() {
+    // 
+    $("#go-to-experiment").click(function() { //delete all this! 
         dallinger.allow_exit();
         window.location.href = '/exp';
     });
 
 
-    $("#submit-response").click(function() {
+    $("#submit-response").click(function() { //also useless 
         $("#submit-response").addClass('disabled');
         $("#submit-response").html('Sending...');
         $("#question").html("Waiting for other players to catch up...");
 
-// when submit response is submitted, then the contents are requested/posted as an info for that node??
-       reqwest({
+// when submit response is submitted, then the contents are requested/posted as an info for that node?? NOT TRUE
+       reqwest({ //junk, old bartlett 
             url: "/info/" + my_node_id,
             method: 'post',
             data: {
@@ -63,7 +63,7 @@ $(document).ready(function() {
         });
     });
 
-    $("#submit-a").click(function() {
+    $("#submit-a").click(function() { // could refactor these (good programming exercise!) make function that does the stuff and then you call a/b/copy
         clearTimeout(answer_timeout);
         $("#countdown").hide();
         disable_answer_buttons();
@@ -84,10 +84,10 @@ $(document).ready(function() {
         submit_response($("#submit-copy").text());
     });
 
-    $("#info-choice-a").click(function() {
+    $("#info-choice-a").click(function() { //probably refactor these too
         clearTimeout(answer_timeout);
         disable_choice_buttons();
-        info_chosen = $("#info-choice-a").text();
+        info_chosen = $("#info-choice-a").text(); //can collapse these into single lines 
         check_neighbors(info_chosen);
     });
 
@@ -98,14 +98,14 @@ $(document).ready(function() {
         check_neighbors(info_chosen);
     });
 
-    $("#round2okay").click(function() {
+    $("#round2okay").click(function() { //round 2 header stuff, put with other header stuff...? 
         $("#round2div_check").show();
         enable_R2_buttons();
         clearTimeout(answer_timeout);
         $("#round2div").hide();
     });
 
-    $("#practiceButton").click(function(){
+    $("#practiceButton").click(function(){ //probably reorder too 
         start_new_timeout();
         $("#welcome_div").show();
         $("#submit_div").show();
@@ -116,28 +116,28 @@ $(document).ready(function() {
         $("#practice").hide();
     });
 
-if ((condition =="A"||condition=="B")){
-    $("#check_AB").click(function() {
-        start_new_timeout();
-        $("#welcome_div").show();
-        $("#submit_div").show();
-        $("#neighbor_buttons").show();
-        $("#info_choice_buttons").show();
-        $("#round2div").hide();
-        $("#round2div_check").hide();
-    });
-} else {
-    $("#check_AB").click(function(){
-        start_new_timeout();
-        $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
-        disable_R2_buttons();
-        setTimeout(function() {
+    if ((condition =="A"||condition=="B")){
+        $("#check_AB").click(function() {
+            start_new_timeout();
+            $("#welcome_div").show();
+            $("#submit_div").show();
+            $("#neighbor_buttons").show();
+            $("#info_choice_buttons").show();
+            $("#round2div").hide();
             $("#round2div_check").hide();
-            $("#wrong_check").hide();
-            $("#round2div").show();
-        }, 2000);
-    });
-}
+        });
+    } else {
+        $("#check_AB").click(function(){
+            start_new_timeout();
+            $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
+            disable_R2_buttons();
+            setTimeout(function() {
+                $("#round2div_check").hide();
+                $("#wrong_check").hide();
+                $("#round2div").show();
+            }, 2000);
+        });
+    }
 
 if ((condition=="C")){
     $("#check_C").click(function() {
@@ -158,14 +158,14 @@ if ((condition=="C")){
             $("#round2div_check").hide();
             $("#wrong_check").hide();
             $("#round2div").show();
-        }, 3000);
+        }, 2000);
     });
 }
 
 
     disable_answer_buttons();
     disable_choice_buttons();
-    hide_pics();
+    hide_pics(); //
 
 });
 
@@ -321,7 +321,7 @@ var process_info = function(info) {
         } else {
             $("#practice").hide();
         }
-        if (number ==6) {
+        if (number ==41) {
             $("#welcome_div").hide();
             $("#submit_div").hide();
             $("#neighbor_buttons").hide();
@@ -331,7 +331,7 @@ var process_info = function(info) {
         } else {
             $("#round2div").hide();
         }
-        if (number ==11) {
+        if (number ==101) {
             dallinger.allowExit();
             dallinger.goToPage('questionnaire');
         }
@@ -355,7 +355,7 @@ var process_info = function(info) {
         }
         enable_answer_buttons();
         countdown = 15
-        if (number !=1 && number!=6) {
+        if (number !=1 && number!=41) {
             start_new_timeout();
         }
     }

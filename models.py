@@ -91,7 +91,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'The capital of the Philippines is?',
                 'number':6,
-                'round':2,
+                'round':1,
                 'topic':'Georgraphy',
                 'Wwer': 'Davao',
                 'Rwer': 'Manila',
@@ -100,7 +100,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Which is closest to Finland?',
                 'number':7,
-                'round':2,
+                'round':1,
                 'topic':'Georgraphy',
                 'Wwer': 'Moscow',
                 'Rwer': 'St Petersburg',
@@ -109,7 +109,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Which is the largest of The Canary Islands?',
                 'number':8,
-                'round':2,
+                'round':1,
                 'topic':'Georgraphy',
                 'Wwer': 'Gran Canaria',
                 'Rwer': 'Tenerife',
@@ -118,7 +118,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Oklahoma state shares a border with?',
                 'number':9,
-                'round':2,
+                'round':1,
                 'topic':'Georgraphy',
                 'Wwer': 'Arizona',
                 'Rwer': 'New Mexico',
@@ -127,7 +127,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Amsterdam is nearer to?',
                 'number':10,
-                'round':2,
+                'round':1,
                 'topic':'Georgraphy',
                 'Wwer': 'Antwerp',
                 'Rwer': 'Rotterdam',
