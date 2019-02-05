@@ -226,7 +226,7 @@ var create_agent = function() {
     .done(function (resp) {
         my_node_id = resp.node.id;
         my_network_id = resp.node.network_id;
-        player_id = resp.node.property1;
+        player_id = JSON.parse(resp.node.property1).name;
         $("#welcome").html("Welcome to our quiz, you are player " + player_id);
         get_transmissions(my_node_id);
     })
@@ -409,17 +409,17 @@ var check_neighbors = function(info_chosen) {
                 if (entry.type != "quiz_source") {
                     button_id = "#neighbor_button_" + current_button;
                     if (info_chosen == "Player ID") { 
-                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "player ID: " + entry.property1);
+                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "player ID: " + JSON.parse(entry.property1).name);
                         $("#question1").html("Below are their Player IDs");
                         $("#question1").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Times chosen in Round 1") {
-                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "chosen " + entry.property2 + " times");
+                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + "chosen " + JSON.parse(entry.property1).n_copies + " times");
                         $("#question1").html("Below are how many times they were chosen in Round 1 by other players");
                         $("#question1").show();
                         $("#countdown").hide();
                     } else if (info_chosen == "Total Score") {
-                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + entry.property3 + " correct");
+                        $(button_id).html("<img src='/static/images/stick.png' height='90' width='50'><br>" + JSON.parse(entry.property1).asoc_score + " correct");
                         $("#question1").html("Below is how many questions they have answered correctly themselves");
                         $("#question1").show();
                         $("#countdown").hide();

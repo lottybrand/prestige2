@@ -1,6 +1,7 @@
 """Bartlett's transmission chain experiment from Remembering (1932)."""
 
 import logging
+import json
 
 from operator import attrgetter
 
@@ -60,15 +61,17 @@ class Bartlett1932(Experiment):
 
     def create_node(self, participant, network):
         """Create a node for a participant."""
-        node = Node(network=network, participant=participant)
+        node = self.models.LottyNode(network=network, participant=participant)
         import random
         name = random.randint(100, 999)
         #name is then assigned to node's property1 in the database
-        node.property1 = name
-        node.property2 = 0
-        node.property3 = 0
-        node.property4 = 0
-        node.property5 = 0
+        node.property1 = json.dumps({
+            'name': name,
+            'n_copies': 0,
+            'asoc_score': 0,
+            'score': 0,
+            'bonus': False
+        })
         return node
 
 
@@ -110,7 +113,7 @@ class Bartlett1932(Experiment):
             neighbor = [n for n in other_nodes if n.id == int(info.contents)][0]
             # and increase their number of copies, but only if we're in round 1
             if (int(info.property5) == 1):
-                neighbor.property2 = str(int(neighbor.property2) + 1)
+                neighbor.n_copies = str(int(neighbor.n_copies) + 1)
             # fail the original info
             info.fail()
             # ask the neighbor to transmit their actual decision to the current player.
@@ -128,30 +131,30 @@ class Bartlett1932(Experiment):
             new_info.property4 = info.property4
             # update the nodes score according to the score of the new_info
             if int(info.property5) !=0:
-                node.property4 = str(int(node.property4) + int(new_info.property3))
+                node.score = str(int(node.score) + int(new_info.property3))
 
         # if its not a copying decision
-        if info.property2 =="false":
+        if info.property2 == "false":
             # if its round 1
             if int(info.property5) == 1:
                 # update node property3 which is the asocial score in round 1
-                node.property3 = str(int(node.property3) + int(info.property3))
+                node.asoc_score = int(node.asoc_score) + int(info.property3)
 
             # regardless of round, update node.property4 which is the total score across all rounds.
             if int(info.property5) !=0:
-                node.property4 = str(int(node.property4) + int(info.property3)) 
+                node.score = int(node.score) + int(info.property3)
 
         # update property5 to reflect whether or not the ppt has earned the bonus
-        bonus_score = int(node.property4)
+        bonus_score = int(node.score)
         if (bonus_score >= 90):
-            node.property5 = True
+            node.bonus = True
         else: 
-            node.property5 = False 
+            node.bonus = False 
 
         # add node properties 4 and 5 to ppt object
         ppt = node.participant
-        ppt.property1 = node.property4
-        ppt.property2 = node.property5
+        ppt.property1 = node.score
+        ppt.property2 = node.bonus
 
         if ready:
             # if no one has copied
@@ -207,7 +210,7 @@ class Bartlett1932(Experiment):
         nodes = participant.nodes()
         node = nodes[0]
 
-        bonus = node.property5
+        bonus = node.bonus
         if (bonus == True):
             return 20
         else:

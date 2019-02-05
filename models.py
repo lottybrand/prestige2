@@ -1,4 +1,64 @@
+import json
+
 from dallinger.nodes import Source
+from dallinger.models import Node
+
+class LottyNode(Node):
+
+    __mapper_args__ = {
+        "polymorphic_identity": "lotty_node"
+    }
+
+    @property
+    def name(self):
+        return json.loads(self.property1)["name"]
+
+    @property
+    def n_copies(self):
+        return json.loads(self.property1)["n_copies"]
+
+    @property
+    def asoc_score(self):
+        return json.loads(self.property1)["asoc_score"]
+
+    @property
+    def score(self):
+        return json.loads(self.property1)["score"]
+
+    @property
+    def bonus(self):
+        return json.loads(self.property1)["bonus"]
+
+    @name.setter
+    def name(self, val):
+        p1 = json.loads(self.property1)
+        p1["name"] = val
+        self.property1 = json.dumps(p1)
+
+    @n_copies.setter
+    def n_copies(self, val):
+        p1 = json.loads(self.property1)
+        p1["n_copies"] = val
+        self.property1 = json.dumps(p1)
+
+    @asoc_score.setter
+    def asoc_score(self, val):
+        p1 = json.loads(self.property1)
+        p1["asoc_score"] = val
+        self.property1 = json.dumps(p1)
+
+    @score.setter
+    def score(self, val):
+        p1 = json.loads(self.property1)
+        p1["score"] = val
+        self.property1 = json.dumps(p1)
+
+    @bonus.setter
+    def bonus(self, val):
+        p1 = json.loads(self.property1)
+        p1["bonus"] = val
+        self.property1 = json.dumps(p1)
+
 
 
 class QuizSource(Source):
