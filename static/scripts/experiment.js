@@ -1,24 +1,20 @@
-var my_node_id; // setting the node id but maybe can delete 
-var most_recent_question = 0; //maybe delete this
-var player_id;// maybe don't need to declare here
 
 var condition = "B";
-$("#practice").hide(); //move these three lines into document.ready function, it means run all this once document fully loaded. best practice to put this stuff in there. 
-$("#round2div").hide();
-$("#round2div_check").hide();
-// Consent to the experiment.
+if ((condition == "A") || (condition == "B")) {
+    check_info = 'their Player ID, or, the number of times they were chosen by others in Round 1.'
+} else {
+    check_info = 'their total score in Round 1, or, the number of times they were chosen by others in Round 1.'
+}
+
+// this function runs immediately once the page is loaded
 $(document).ready(function() {
 
-    // do not allow user to close or reload
-    prevent_exit = true; //it's been replaced in latest dallinger, so can delete here. 
+    // Hide divs that should not be initially visible
+    $("#practice").hide();
+    $("#round2div").hide();
+    $("#round2div_check").hide();
 
-    // Print the consent form.
-    $("#print-consent").click(function() {// delete all this
-        console.log("hello");//
-        window.print();//
-    });
-
-    // Consent to the experiment.
+    // Change functionality of the consent button
     $("#consent").click(function() {
         store.set("recruiter", dallinger.getUrlParameter("recruiter"));
         store.set("hit_id", dallinger.getUrlParameter("hit_id"));
@@ -34,78 +30,59 @@ $(document).ready(function() {
         }
     });
 
-    // Consent to the experiment.
-    $("#no-consent").click(function() { //can get rid of these as well as 17,18,19 in consent.html as it will reset to dallinger basics
-        dallinger.allow_exit();
-        window.close();
-    });
+    // Add functionality to buttons controlling participantss answers
+    // either option a, option b, or copy someone else.
 
-    // 
-    $("#go-to-experiment").click(function() { //delete all this! 
-        dallinger.allow_exit();
-        window.location.href = '/exp';
-    });
-
-
-    $("#submit-response").click(function() { //also useless 
-        $("#submit-response").addClass('disabled');
-        $("#submit-response").html('Sending...');
-        $("#question").html("Waiting for other players to catch up...");
-
-// when submit response is submitted, then the contents are requested/posted as an info for that node?? NOT TRUE
-       reqwest({ //junk, old bartlett 
-            url: "/info/" + my_node_id,
-            method: 'post',
-            data: {
-                contents: response,
-                info_type: "LottyInfo"
-            },
-        });
-    });
-
-    $("#submit-a").click(function() { // could refactor these (good programming exercise!) make function that does the stuff and then you call a/b/copy
-        clearTimeout(answer_timeout);
-        $("#countdown").hide();
-        disable_answer_buttons();
-        submit_response($("#submit-a").text());
+    $("#submit-a").click(function() {
+        submit_answer("#submit-a")
     });
 
     $("#submit-b").click(function() {
-        clearTimeout(answer_timeout);
-        $("#countdown").hide();
-        disable_answer_buttons();
-        submit_response($("#submit-b").text());
+        submit_answer("#submit-b")
     });
 
     $("#submit-copy").click(function() {
+        submit_answer("#submit-copy")
+    });
+
+    submit_answer = function(answer) {
         clearTimeout(answer_timeout);
         $("#countdown").hide();
         disable_answer_buttons();
-        submit_response($("#submit-copy").text());
-    });
+        submit_response($(answer).text());
+    }
 
-    $("#info-choice-a").click(function() { //probably refactor these too
-        clearTimeout(answer_timeout);
-        disable_choice_buttons();
-        info_chosen = $("#info-choice-a").text(); //can collapse these into single lines 
-        check_neighbors(info_chosen);
+    // Add functionality to buttons controlling participants' info choice
+
+    $("#info-choice-a").click(function() {
+        submit_choice("#info-choice-a")
     });
 
     $("#info-choice-b").click(function() {
-        clearTimeout(answer_timeout);
-        disable_choice_buttons();   
-        info_chosen = $("#info-choice-b").text();
-        check_neighbors(info_chosen);
+        submit_choice("#info-choice-b")
     });
 
-    $("#round2okay").click(function() { //round 2 header stuff, put with other header stuff...? 
+    submit_choice = function(choice) {
+        disable_choice_buttons();   
+        info_chosen = $("choice").text();
+        check_neighbors(info_chosen);
+    }
+
+    // Add functionality to the round 2 button
+    // This means participants have acknowledge they are starting round 2
+    // and they will be shown a quick test of this ability
+
+    $("#round2okay").click(function() {
         $("#round2div_check").show();
         enable_R2_buttons();
         clearTimeout(answer_timeout);
         $("#round2div").hide();
     });
 
-    $("#practiceButton").click(function(){ //probably reorder too 
+    // Add functionality to the practice button
+    // this button starts the practice rounds
+
+    $("#practiceButton").click(function() {
         start_new_timeout();
         $("#welcome_div").show();
         $("#submit_div").show();
@@ -116,41 +93,36 @@ $(document).ready(function() {
         $("#practice").hide();
     });
 
-    if ((condition =="A"||condition=="B")){
+    // Check AB/C are the buttons with one of the possible info choices
+    // they are used to test participants attention to the instructions
+
+    if (condition == "A" || condition == "B") {
         $("#check_AB").click(function() {
-            start_new_timeout();
-            $("#welcome_div").show();
-            $("#submit_div").show();
-            $("#neighbor_buttons").show();
-            $("#info_choice_buttons").show();
-            $("#round2div").hide();
-            $("#round2div_check").hide();
+            update_ui_attention_check_passed();
         });
-    } else {
+        $("#check_C").click(function() {
+            update_ui_attention_check_failed();
+        });
+    } else if (condition == "C") {
         $("#check_AB").click(function(){
-            start_new_timeout();
-            $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
-            disable_R2_buttons();
-            setTimeout(function() {
-                $("#round2div_check").hide();
-                $("#wrong_check").hide();
-                $("#round2div").show();
-            }, 2000);
+            update_ui_attention_check_failed();
+        });
+        $("#check_C").click(function() {
+            update_ui_attention_check_passed();
         });
     }
 
-if ((condition=="C")){
-    $("#check_C").click(function() {
-        clearTimeout(answer_timeout);
+    update_ui_attention_check_passed = function() {
+        start_new_timeout();
         $("#welcome_div").show();
         $("#submit_div").show();
         $("#neighbor_buttons").show();
         $("#info_choice_buttons").show();
         $("#round2div").hide();
         $("#round2div_check").hide();
-    });
-} else {
-    $("#check_C").click(function(){
+    }
+
+    update_ui_attention_check_failed = function() {
         clearTimeout(answer_timeout);
         $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
         disable_R2_buttons();
@@ -159,21 +131,15 @@ if ((condition=="C")){
             $("#wrong_check").hide();
             $("#round2div").show();
         }, 2000);
-    });
-}
+    }
 
+    // initially hide the buttons
 
     disable_answer_buttons();
     disable_choice_buttons();
-    hide_pics(); //
+    hide_pics();
 
 });
-
-if ((condition =="A") || (condition =="B")){
-    check_info = 'their Player ID, or, the number of times they were chosen by others in Round 1.'
-}else{
-    check_info = 'their total score in Round 1, or, the number of times they were chosen by others in Round 1.'
-}
 
 add_neighbor_buttons = function() {
     dallinger.getExperimentProperty("group_size")
