@@ -1,7 +1,7 @@
 import json
 
 from dallinger.nodes import Source
-from dallinger.models import Node
+from dallinger.models import Node, Info
 
 class LottyNode(Node):
 
@@ -59,7 +59,61 @@ class LottyNode(Node):
         p1["bonus"] = val
         self.property1 = json.dumps(p1)
 
+class LottyInfo(Info):
 
+    __mapper_args__ = {
+        "polymorphic_identity": "lotty_info"
+    }
+
+    @property
+    def number(self):
+        return json.loads(self.property1)["number"]
+
+    @property
+    def copying(self):
+        return json.loads(self.property1)["copying"]
+
+    @property
+    def score(self):
+        return json.loads(self.property1)["score"]
+
+    @property
+    def info_chosen(self):
+        return json.loads(self.property1)["info_chosen"]
+
+    @property
+    def round(self):
+        return json.loads(self.property1)["round"]
+
+    @number.setter
+    def number(self, val):
+        p1 = json.loads(self.property1)
+        p1["number"] = val
+        self.property1 = json.dumps(p1)
+
+    @copying.setter
+    def copying(self, val):
+        p1 = json.loads(self.property1)
+        p1["copying"] = val
+        self.property1 = json.dumps(p1)
+
+    @score.setter
+    def score(self, val):
+        p1 = json.loads(self.property1)
+        p1["score"] = val
+        self.property1 = json.dumps(p1)
+
+    @info_chosen.setter
+    def info_chosen(self, val):
+        p1 = json.loads(self.property1)
+        p1["info_chosen"] = val
+        self.property1 = json.dumps(p1)
+
+    @round.setter
+    def round(self, val):
+        p1 = json.loads(self.property1)
+        p1["round"] = val
+        self.property1 = json.dumps(p1)
 
 class QuizSource(Source):
     """A Source that reads in a question from a file and transmits it."""

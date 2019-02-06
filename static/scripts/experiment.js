@@ -58,7 +58,7 @@ $(document).ready(function() {
             method: 'post',
             data: {
                 contents: response,
-                info_type: "Info"
+                info_type: "LottyInfo"
             },
         });
     });
@@ -206,12 +206,14 @@ submit_response = function(response, copy=false, info_chosen="NA") {
     score = (response == Rwer)*1
     dallinger.createInfo(my_node_id, {
         contents: response,
-        info_type: "Info",
-        property1: number,
-        property2: copy,
-        property3: score,
-        property4: info_chosen,
-        property5: round
+        info_type: "LottyInfo",
+        property1: JSON.stringify({
+            "number": number,
+            "copying": copy,
+            "score": score,
+            "info_chosen": info_chosen,
+            "round": round
+        })
     }).done(function (resp) {
         most_recent_question = number;
         setTimeout(function() {

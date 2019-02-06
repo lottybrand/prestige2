@@ -30,6 +30,8 @@ class Bartlett1932(Experiment):
         super(Bartlett1932, self).__init__(session)
         import models
         self.models = models
+
+        self.known_classes["LottyInfo"] = self.models.LottyInfo
         self.experiment_repeats = 1
         self.initial_recruitment_size = self.experiment_repeats*self.group_size
         if session:
@@ -86,7 +88,7 @@ class Bartlett1932(Experiment):
     def info_post_request(self, node, info):
         """Run when a request to create an info is complete."""
         # question number is found in info's property1 in the database
-        question_number = info.property1
+        question_number = info.number
         
         # have all the other nodes answered this question
         # other nodes are defined as nodes in the network that are not current node, and are not the source. 
@@ -96,7 +98,7 @@ class Bartlett1932(Experiment):
         infos = [info]
         for n in other_nodes:
             #for all other nodes, do something with n.infos if we're on the latest question number.
-            infos.extend([i for i in n.infos() if i.property1 == question_number])
+            infos.extend([i for i in n.infos() if i.number == question_number])
             #answers are in the contents column in the database for that latest info
             answers = [i.contents for i in infos]
 
@@ -108,11 +110,11 @@ class Bartlett1932(Experiment):
                 ready = True
 
         # if property 2 is true this means this is a copying decision
-        if info.property2 == "true":
+        if info.copying:
             # so find the neighbor to be copied
             neighbor = [n for n in other_nodes if n.id == int(info.contents)][0]
             # and increase their number of copies, but only if we're in round 1
-            if (int(info.property5) == 1):
+            if info.round == 1:
                 neighbor.n_copies = str(int(neighbor.n_copies) + 1)
             # fail the original info
             info.fail()
@@ -126,26 +128,26 @@ class Bartlett1932(Experiment):
             # get the newly made info, and copy its properties over as well.
             new_info = max(node.infos(), key=attrgetter("id"))
             new_info.property1 = copied_info.property1
-            new_info.property2 = info.property2
-            new_info.property3 = copied_info.property3
-            new_info.property4 = info.property4
+            new_info.copying = info.copying
+            new_info.info_chosen = info.info_chosen
+
             # update the nodes score according to the score of the new_info
-            if int(info.property5) !=0:
-                node.score = str(int(node.score) + int(new_info.property3))
+            if info.round != 0:
+                node.score = node.score + new_info.score
 
         # if its not a copying decision
-        if info.property2 == "false":
+        if not info.copying:
             # if its round 1
-            if int(info.property5) == 1:
+            if info.round == 1:
                 # update node property3 which is the asocial score in round 1
-                node.asoc_score = int(node.asoc_score) + int(info.property3)
+                node.asoc_score = node.asoc_score + info.score
 
             # regardless of round, update node.property4 which is the total score across all rounds.
-            if int(info.property5) !=0:
-                node.score = int(node.score) + int(info.property3)
+            if info.round != 0:
+                node.score = node.score + info.score
 
         # update property5 to reflect whether or not the ppt has earned the bonus
-        bonus_score = int(node.score)
+        bonus_score = node.score
         if (bonus_score >= 90):
             node.bonus = True
         else: 
