@@ -52,6 +52,7 @@ $(document).ready(function() {
     submit_answer = function(answer) {
         clearTimeout(answer_timeout);
         $("#countdown").hide();
+        $("#countdown").html("");
         disable_answer_buttons();
         submit_response($(answer).text());
     }
@@ -79,7 +80,6 @@ $(document).ready(function() {
     $("#round2okay").click(function() {
         $("#round2div_check").show();
         enable_R2_buttons();
-        clearTimeout(answer_timeout);
         $("#round2div").hide();
     });
 
@@ -87,7 +87,6 @@ $(document).ready(function() {
     // this button starts the practice rounds
 
     $("#practiceButton").click(function() {
-        start_answer_timeout();
         $("#welcome_div").show();
         $("#submit_div").show();
         $("#neighbor_buttons").show();
@@ -95,6 +94,7 @@ $(document).ready(function() {
         $("#round2div").hide();
         $("#round2div_check").hide();
         $("#practice").hide();
+        display_question();
     });
 
     // Check AB/C are the buttons with one of the possible info choices
@@ -117,17 +117,13 @@ $(document).ready(function() {
     }
 
     update_ui_attention_check_passed = function() {
-        start_answer_timeout();
-        $("#welcome_div").show();
-        $("#submit_div").show();
-        $("#neighbor_buttons").show();
-        $("#info_choice_buttons").show();
         $("#round2div").hide();
         $("#round2div_check").hide();
+
+        display_question();
     }
 
     update_ui_attention_check_failed = function() {
-        clearTimeout(answer_timeout);
         $("#wrong_check").html("WRONG ANSWER, PLEASE READ AGAIN");
         disable_R2_buttons();
         setTimeout(function() {
@@ -143,49 +139,18 @@ $(document).ready(function() {
     hide_pics();
 });
 
-// This is called by the exp.html page, it creates a set of buttons for your current
-// group size.
-add_neighbor_buttons = function() {
-    dallinger.getExperimentProperty("group_size")
-    .done(function (resp) {
-        group_size = resp.group_size;
-        start = '<button id="neighbor_button_';
-        stop = '" type="button" class="btn btn-success"></button>';
-        button_string = '';
-        for (i = 1; i <= group_size-1; i++) {
-            button_string = button_string.concat(start);
-            button_string = button_string.concat(i);
-            button_string = button_string.concat(stop);
-        }
-        $("#neighbor_buttons").html(button_string);
-        $("#neighbor_buttons").hide();
-        $(button_string).prop("disabled",true);
-        for (i = 1; i <= group_size-1; i++) {
-            button_string = "#neighbor_button_" + i;
-            $(button_string).css({
-                "margin-right": "14px"
-            });
-        }
-        disable_neighbor_buttons();
-    });
-}
-
-
-
 submit_response = function(response, copy=false, info_chosen="NA") {
-    score = (response == Rwer)*1
     dallinger.createInfo(my_node_id, {
         contents: response,
         info_type: "LottyInfo",
         property1: JSON.stringify({
             "number": number,
             "copying": copy,
-            "score": score,
+            "score": (response == Rwer)*1,
             "info_chosen": info_chosen,
             "round": round
         })
     }).done(function (resp) {
-        most_recent_question = number;
         setTimeout(function() {
             get_transmissions();
         }, 1000);
@@ -289,21 +254,19 @@ var process_info = function(info) {
         }
 
         // if its q41, show the round 2 warning
-        if (number == 41) {
+        else if (number == 41) {
             display_round_warning(2);
         }
 
         // if its q101, go to the questionnaire.
-        if (number ==101) {
+        else if (number ==101) {
             dallinger.allowExit();
             dallinger.goToPage('questionnaire');
         }
 
         // display the question
-        display_question();
-        countdown = 15;
-        if (number != 1 && number != 41) {
-            start_answer_timeout();
+        else {
+            display_question();
         }
     }
 };
@@ -358,16 +321,17 @@ display_question = function() {
         $("#submit-b").html(Wwer);
         $("#submit-a").html(Rwer);
     }
-    $("#countdown").show();
     enable_answer_buttons();
+    countdown = 15;
+    start_answer_timeout();
 }
 
 start_answer_timeout = function() {
+    $("#countdown").show();
     answer_timeout = setTimeout(function() {
-        countdown = countdown - 1
+        countdown = countdown - 1;
         $("#countdown").html(countdown);
         if (countdown <= 0) {
-            $("#countdown").html("")
             disable_answer_buttons();
             submit_response(Wwer);
         } else {
@@ -379,6 +343,7 @@ start_answer_timeout = function() {
 
 var info_choice = function() {
     $("#question").html("What information do you want to see about the other players?");
+    assign_choice_buttons();
     enable_choice_buttons();
 };
 
@@ -455,10 +420,6 @@ update_neighbor_button = function(number, neighbor) {
     $(button_id).show();
 }
 
-get_neighbors = function() {
-    
-}
-
 disable_R2_buttons = function() {
     $("#check_AB").addClass('disabled');
     $("#check_C").addClass('disabled');
@@ -523,39 +484,58 @@ enable_answer_buttons = function() {
     $("#submit-a").show();
     $("#submit-b").show();
     $("#submit-copy").show();
+}
 
-    if ((condition == "A") || (condition == "B")) {
+assign_choice_buttons = function() {
+    if (condition == "A" || condition == "B") {
         info_choice_a = "Player ID"
     } else {
         info_choice_a = "Total Score"
     }
-
     if (Math.random() < 0.5) {
-        enable_choice_buttons = function() {
-            $("#countdown").hide();
-            $("#info-choice-a").removeClass('disabled');
-            $("#info-choice-b").removeClass('disabled');
-            $("#info-choice-a").html(info_choice_a);
-            $("#info-choice-a").show();
-            $("#info-choice-b").html("Times chosen in Round 1")
-            $("#info-choice-b").show();
-        }
+        $("#info-choice-a").html(info_choice_a);
+        $("#info-choice-b").html("Times chosen in Round 1")
     } else {
-        enable_choice_buttons = function() {
-            $("#countdown").hide();
-            $("#info-choice-b").removeClass('disabled');
-            $("#info-choice-a").removeClass('disabled');
-            $("#info-choice-a").html("Times chosen in Round 1");
-            $("#info-choice-a").show();
-            $("#info-choice-b").html(info_choice_a);
-            $("#info-choice-b").show();
-        }
+        $("#info-choice-a").html("Times chosen in Round 1");
+        $("#info-choice-b").html(info_choice_a);
     }
 }
 
+enable_choice_buttons = function() {
+    $("#countdown").hide();
+    $("#info-choice-a").removeClass('disabled');
+    $("#info-choice-b").removeClass('disabled');
+    $("#info-choice-a").show();
+    $("#info-choice-b").show();
+}
 
 
-
+// This is called by the exp.html page, it creates a set of buttons for your current
+// group size.
+add_neighbor_buttons = function() {
+    dallinger.getExperimentProperty("group_size")
+    .done(function (resp) {
+        group_size = resp.group_size;
+        start = '<button id="neighbor_button_';
+        stop = '" type="button" class="btn btn-success"></button>';
+        button_string = '';
+        for (i = 1; i <= group_size-1; i++) {
+            button_string = button_string.concat(start);
+            button_string = button_string.concat(i);
+            button_string = button_string.concat(stop);
+        }
+        $("#neighbor_buttons").html(button_string);
+        $("#neighbor_buttons").hide();
+        $(button_string).prop("disabled",true);
+        for (i = 1; i <= group_size-1; i++) {
+            button_string = "#neighbor_button_" + i;
+            $(button_string).css({
+                "margin-right": "14px"
+            });
+        }
+        disable_neighbor_buttons();
+    });
+}
 
 
 
