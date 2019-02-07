@@ -29,6 +29,11 @@ class LottyNode(Node):
     def bonus(self):
         return json.loads(self.property1)["bonus"]
 
+    @property
+    def n_requests(self):
+        return json.loads(self.property1)["n_requests"]
+    
+
     @name.setter
     def name(self, val):
         p1 = json.loads(self.property1)
@@ -57,6 +62,12 @@ class LottyNode(Node):
     def bonus(self, val):
         p1 = json.loads(self.property1)
         p1["bonus"] = val
+        self.property1 = json.dumps(p1)
+
+    @n_requests.setter
+    def n_requests(self, val):
+        p1 = json.loads(self.property1)
+        p1["n_requests"] = val
         self.property1 = json.dumps(p1)
 
 class LottyInfo(Info):

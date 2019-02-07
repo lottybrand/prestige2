@@ -58,6 +58,7 @@ class Bartlett1932(Experiment):
             for net in self.networks():
                 self.models.QuizSource(network=net)
 
+
     def create_network(self):
         """Return a new network."""
         return Star(max_size=self.group_size+1)
@@ -74,7 +75,8 @@ class Bartlett1932(Experiment):
             'n_copies': 0,
             'asoc_score': 0,
             'score': 0,
-            'bonus': False
+            'bonus': False,
+            'n_requests': 0
         })
         return node
 
@@ -89,6 +91,7 @@ class Bartlett1932(Experiment):
 
     def info_post_request(self, node, info):
         """Run when a request to create an info is complete."""
+        self.reset_request_counters(node.network)
         
         # Process info, copying as necessary and updating scores.
         if info.copying:
@@ -103,7 +106,11 @@ class Bartlett1932(Experiment):
             node.score = node.score + info.score
         
         self.update_node_bonus(node)
+
+        self.advance_group(node, info)
         
+
+    def advance_group(self, node, info):
         # Check to see if the source needs to send anything out.
         group = node.network.nodes(type=self.models.LottyNode)
         group.sort(key=attrgetter("id"))
@@ -130,7 +137,7 @@ class Bartlett1932(Experiment):
         # is everyone waiting for the server to do something?
         # only return true if everyone has answered and the current
         # answer is the last in the group.
-        everyone_answered = len(group_infos) == self.group_size
+        everyone_answered = len(group_infos) == (info.network.size() - 1)
         if not everyone_answered:
             return False
         elif info == max(group_infos, key=attrgetter("id")):
@@ -235,6 +242,35 @@ class Bartlett1932(Experiment):
             return 20
         else:
             return 0
+
+    def transmission_get_request(self, node, transmissions):
+        """Run when a request to get transmissions is complete."""
+        node.n_requests = node.n_requests + 1
+        self.save()
+
+        if node.n_requests > 60:
+            self.check_node_activity(node)
+
+
+    def check_node_activity(self, node):
+        nodes = node.network.nodes(type=self.models.LottyNode)
+        requests = [n.n_requests for n in nodes]
+
+        if node.n_requests == max(requests) and requests.count(node.n_requests) == 1:
+            if (node.n_requests - min(requests) > 30):
+                loser = min(nodes, key=attrgetter("n_requests"))
+                self.reset_request_counters(node.network)
+                loser.network.max_size = loser.network.max_size - 1
+                loser.fail()
+                most_recent_info = max(node.network.infos(type=self.models.LottyInfo), key=attrgetter("id"))
+                self.advance_group(most_recent_info.origin, most_recent_info)
+
+
+    def reset_request_counters(self, network):
+        nodes = network.nodes(type=self.models.LottyNode)
+        for n in nodes:
+            n.n_requests = 0
+
 
 
 class Star(Network):
