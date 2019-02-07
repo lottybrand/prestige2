@@ -385,19 +385,16 @@ var info_choice = function() {
 
 var check_neighbors = function(info_chosen) {
     // get your neighbors
-    reqwest({
-        url: "/node/" + my_node_id + "/neighbors",
-        method: 'get',
-        type: 'json',
-        data: {
+    dallinger.get(
+        "/node/" + my_node_id + "/neighbors",
+        {
             connection: "from",
             node_type: "LottyNode"
-        },
-        success: function (resp) {
-            neighbors = resp.nodes;
-            process_neighbors();
         }
-    });
+    ).done(function (resp) {
+        neighbors = resp.nodes;
+        process_neighbors();
+    })
 }
 
 process_neighbors = function() {
