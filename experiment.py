@@ -62,6 +62,7 @@ class Bartlett1932(Experiment):
         """Return a new network."""
         return Star(max_size=self.group_size+1)
 
+
     def create_node(self, participant, network):
         """Create a node for a participant."""
         node = self.models.LottyNode(network=network, participant=participant)
@@ -78,7 +79,6 @@ class Bartlett1932(Experiment):
         return node
 
 
-
     def add_node_to_network(self, node, network):
         """Add node to the chain and receive transmissions."""
         network.add_node(node)
@@ -86,119 +86,136 @@ class Bartlett1932(Experiment):
         if network.full:
             source.transmit()
 
+
     def info_post_request(self, node, info):
         """Run when a request to create an info is complete."""
-        # question number is found in info's property1 in the database
-        question_number = info.number
         
-        # have all the other nodes answered this question
-        # other nodes are defined as nodes in the network that are not current node, and are not the source. 
-        other_nodes = [n for n in node.network.nodes() if n != node and not isinstance(n, Source)]
-
-        # get a list of everyones submitted info and answer
-        infos = [info]
-        for n in other_nodes:
-            #for all other nodes, do something with n.infos if we're on the latest question number.
-            infos.extend([i for i in n.infos() if i.number == question_number])
-            #answers are in the contents column in the database for that latest info
-            answers = [i.contents for i in infos]
-
-        # are we ready to receive next transmission?
-        ready = False
-        if len(infos) == self.group_size:
-            from operator import attrgetter
-            if info == max(infos, key=attrgetter("id")):
-                ready = True
-
-        # if property 2 is true this means this is a copying decision
+        # Process info, copying as necessary and updating scores.
         if info.copying:
-            # so find the neighbor to be copied
-            neighbor = [n for n in other_nodes if n.id == int(info.contents)][0]
-            # and increase their number of copies, but only if we're in round 1
-            if info.round == 1:
-                neighbor.n_copies = neighbor.n_copies + 1
-            # fail the original info
-            info.fail()
-            # ask the neighbor to transmit their actual decision to the current player.
-            from operator import attrgetter
-            copied_info = max(neighbor.infos(), key=attrgetter("id"))
-            neighbor.transmit(what=copied_info, to_whom=node)
-            # the current player receives it and copies it.
-            node.receive()
-            node.replicate(info_in=copied_info)
-            # get the newly made info, and copy its properties over as well.
-            new_info = max(node.infos(), key=attrgetter("id"))
-            new_info.property1 = copied_info.property1
-            new_info.copying = info.copying
-            new_info.info_chosen = info.info_chosen
-
-            # update the nodes score according to the score of the new_info
-            if info.round != 0:
-                node.score = node.score + new_info.score
-
-        # if its not a copying decision
-        if not info.copying:
-            # if its round 1
+            info = self.copy_neighbor(node, info)
+        else:
             if info.round == 1:
                 # update node property3 which is the asocial score in round 1
                 node.asoc_score = node.asoc_score + info.score
 
-            # regardless of round, update node.property4 which is the total score across all rounds.
-            if info.round != 0:
-                node.score = node.score + info.score
+        # as long as its not a practice question update total score.
+        if info.round != 0:
+            node.score = node.score + info.score
+        
+        self.update_node_bonus(node)
+        
+        # Check to see if the source needs to send anything out.
+        group = node.network.nodes(type=self.models.LottyNode)
+        group.sort(key=attrgetter("id"))
+        other_nodes = [n for n in group if n.id != node.id]
+        group_infos = [i for i in node.network.infos(type=self.models.LottyInfo) if i.number == info.number]
+        group_infos.sort(key=attrgetter("origin_id"))
+        group_answers = [i.contents for i in group_infos]
 
-        # update property5 to reflect whether or not the ppt has earned the bonus
-        bonus_score = node.score
-        if (bonus_score >= 90):
-            node.bonus = True
-        else: 
-            node.bonus = False 
+        if self.everyone_waiting(group_infos, info):
+            # if everyone copied
+            if all([a == "Ask Someone Else" for a in group_answers]):
+                self.notify_bad_luck(group_infos)
+
+            # if no-one copied
+            elif not "Ask Someone Else" in group_answers:
+                self.send_next_question(node.network)
+                
+            # if some copied
+            else:
+                self.notify_good_luck(group, group_infos, group_answers)
+
+
+    def everyone_waiting(self, group_infos, info):
+        # is everyone waiting for the server to do something?
+        # only return true if everyone has answered and the current
+        # answer is the last in the group.
+        everyone_answered = len(group_infos) == self.group_size
+        if not everyone_answered:
+            return False
+        elif info == max(group_infos, key=attrgetter("id")):
+            return True
+        else:
+            return False
+
+
+    def copy_neighbor(self, node, info):
+        # Find the neighbor
+        neighbors = [n for n in node.network.nodes(type=self.models.LottyNode) if n.id != node.id]
+        neighbor = [n for n in neighbors if n.id == int(info.contents)][0]
+
+        # increase their number of copies, but only if we're in round 1
+        if info.round == 1:
+            neighbor.n_copies = neighbor.n_copies + 1
+
+        # fail the original info
+        info.fail()
+        
+        # ask the neighbor to transmit their actual decision to the current player.
+        copied_info = max(neighbor.infos(), key=attrgetter("id"))
+        neighbor.transmit(what=copied_info, to_whom=node)
+        
+        # the current player receives it and copies it.
+        node.receive()
+        node.replicate(info_in=copied_info)
+        
+        # get the newly made info, and copy its properties over as well.
+        new_info = max(node.infos(), key=attrgetter("id"))
+        new_info.property1 = copied_info.property1
+        new_info.copying = info.copying
+        new_info.info_chosen = info.info_chosen
+
+        return new_info
+
+        # update the nodes score according to the score of the new_info
+        if info.round != 0:
+            node.score = node.score + new_info.score
+
+
+    def update_node_bonus(self, node):
+        # update the nodes bonus
+        node.bonus = node.score >= 90
 
         # add node properties 4 and 5 to ppt object
         ppt = node.participant
         ppt.property1 = node.score
         ppt.property2 = node.bonus
 
-        if ready:
-            # if no one has copied
-            if not "Ask Someone Else" in answers:
-                # if everone has made a decision
-                # tidy up any old vectors from previous neighbor copying
-                source = node.neighbors(type=Source, direction="from")[0]
-                vectors = node.network.vectors()
-                for v in vectors:
-                    if v.origin_id != source.id:
-                        v.fail()
-                #then get the source to transmit to all of its neighbors
-                source.transmit()
-                nodes = source.neighbors()
-            # else if everyone copied
-            elif all([a == "Ask Someone Else" for a in answers]):
-                # I don't know what i.fail is doing here, is it preventing another transmission for now...?
-                for i in infos:
-                    i.fail()
-                source = node.neighbors(type=Source, direction="from")[0]
-                #then  the source transmits a bad luck message to everyone
-                source.transmit(what=Info(origin=source, contents="Bad Luck"))
 
-            # if some copied
-            else:
-                nodes = [node]
-                for n in other_nodes:
-                    nodes.append(n)
-                for i in infos:
-                    if i.contents == "Ask Someone Else":
-                        i.fail()
-                        #matching nodes to their answers here, and copiers are those nodes that have answered "ask someone else"
-                copiers = [n for n, a in zip(nodes, answers) if a == "Ask Someone Else"]
-                not_copiers = [n for n, a in zip(nodes, answers) if a != "Ask Someone Else"]
-                for n in not_copiers:
-                    #connect the not copiers to the copiers
-                    n.connect(whom=copiers)
-                    source = node.neighbors(type=Source, direction="from")[0]
-                
-                #transmit a good luck message from the source to all the copiers 
-                source.transmit(what=Info(origin=source, contents="Good Luck"), to_whom=copiers)
+    def notify_bad_luck(self, infos):
+        for i in infos:
+            i.fail()
+
+        source = infos[0].network.nodes(type=Source)[0]
+        source.transmit(what=Info(origin=source, contents="Bad Luck"))
+
+
+    def send_next_question(self, network):
+        # delete all old vectors
+        source = network.nodes(type=Source)[0]
+        vectors = network.vectors()
+        for v in vectors:
+            if v.origin_id != source.id:
+                v.fail()
+        
+        #then get the source to transmit to all of its neighbors
+        source.transmit()
+
+
+    def notify_good_luck(self, nodes, group_infos, answers):
+        copiers = [n for n, a in zip(nodes, answers) if a == "Ask Someone Else"]
+        not_copiers = [n for n, a in zip(nodes, answers) if a != "Ask Someone Else"]
+        for i in group_infos:
+            if i.contents == "Ask Someone Else":
+                i.fail()
+
+        for n in not_copiers:
+            #connect the not copiers to the copiers
+            n.connect(whom=copiers)
+
+        source = nodes[0].network.nodes(type=Source)[0]
+        source.transmit(what=Info(origin=source, contents="Good Luck"), to_whom=copiers)
+
 
     def recruit(self):
         """Recruit one participant at a time until all networks are full."""
