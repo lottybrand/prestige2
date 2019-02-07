@@ -275,7 +275,7 @@ var process_info = function(info) {
 parse_question = function(question) {
     question_json = JSON.parse(question.contents);
     round = question_json.round;
-    question = question_json.question;
+    question_text = question_json.question;
     Wwer = question_json.Wwer;
     Rwer = question_json.Rwer;
     number = question_json.number;
@@ -303,7 +303,7 @@ display_round_warning = function(round) {
 
 // display the question
 display_question = function() {
-    $("#question").html(question);
+    $("#question").html(question_text);
     if (round != 0) {
         $("#question_number").html("You are in the " + topic + " topic, on question " + number + "/100");
     } else {
@@ -333,6 +333,8 @@ start_answer_timeout = function() {
         $("#countdown").html(countdown);
         if (countdown <= 0) {
             disable_answer_buttons();
+            $("#countdown").hide();
+            $("#countdown").html("");
             submit_response(Wwer);
         } else {
             start_answer_timeout();
