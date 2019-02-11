@@ -119,7 +119,10 @@ $(document).ready(function() {
     update_ui_attention_check_passed = function() {
         $("#round2div").hide();
         $("#round2div_check").hide();
-
+        $("#welcome_div").show();
+        $("#submit_div").show();
+        $("#neighbor_buttons").show();
+        $("#info_choice_buttons").show();
         display_question();
     }
 
