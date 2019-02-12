@@ -402,7 +402,7 @@ update_neighbor_button = function(number, neighbor) {
     // get neighbor properties, and button details
     neighbor_properties = JSON.parse(neighbor.property1);
     button_id = "#neighbor_button_" + current_button;
-    neighbor_image = "<img src='/static/images/stick.png' height='90' width='50'><br>"
+    neighbor_image = "<img src='/static/images/stick.png' height='90' width='50'><br>";
 
     // update button and question display according to info_chosen
     if (info_chosen == "Player ID") { 
@@ -423,7 +423,7 @@ update_neighbor_button = function(number, neighbor) {
     });
     $(button_id).prop("disabled", false);
     $(button_id).show();
-}
+};
 
 disable_R2_buttons = function() {
     $("#check_AB").addClass('disabled');
