@@ -256,12 +256,16 @@ class Bartlett1932(Experiment):
         nodes = node.network.nodes(type=self.models.LottyNode)
         requests = [n.n_requests for n in nodes]
 
-        if node.n_requests == max(requests) and requests.count(node.n_requests) == 1:
-            if (node.n_requests - min(requests) > 30):
-                loser = min(nodes, key=attrgetter("n_requests"))
+        if (node.n_requests - min(requests) > 30):
+            loser = min(nodes, key=attrgetter("n_requests"))
+            try:
+                loser.fail()
+            except AttributeError:
+                pass
+            else:
                 self.reset_request_counters(node.network)
                 loser.network.max_size = loser.network.max_size - 1
-                loser.fail()
+                loser.network.calculate_full()
                 most_recent_info = max(node.network.infos(type=self.models.LottyInfo), key=attrgetter("id"))
                 self.advance_group(most_recent_info.origin, most_recent_info)
 
