@@ -255,19 +255,22 @@ class Bartlett1932(Experiment):
     def check_node_activity(self, node):
         nodes = node.network.nodes(type=self.models.LottyNode)
         requests = [n.n_requests for n in nodes]
+        max_requests = max(requests)
 
-        if (node.n_requests - min(requests) > 30):
-            loser = min(nodes, key=attrgetter("n_requests"))
-            try:
-                loser.fail()
-            except AttributeError:
-                pass
-            else:
-                self.reset_request_counters(node.network)
-                loser.network.max_size = loser.network.max_size - 1
-                loser.network.calculate_full()
-                most_recent_info = max(node.network.infos(type=self.models.LottyInfo), key=attrgetter("id"))
-                self.advance_group(most_recent_info.origin, most_recent_info)
+        players = [n for n in nodes if max_requests - n.n_requests < 30]
+        abandoners = [n for n in nodes if max_requests - n.n_requests >= 30]
+
+        player_ids = [n.id for n in players]
+        max_player_id = max(player_ids)
+
+        if node.id == max_player_id:
+            for a in abandoners:
+                a.network.max_size = a.network.max_size - 1
+                a.fail()
+            
+            self.reset_request_counters(node.network)
+            most_recent_info = max(node.network.infos(type=self.models.LottyInfo), key=attrgetter("id"))
+            self.advance_group(most_recent_info.origin, most_recent_info)
 
 
     def reset_request_counters(self, network):
