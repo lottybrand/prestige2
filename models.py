@@ -270,7 +270,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'A Rubiks cube weighs?',
                 'number':12,
-                'round': 1,
+                'round':1,
                 'topic': 'Weight',
                 'Wwer': '1.4kg',
                 'Rwer': '0.14kg',
@@ -279,7 +279,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'A blue whale weighs?',
                 'number':13,
-                'round': 1,
+                'round':1,
                 'topic': 'Weight',
                 'Wwer': '1,400kg',
                 'Rwer': '140,000kg',
@@ -288,7 +288,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'A tennis ball weighs?',
                 'number':14,
-                'round': 1,
+                'round':1,
                 'topic': 'Weight',
                 'Wwer': '5.85g',
                 'Rwer': '58.5g',
@@ -297,7 +297,7 @@ class QuizSource(Source):
             json.dumps({
                 'question': 'Which weighs more, on average?',
                 'number':15,
-                'round': 1,
+                'round':1,
                 'topic': 'Weight',
                 'Wwer': 'A wood pigeon',
                 'Rwer': 'A seagull',

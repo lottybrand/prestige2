@@ -60,16 +60,16 @@ $(document).ready(function() {
     // Add functionality to buttons controlling participants' info choice
 
     $("#info-choice-a").click(function() {
-        submit_choice("#info-choice-a")
+        submit_choice("#info-choice-a");
     });
 
     $("#info-choice-b").click(function() {
-        submit_choice("#info-choice-b")
+        submit_choice("#info-choice-b");
     });
 
     submit_choice = function(choice) {
         disable_choice_buttons();   
-        info_chosen = $("choice").text();
+        info_chosen = ($(choice).text());
         check_neighbors(info_chosen);
     }
 
@@ -401,22 +401,29 @@ process_neighbors = function() {
 update_neighbor_button = function(number, neighbor) {
     // get neighbor properties, and button details
     neighbor_properties = JSON.parse(neighbor.property1);
+    console.log("I'm here 1");
     button_id = "#neighbor_button_" + current_button;
+    console.log("I'm here 2");
     neighbor_image = "<img src='/static/images/stick.png' height='90' width='50'><br>";
+    console.log("I'm here 3");
 
     // update button and question display according to info_chosen
     if (info_chosen == "Player ID") { 
+        console.log("I'm here 4");
         $(button_id).html(neighbor_image + "player ID: " + neighbor_properties.name);
 
     } else if (info_chosen == "Times chosen in Round 1") {
+        console.log("I'm here 5");
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times");
 
     } else if (info_chosen == "Total Score") {
+        console.log("im here 6");
         $(button_id).html(neighbor_image + neighbor_properties.asoc_score + " correct");
     }
     
     // add button functionality
     $(button_id).click(function() {
+        console.log("im here 7");
         submit_response(neighbor.id, true, info_chosen);
         disable_neighbor_buttons();
         $("#question1").hide();
