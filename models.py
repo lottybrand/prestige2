@@ -96,6 +96,10 @@ class LottyInfo(Info):
     def round(self):
         return json.loads(self.property1)["round"]
 
+    @property
+    def human(self):
+        return json.loads(self.property1)["human"]
+
     @number.setter
     def number(self, val):
         p1 = json.loads(self.property1)
@@ -124,6 +128,12 @@ class LottyInfo(Info):
     def round(self, val):
         p1 = json.loads(self.property1)
         p1["round"] = val
+        self.property1 = json.dumps(p1)
+
+    @human.setter
+    def human(self, val):
+        p1 = json.loads(self.property1)
+        p1["human"] = val
         self.property1 = json.dumps(p1)
 
 class QuizSource(Source):
