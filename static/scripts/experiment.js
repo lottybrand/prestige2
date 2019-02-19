@@ -151,7 +151,8 @@ submit_response = function(response, copy=false, info_chosen="NA") {
             "copying": copy,
             "score": (response == Rwer)*1,
             "info_chosen": info_chosen,
-            "round": round
+            "round": round,
+            "human": 'true'
         })
     }).done(function (resp) {
         setTimeout(function() {
@@ -339,6 +340,7 @@ start_answer_timeout = function() {
             $("#countdown").hide();
             $("#countdown").html("");
             submit_response(Wwer);
+            lotty_info.property1.human = 'false';
         } else {
             start_answer_timeout();
         }
@@ -401,23 +403,17 @@ process_neighbors = function() {
 update_neighbor_button = function(number, neighbor) {
     // get neighbor properties, and button details
     neighbor_properties = JSON.parse(neighbor.property1);
-    console.log("I'm here 1");
     button_id = "#neighbor_button_" + current_button;
-    console.log("I'm here 2");
     neighbor_image = "<img src='/static/images/stick.png' height='90' width='50'><br>";
-    console.log("I'm here 3");
 
     // update button and question display according to info_chosen
     if (info_chosen == "Player ID") { 
-        console.log("I'm here 4");
         $(button_id).html(neighbor_image + "player ID: " + neighbor_properties.name);
 
     } else if (info_chosen == "Times chosen in Round 1") {
-        console.log("I'm here 5");
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times");
 
     } else if (info_chosen == "Total Score") {
-        console.log("im here 6");
         $(button_id).html(neighbor_image + neighbor_properties.asoc_score + " correct");
     }
     
