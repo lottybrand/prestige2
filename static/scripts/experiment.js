@@ -424,7 +424,6 @@ update_neighbor_button = function(number, neighbor) {
     
     // add button functionality
     $(button_id).click(function() {
-        console.log("im here 7");
         submit_response(response=neighbor.id,
                         copy=true,
                         info_chosen=info_chosen);
