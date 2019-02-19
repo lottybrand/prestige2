@@ -54,7 +54,7 @@ $(document).ready(function() {
         $("#countdown").hide();
         $("#countdown").html("");
         disable_answer_buttons();
-        submit_response($(answer).text());
+        submit_response(response=$(answer).text());
     }
 
     // Add functionality to buttons controlling participants' info choice
@@ -142,7 +142,7 @@ $(document).ready(function() {
     hide_pics();
 });
 
-submit_response = function(response, copy=false, info_chosen="NA") {
+submit_response = function(response, copy=false, info_chosen="NA", human=true) {
     dallinger.createInfo(my_node_id, {
         contents: response,
         info_type: "LottyInfo",
@@ -152,7 +152,7 @@ submit_response = function(response, copy=false, info_chosen="NA") {
             "score": (response == Rwer)*1,
             "info_chosen": info_chosen,
             "round": round,
-            "human": 'true'
+            "human": human
         })
     }).done(function (resp) {
         setTimeout(function() {
@@ -231,7 +231,10 @@ var process_info = function(info) {
     if (info.contents == "Bad Luck") {
         $("#question").html("Sorry, everyone chose to Ask Someone Else, so no one can score points for this question");
         setTimeout(function() {
-            submit_response("Bad Luck");
+            submit_response(response="Bad Luck",
+                            copy=undefined,
+                            info_chosen=undefined,
+                            human=false);
         }, 3000);
 
     // a contents of "Good luck" indicates you chose to copy, but not everyone else did.
@@ -339,8 +342,10 @@ start_answer_timeout = function() {
             disable_answer_buttons();
             $("#countdown").hide();
             $("#countdown").html("");
-            submit_response(Wwer);
-            lotty_info.property1.human = 'false';
+            submit_response(Wwer,
+                            copy=undefined,
+                            info_chosen=undefined,
+                            human=false);
         } else {
             start_answer_timeout();
         }
@@ -420,7 +425,9 @@ update_neighbor_button = function(number, neighbor) {
     // add button functionality
     $(button_id).click(function() {
         console.log("im here 7");
-        submit_response(neighbor.id, true, info_chosen);
+        submit_response(response=neighbor.id,
+                        copy=true,
+                        info_chosen=info_chosen);
         disable_neighbor_buttons();
         $("#question1").hide();
     });
