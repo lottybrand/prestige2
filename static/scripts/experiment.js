@@ -300,11 +300,11 @@ display_round_warning = function(round) {
     if (round == 1) {
         $("#round2div").hide();
         $("#practice").show();
-        $("#practiceInfo").html('The first three questions were practice questions. You are now starting the real quiz and your score will be counted');
+        $("#practiceInfo").html('The first four questions were practice questions. <br> <br> You are now starting Round 1 of the real quiz and your score will be counted. <br> <br> Round 1 consists of 40 questions.');
     }
     if (round == 2) {
         $("#round2div").show();
-        $("#r2info").html('You are now starting Round 2.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either ' + check_info);
+        $("#r2info").html('Thank you for completing Round 1. <br> <br> You are now starting Round 2 which consists of the final 60 questions.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either ' + check_info);
     }
 }
 
@@ -314,7 +314,7 @@ display_question = function() {
     if (round != 0) {
         $("#question_number").html("You are in the " + topic + " topic, on question " + number + "/100");
     } else {
-        $("#question_number").html("You are in the " + topic + " Round, on question " + number + "/3");
+        $("#question_number").html("You are in the " + topic + " Round, on question " + number + "/4");
     }
     if (pic == true) {
         show_pics(number);

@@ -245,11 +245,12 @@ class Bartlett1932(Experiment):
 
     def transmission_get_request(self, node, transmissions):
         """Run when a request to get transmissions is complete."""
-        node.n_requests = node.n_requests + 1
-        self.save()
+        if node.network.full:
+            node.n_requests = node.n_requests + 1
+            self.save()
 
-        if node.n_requests > 60:
-            self.check_node_activity(node)
+            if node.n_requests > 60:
+                self.check_node_activity(node)
 
 
     def check_node_activity(self, node):
