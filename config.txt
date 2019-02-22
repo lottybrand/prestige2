@@ -13,7 +13,9 @@ duration = 1
 us_only = false
 approve_requirement = 95
 contact_email_on_error = culturalevolution@exeter.ac.uk
-ad_group = Quiz
+group_name = prestigeQuiz22
+assign_qualifications = true
+qualification_blacklist = prestigeQuiz22
 organization_name = University of Exeter
 browser_exclude_rule = MSIE, mobile,
 
