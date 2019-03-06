@@ -167,6 +167,7 @@ create_agent = function() {
     dallinger.createAgent()
     .done(function (resp) {
         my_node_id = resp.node.id;
+        my_network_id = resp.node.network_id;
         $("#welcome").html("Welcome to our quiz, you are player " +
                            JSON.parse(resp.node.property1).name);
         get_group();
@@ -183,19 +184,23 @@ create_agent = function() {
 };
 
  get_group = function() {
-    //console.log(self.network.nodes(size));
-    //dallinger.getNetwork(self, size)
-    //   .done(function(resp){
-    //  size_so_far = ((resp.network.size)-1);
-    //    })
-    console.log("getting group size");
-    $("#question").html("Waiting for other players to join. Currently there are +size_so_far+ /10 players <br> <br> Please do not refresh your page");
-    // if (size_so_far == 10) {
-    get_transmissions(my_node_id);
-    //} else {
-    // setTimeout(function(){
-    //             get_transmissions();
-    //         }, 1000);
+    url = "/node/1/neighbors"
+    dallinger.get(url).done(function(resp) {
+        size_so_far = resp.nodes.length
+        $("#question").html("Waiting for other players to join. Currently there are " + size_so_far + "/10 players. <br> <br> Please do not refresh your page.");
+
+        url = "/network/" + my_network_id;
+        dallinger.get(url).done(function(resp) {
+            full = resp.network.full
+            setTimeout(function() {
+                if (full == true) {
+                    get_transmissions();
+                } else {
+                    get_group();
+                }
+            });
+        });
+    });
  };
 
 // get any pending incoming transmissions
