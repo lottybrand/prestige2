@@ -169,7 +169,7 @@ create_agent = function() {
         my_node_id = resp.node.id;
         $("#welcome").html("Welcome to our quiz, you are player " +
                            JSON.parse(resp.node.property1).name);
-        get_transmissions(my_node_id);
+        get_group();
     })
     .fail(function (rejection) {
       // A 403 is our signal that it's time to go to the questionnaire
@@ -181,6 +181,16 @@ create_agent = function() {
         }
     });
 };
+
+ get_group = function() {
+    //dallinger.getNetwork(self, size)
+        //done(function(resp){
+            //size_so_far = ((resp.network.size)-1);
+        //}
+    console.log("getting group size");
+    $("#question").html("Waiting for other players to join. Currently there are +size_so_far+ /10 players <br> <br> Please do not refresh your page");
+    get_transmissions(my_node_id);
+ };
 
 // get any pending incoming transmissions
 // this function is called repeatedly while we are waiting for other to catch up.
