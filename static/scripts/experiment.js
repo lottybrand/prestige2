@@ -198,7 +198,7 @@ create_agent = function() {
                 } else {
                     get_group();
                 }
-            });
+            }, 1000);
         });
     });
  };
