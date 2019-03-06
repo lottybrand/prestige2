@@ -183,13 +183,19 @@ create_agent = function() {
 };
 
  get_group = function() {
+    //console.log(self.network.nodes(size));
     //dallinger.getNetwork(self, size)
-        //done(function(resp){
-            //size_so_far = ((resp.network.size)-1);
-        //}
+    //   .done(function(resp){
+    //  size_so_far = ((resp.network.size)-1);
+    //    })
     console.log("getting group size");
     $("#question").html("Waiting for other players to join. Currently there are +size_so_far+ /10 players <br> <br> Please do not refresh your page");
+    // if (size_so_far == 10) {
     get_transmissions(my_node_id);
+    //} else {
+    // setTimeout(function(){
+    //             get_transmissions();
+    //         }, 1000);
  };
 
 // get any pending incoming transmissions
