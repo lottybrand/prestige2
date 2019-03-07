@@ -235,19 +235,14 @@ class Bartlett1932(Experiment):
 
         else:
             self.recruiter().close_recruitment()
-
-    
-    def data_check(self, participant):
-        ppt_node = participant.nodes()
-
-        return len(ppt_node) == 1
-
     
     def bonus(self, participant):
         """Calculate a participants bonus."""
         nodes = participant.nodes()
-        node = nodes[0]
+        if len(nodes) != 1:
+            return 0
 
+        node = nodes[0]
         bonus = node.bonus
         if (bonus == True):
             return 20
