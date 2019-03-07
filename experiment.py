@@ -81,6 +81,17 @@ class Bartlett1932(Experiment):
         return node
 
 
+    def get_network_for_participant(self, participant):
+        if participant.nodes(failed="all"):
+            return None
+
+        networks = self.networks(full=False)
+        if networks:
+            return min(networks, key=attrgetter("id"))
+        else:
+            return None
+
+
     def add_node_to_network(self, node, network):
         """Add node to the chain and receive transmissions."""
         network.add_node(node)
