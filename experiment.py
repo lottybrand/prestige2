@@ -119,18 +119,21 @@ class Bartlett1932(Experiment):
         group_infos.sort(key=attrgetter("origin_id"))
         group_answers = [i.contents for i in group_infos]
 
-        if ([Wwer | Rwer !in group_answers]):
-
         if self.everyone_waiting(group_infos, info):
             # if everyone copied
             if all([a == "Ask Someone Else" for a in group_answers]):
                 self.notify_bad_luck(group_infos)
-    
+
+            # if no-one copied
+            elif not "Ask Someone Else" in group_answers:
+                self.send_next_question(node.network)
+                
             # if some copied
             elif:
                 self.notify_good_luck(group, group_infos, group_answers)
 
-            else:
+            elif: 
+                "Wwer" or "Rwer" in group_answers:
                 self.send_next_question(node.network)
 
 
