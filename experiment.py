@@ -118,8 +118,12 @@ class Bartlett1932(Experiment):
         group_infos = [i for i in node.network.infos(type=self.models.LottyInfo) if i.number == info.number]
         group_infos.sort(key=attrgetter("origin_id"))
         group_answers = [i.contents for i in group_infos]
+        import json
+        question = json.loads(max(node.network.nodes(type=QuizSource)[0].infos(), key=attrgetter("id")).contents)
+        Rwer = question["Rwer"]
+        Wwer = question["Wwer"]
 
-        if self.everyone_waiting(group_infos, info):
+        if self.everyone_waiting(group_infos, info, group_answers, Rwer, Wwer):
             # if everyone copied
             if all([a == "Ask Someone Else" for a in group_answers]):
                 self.notify_bad_luck(group_infos)
@@ -129,25 +133,23 @@ class Bartlett1932(Experiment):
                 self.send_next_question(node.network)
                 
             # if some copied
-            elif:
+            else:
                 self.notify_good_luck(group, group_infos, group_answers)
 
-            elif: 
-                "Wwer" or "Rwer" in group_answers:
-                self.send_next_question(node.network)
 
-
-    def everyone_waiting(self, group_infos, info):
+    def everyone_waiting(self, group_infos, info, group_answers, Rwer, Wwer):
         # is everyone waiting for the server to do something?
         # only return true if everyone has answered and the current
         # answer is the last in the group.
         everyone_answered = len(group_infos) == (info.network.size() - 1)
         if not everyone_answered:
             return False
-        elif info == max(group_infos, key=attrgetter("id")):
-            return True
-        else:
-            return False
+
+        if all([a in [Rwer, Wwer, "Ask Someone Else"] for a in group_answers]):
+            if info == max(group_infos, key=attrgetter("id")):
+                return True
+        
+        return False
 
 
     def copy_neighbor(self, node, info):
