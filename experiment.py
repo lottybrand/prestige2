@@ -238,13 +238,9 @@ class Bartlett1932(Experiment):
 
     
     def data_check(self, participant):
-        ppt_node = participants.nodes()[0]
-        response = ppt_node.infos()[0].contents
+        ppt_node = participant.nodes()
 
-        if ppt_node > 1
-            return False
-
-        return True
+        return len(ppt_node) == 1
 
     
     def bonus(self, participant):
