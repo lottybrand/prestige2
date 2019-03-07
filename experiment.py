@@ -119,18 +119,19 @@ class Bartlett1932(Experiment):
         group_infos.sort(key=attrgetter("origin_id"))
         group_answers = [i.contents for i in group_infos]
 
+        if ([Wwer | Rwer !in group_answers]):
+
         if self.everyone_waiting(group_infos, info):
             # if everyone copied
             if all([a == "Ask Someone Else" for a in group_answers]):
                 self.notify_bad_luck(group_infos)
-
-            # if no-one copied
-            elif not "Ask Someone Else" in group_answers:
-                self.send_next_question(node.network)
-                
+    
             # if some copied
-            else:
+            elif:
                 self.notify_good_luck(group, group_infos, group_answers)
+
+            else:
+                self.send_next_question(node.network)
 
 
     def everyone_waiting(self, group_infos, info):
@@ -232,6 +233,17 @@ class Bartlett1932(Experiment):
         else:
             self.recruiter().close_recruitment()
 
+    
+    def data_check(self, participant):
+        ppt_node = participants.nodes()[0]
+        response = ppt_node.infos()[0].contents
+
+        if ppt_node > 1
+            return False
+
+        return True
+
+    
     def bonus(self, participant):
         """Calculate a participants bonus."""
         nodes = participant.nodes()
