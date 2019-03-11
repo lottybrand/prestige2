@@ -136,6 +136,7 @@ class Bartlett1932(Experiment):
         print(q)
         sys.stdout.flush()
         q = q.infos()
+        q = [i for i in q if i.contents not in ["Good Luck", "Bad Luck"]]
         print(q)
         sys.stdout.flush()
         q = max(q, key=attrgetter('id'))
