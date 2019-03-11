@@ -423,7 +423,7 @@ process_neighbors = function() {
     });
 
     // show the buttons
-    $("#neighbor_buttons").show();
+    $("#neighbor_buttons").show()
 };
 
 update_neighbor_button = function(number, neighbor) {
@@ -561,14 +561,14 @@ add_neighbor_buttons = function() {
         }
         $("#neighbor_buttons").html(button_string);
         $("#neighbor_buttons").hide();
-        $(button_string).prop("disabled",true);
         for (i = 1; i <= group_size-1; i++) {
             button_string = "#neighbor_button_" + i;
             $(button_string).css({
                 "margin-right": "14px"
             });
-        }
-        disable_neighbor_buttons();
+            $(button_string).hide();
+            $(button_string).prop("disabled",true);
+            }
     });
 }
 
