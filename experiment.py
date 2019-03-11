@@ -131,9 +131,24 @@ class Bartlett1932(Experiment):
         group_infos.sort(key=attrgetter("origin_id"))
         group_answers = [i.contents for i in group_infos]
         import json
-        question = json.loads(max(node.network.nodes(type=self.models.QuizSource)[0].infos(), key=attrgetter("id")).contents)
-        Rwer = question["Rwer"]
-        Wwer = question["Wwer"]
+        import sys
+        q = node.network.nodes(type=self.models.QuizSource)[0]
+        print(q)
+        sys.stdout.flush()
+        q = q.infos()
+        print(q)
+        sys.stdout.flush()
+        q = max(q, key=attrgetter('id'))
+        print(q)
+        sys.stdout.flush()
+        q = q.contents
+        print(q)
+        sys.stdout.flush()
+        q = json.loads(q)
+        print(q)
+        sys.stdout.flush()
+        Rwer = q["Rwer"]
+        Wwer = q["Wwer"]
 
         if self.everyone_waiting(group_infos, info, group_answers, Rwer, Wwer):
             self.log("PRINTED 8 !!!!!!!!! !!!!!!!")
