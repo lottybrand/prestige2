@@ -178,7 +178,7 @@ class Bartlett1932(Experiment):
             return False
             self.log("PRINTED 2 !!!!!!!!! !!!!!!!")
 
-        if all([a in [Rwer, Wwer, "Ask Someone Else"] for a in group_answers]):
+        if all([a in [Rwer, Wwer, "Ask Someone Else", "Bad Luck"] for a in group_answers]):
             if info == max(group_infos, key=attrgetter("id")):
                 return True
                 self.log("PRINTED 3 !!!!!!!!! !!!!!!!")
