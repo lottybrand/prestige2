@@ -212,20 +212,20 @@ get_transmissions = function() {
         status: "pending"
     })
     .done(function (resp) {
-        console.log("HEREIAM1");
+        console.log("*** Checking for transmissions");
         transmissions = resp.transmissions;
-        console.log("HEREIAM2");
+        console.log("*** Resp:" + resp);
         if (transmissions.length > 0) {
             if (transmissions.length > 1) {
                 console.log("More than one transmission - unexpected!");
             } else {
+                console.log("*** Got one transmission, info id: " + transmissions[0].info_id);
                 get_info(transmissions[0].info_id);
-                console.log("HEREIAM3");
             }
         } else {
+            console.log("*** Got 0 transmissions, waiting 1 s and repeating");
             setTimeout(function(){
                 get_transmissions();
-                console.log("HEREIAM4");
             }, 1000);
         }
     })
@@ -240,8 +240,8 @@ get_transmissions = function() {
 var get_info = function(info_id) {
     dallinger.getInfo(my_node_id, info_id)
     .done(function(resp) {
+        console.log("*** Getting info: " + resp);
         process_info(resp.info);
-        console.log("HEREIAM5");
     })
     .fail(function (rejection) {
         console.log(rejection);
@@ -254,9 +254,10 @@ var get_info = function(info_id) {
 var process_info = function(info) {
     // a contents of "Bad Luck" indicates that everyone copied.
     // participants are forced to answer "Bad Luck" which is always wrong.
+    console.log("*** Processing ingo");
     if (info.contents == "Bad Luck") {
+        console.log("*** info was bad luck");
         $("#question").html("Sorry, everyone chose to Ask Someone Else, so no one can score points for this question");
-        console.log("HEREIAM6");
         setTimeout(function() {
             submit_response(response="Bad Luck",
                             copy=undefined,
@@ -267,24 +268,26 @@ var process_info = function(info) {
     // a contents of "Good luck" indicates you chose to copy, but not everyone else did.
     // depending on the round and condition different things will happen
     } else if (info.contents == "Good Luck") {
+        console.log("*** Info was good luck");
         if (round == 2) {
-            console.log("HEREIAM7");
+            console.log("*** getting info choice");
             info_choice();    
         } else if (condition == "A") {
+            console.log("*** Getting neighbors by player id");
             info_chosen = "Player ID";
             check_neighbors(info_chosen);
         } else if (condition == "B" || condition == "C") {
             info_chosen = "Total Score";
-            console.log("HEREIAM8");
+            console.log("*** Getting neighbors by total score");
             check_neighbors(info_chosen);
         }
 
     // Any other contents indicates its a question from the source.
     } else {
         // get question details
+        console.log("*** Info is a question");
         parse_question(info);
-        console.log("HEREIAM9");
-
+        
         // if its q1, show the round 1 warning
         if (number == 1) {
             display_round_warning(1);
@@ -304,14 +307,13 @@ var process_info = function(info) {
         // display the question
         else {
             display_question();
-            console.log("HEREIAM10");
         }
     }
 };
 
 // Extract the relevant information from a question Info.
 parse_question = function(question) {
-    console.log("HEREIAM11");
+    console.log("*** Parsing question");
     question_json = JSON.parse(question.contents);
     round = question_json.round;
     question_text = question_json.question;
@@ -342,8 +344,8 @@ display_round_warning = function(round) {
 
 // display the question
 display_question = function() {
+    console.log("*** Displaying question");
     $("#question").html(question_text);
-    console.log("HEREIAM12");
     if (round != 0) {
         $("#question_number").html("You are in the " + topic + " topic, on question " + number + "/100");
     } else {
