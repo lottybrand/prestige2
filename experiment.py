@@ -26,7 +26,7 @@ class Bartlett1932(Experiment):
 
         Finally, setup() is called.
         """
-        self.group_size = 2
+        self.group_size = 3
         super(Bartlett1932, self).__init__(session)
         import models
         self.models = models
@@ -111,7 +111,6 @@ class Bartlett1932(Experiment):
             if info.round == 1:
                 # update node property3 which is the asocial score in round 1
                 node.asoc_score = node.asoc_score + info.score
-                self.log("PRINTED !!!!!!!!! !!!!!!!")
 
         # as long as its not a practice question update total score.
         if info.round != 0:
@@ -131,42 +130,27 @@ class Bartlett1932(Experiment):
         group_infos.sort(key=attrgetter("origin_id"))
         group_answers = [i.contents for i in group_infos]
         import json
-        import sys
         q = node.network.nodes(type=self.models.QuizSource)[0]
-        print(q)
-        sys.stdout.flush()
         q = q.infos()
         q = [i for i in q if i.contents not in ["Good Luck", "Bad Luck"]]
-        print(q)
-        sys.stdout.flush()
         q = max(q, key=attrgetter('id'))
-        print(q)
-        sys.stdout.flush()
         q = q.contents
-        print(q)
-        sys.stdout.flush()
         q = json.loads(q)
-        print(q)
-        sys.stdout.flush()
         Rwer = q["Rwer"]
         Wwer = q["Wwer"]
 
         if self.everyone_waiting(group_infos, info, group_answers, Rwer, Wwer):
-            self.log("PRINTED 8 !!!!!!!!! !!!!!!!")
             # if everyone copied
             if all([a == "Ask Someone Else" for a in group_answers]):
                 self.notify_bad_luck(group_infos)
-                self.log("PRINTED 5 !!!!!!!!! !!!!!!!")
 
             # if no-one copied
             elif not "Ask Someone Else" in group_answers:
                 self.send_next_question(node.network)
-                self.log("PRINTED 6 !!!!!!!!! !!!!!!!")
                 
             # if some copied
             else:
                 self.notify_good_luck(group, group_infos, group_answers)
-                self.log("PRINTED 7 !!!!!!!!! !!!!!!!")
 
 
     def everyone_waiting(self, group_infos, info, group_answers, Rwer, Wwer):
@@ -176,15 +160,12 @@ class Bartlett1932(Experiment):
         everyone_answered = len(group_infos) == (info.network.size() - 1)
         if not everyone_answered:
             return False
-            self.log("PRINTED 2 !!!!!!!!! !!!!!!!")
 
         if all([a in [Rwer, Wwer, "Ask Someone Else", "Bad Luck"] for a in group_answers]):
             if info == max(group_infos, key=attrgetter("id")):
                 return True
-                self.log("PRINTED 3 !!!!!!!!! !!!!!!!")
         
         return False
-        self.log("PRINTED 4 !!!!!!!!! !!!!!!!")
 
 
     def copy_neighbor(self, node, info):

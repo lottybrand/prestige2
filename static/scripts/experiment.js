@@ -212,16 +212,20 @@ get_transmissions = function() {
         status: "pending"
     })
     .done(function (resp) {
+        console.log("HEREIAM1");
         transmissions = resp.transmissions;
+        console.log("HEREIAM2");
         if (transmissions.length > 0) {
             if (transmissions.length > 1) {
                 console.log("More than one transmission - unexpected!");
             } else {
                 get_info(transmissions[0].info_id);
+                console.log("HEREIAM3");
             }
         } else {
             setTimeout(function(){
                 get_transmissions();
+                console.log("HEREIAM4");
             }, 1000);
         }
     })
@@ -237,6 +241,7 @@ var get_info = function(info_id) {
     dallinger.getInfo(my_node_id, info_id)
     .done(function(resp) {
         process_info(resp.info);
+        console.log("HEREIAM5");
     })
     .fail(function (rejection) {
         console.log(rejection);
@@ -251,6 +256,7 @@ var process_info = function(info) {
     // participants are forced to answer "Bad Luck" which is always wrong.
     if (info.contents == "Bad Luck") {
         $("#question").html("Sorry, everyone chose to Ask Someone Else, so no one can score points for this question");
+        console.log("HEREIAM6");
         setTimeout(function() {
             submit_response(response="Bad Luck",
                             copy=undefined,
@@ -262,12 +268,14 @@ var process_info = function(info) {
     // depending on the round and condition different things will happen
     } else if (info.contents == "Good Luck") {
         if (round == 2) {
+            console.log("HEREIAM7");
             info_choice();    
         } else if (condition == "A") {
             info_chosen = "Player ID";
             check_neighbors(info_chosen);
         } else if (condition == "B" || condition == "C") {
             info_chosen = "Total Score";
+            console.log("HEREIAM8");
             check_neighbors(info_chosen);
         }
 
@@ -275,6 +283,7 @@ var process_info = function(info) {
     } else {
         // get question details
         parse_question(info);
+        console.log("HEREIAM9");
 
         // if its q1, show the round 1 warning
         if (number == 1) {
@@ -295,12 +304,14 @@ var process_info = function(info) {
         // display the question
         else {
             display_question();
+            console.log("HEREIAM10");
         }
     }
 };
 
 // Extract the relevant information from a question Info.
 parse_question = function(question) {
+    console.log("HEREIAM11");
     question_json = JSON.parse(question.contents);
     round = question_json.round;
     question_text = question_json.question;
@@ -332,6 +343,7 @@ display_round_warning = function(round) {
 // display the question
 display_question = function() {
     $("#question").html(question_text);
+    console.log("HEREIAM12");
     if (round != 0) {
         $("#question_number").html("You are in the " + topic + " topic, on question " + number + "/100");
     } else {
