@@ -201,11 +201,6 @@ class Bartlett1932(Experiment):
 
         return new_info
 
-        # update the nodes score according to the score of the new_info
-        if info.round != 0:
-            node.score = node.score + new_info.score
-            self.save()
-
 
     def update_node_bonus(self, node):
         # update the nodes bonus
