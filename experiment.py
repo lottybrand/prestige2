@@ -177,8 +177,10 @@ class Bartlett1932(Experiment):
 
         # increase their number of copies, but only if we're in round 1
         if info.round == 1:
+            self.log("incremementing n_copies of node {}, from {} to {}".format(neighbor.id, neighbor.n_copies, neighbor.n_copies + 1))
             neighbor.n_copies = neighbor.n_copies + 1
             self.save()
+            self.log("n_copies of node {} has been incremented, its now {}".format(neighbor.id, neighbor.n_copies))
 
         # fail the original info
         info.fail()
