@@ -158,6 +158,9 @@ submit_response = function(response, copy=false, info_chosen="NA", human=true) {
         setTimeout(function() {
             get_transmissions();
         }, 1000);
+    })
+    .fail(function (rejection) {
+        dallinger.error(rejection);
     });
 }
 
