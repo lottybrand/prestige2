@@ -32,5 +32,3 @@ notification_url = None
 clock_on = false
 logfile = -
 
-[Heroku Access]
-heroku_team = dallinger

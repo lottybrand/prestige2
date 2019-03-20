@@ -280,7 +280,7 @@ var process_info = function(info) {
             info_chosen = "Player ID";
             check_neighbors(info_chosen);
         } else if (condition == "B" || condition == "C") {
-            info_chosen = "Total Score";
+            info_chosen = "Total Score in Round 1";
             console.log("*** Getting neighbors by total score");
             check_neighbors(info_chosen);
         }
@@ -337,7 +337,7 @@ display_round_warning = function(round) {
     if (round == 1) {
         $("#round2div").hide();
         $("#practice").show();
-        $("#practiceInfo").html('The first four questions were practice questions. <br> <br> You are now starting Round 1 of the real quiz and your score will be counted. <br> <br> Round 1 consists of 40 questions.');
+        $("#practiceInfo").html('The first four questions were practice questions. <br> <br> You are now starting Round 1 of the real quiz and your score will be counted. <br> <br> Round 1 consists of 40 questions. <br> <br> <br> REMEMBER: You can still score points for yourself if you choose to "Ask Someone Else" and their answer was correct');
     }
     if (round == 2) {
         $("#round2div").show();
@@ -427,7 +427,7 @@ process_neighbors = function() {
     } else if (info_chosen == "Times chosen in Round 1") {
         $("#question1").html("Below are how many times they were chosen in Round 1 by other players");
 
-    } else if (info_chosen == "Total Score") {
+    } else if (info_chosen == "Total Score in Round 1") {
         $("#question1").html("Below is how many questions they have answered correctly themselves");
     }
     $("#question1").show();
@@ -456,7 +456,7 @@ update_neighbor_button = function(number, neighbor) {
     } else if (info_chosen == "Times chosen in Round 1") {
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times");
 
-    } else if (info_chosen == "Total Score") {
+    } else if (info_chosen == "Total Score in Round 1") {
         $(button_id).html(neighbor_image + neighbor_properties.asoc_score + " correct");
     }
     
@@ -542,7 +542,7 @@ assign_choice_buttons = function() {
     if (condition == "A" || condition == "B") {
         info_choice_a = "Player ID"
     } else {
-        info_choice_a = "Total Score"
+        info_choice_a = "Total Score in Round 1"
     }
     if (Math.random() < 0.5) {
         $("#info-choice-a").html(info_choice_a);

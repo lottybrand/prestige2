@@ -26,7 +26,7 @@ class Bartlett1932(Experiment):
 
         Finally, setup() is called.
         """
-        self.group_size = 10
+        self.group_size = 2
         super(Bartlett1932, self).__init__(session)
         import models
         self.models = models
@@ -34,7 +34,7 @@ class Bartlett1932(Experiment):
         self.known_classes["LottyInfo"] = self.models.LottyInfo
         self.known_classes["LottyNode"] = self.models.LottyNode
         self.experiment_repeats = 1
-        self.initial_recruitment_size = int(self.experiment_repeats*self.group_size*1.5)
+        self.initial_recruitment_size = self.experiment_repeats*self.group_size
         if session:
             self.setup()
 
