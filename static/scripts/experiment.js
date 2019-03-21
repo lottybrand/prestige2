@@ -173,7 +173,7 @@ create_agent = function() {
         my_network_id = resp.node.network_id;
         $("#welcome").html("Welcome to our quiz, you are player " +
                            JSON.parse(resp.node.property1).name);
-        get_group();
+        get_source();
     })
     .fail(function (rejection) {
       // A 403 is our signal that it's time to go to the questionnaire
@@ -186,8 +186,20 @@ create_agent = function() {
     });
 };
 
- get_group = function() {
-    url = "/node/1/neighbors"
+get_source = function() {
+    url = "/node/" + my_node_id + "/neighbors"
+    data = {
+        connection: "from",
+        node_type: "QuizSource"
+    }
+    dallinger.get(url, data).done(function(resp) {
+        my_source_id = resp.nodes[0].id;
+        get_group();
+    })
+}
+
+get_group = function() {
+    url = "/node/" + my_source_id + "/neighbors"
     dallinger.get(url).done(function(resp) {
         size_so_far = resp.nodes.length
         $("#question").html("Waiting for other players to join. Currently there are " + size_so_far + "/10 players. <br> <br> Please do not refresh your page.");
