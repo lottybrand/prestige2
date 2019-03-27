@@ -1,5 +1,5 @@
 // variables
-var condition = "B";
+var condition = "C";
 seconds_per_question = 15;
 
 

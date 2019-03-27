@@ -11,7 +11,7 @@ from dallinger.models import Info, Node, Network
 
 
 logger = logging.getLogger(__file__)
-
+condition = "C"
 
 class Bartlett1932(Experiment):
     """Define the structure of the experiment."""
@@ -26,7 +26,7 @@ class Bartlett1932(Experiment):
 
         Finally, setup() is called.
         """
-        self.group_size = 2
+        self.group_size = 3
         super(Bartlett1932, self).__init__(session)
         import models
         self.models = models
@@ -34,7 +34,7 @@ class Bartlett1932(Experiment):
         self.known_classes["LottyInfo"] = self.models.LottyInfo
         self.known_classes["LottyNode"] = self.models.LottyNode
         self.known_classes["QuizSource"] = self.models.QuizSource
-        self.experiment_repeats = 1
+        self.experiment_repeats = 2
         self.initial_recruitment_size = self.experiment_repeats*self.group_size
         if session:
             self.setup()
@@ -104,6 +104,8 @@ class Bartlett1932(Experiment):
     def info_post_request(self, node, info):
         """Run when a request to create an info is complete."""
         self.reset_request_counters(node.network)
+
+        info.property2 == condition
         
         # Process info, copying as necessary and updating scores.
         if info.copying:
