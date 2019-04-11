@@ -349,7 +349,7 @@ display_round_warning = function(round) {
     if (round == 1) {
         $("#round2div").hide();
         $("#practice").show();
-        $("#practiceInfo").html('The first four questions were practice questions. <br> <br> You are now starting Round 1 of the real quiz and your score will be counted. <br> <br> Round 1 consists of 40 questions. <br> <br> <br> REMEMBER: You can still score points for yourself if you choose to "Ask Someone Else" and their answer was correct');
+        $("#practiceInfo").html('The first four questions were practice questions. <br> <br> You are now starting Round 1 of the real quiz and your score will be counted. <br> <br> Round 1 consists of 40 questions. <br> <br> <br> REMEMBER: You will still score a point for yourself if you choose to "Ask Someone Else" and the person you choose answered that question correctly');
     }
     if (round == 2) {
         $("#round2div").show();

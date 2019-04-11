@@ -26,7 +26,7 @@ class Bartlett1932(Experiment):
 
         Finally, setup() is called.
         """
-        self.group_size = 3
+        self.group_size = 2
         super(Bartlett1932, self).__init__(session)
         import models
         self.models = models
@@ -34,7 +34,7 @@ class Bartlett1932(Experiment):
         self.known_classes["LottyInfo"] = self.models.LottyInfo
         self.known_classes["LottyNode"] = self.models.LottyNode
         self.known_classes["QuizSource"] = self.models.QuizSource
-        self.experiment_repeats = 2
+        self.experiment_repeats = 1
         self.initial_recruitment_size = self.experiment_repeats*self.group_size
         if session:
             self.setup()
@@ -79,6 +79,7 @@ class Bartlett1932(Experiment):
             'bonus': False,
             'n_requests': 0
         })
+        node.property2 = condition
         return node
 
 
@@ -105,7 +106,6 @@ class Bartlett1932(Experiment):
         """Run when a request to create an info is complete."""
         self.reset_request_counters(node.network)
 
-        info.property2 == condition
         
         # Process info, copying as necessary and updating scores.
         if info.copying:
@@ -207,7 +207,7 @@ class Bartlett1932(Experiment):
 
     def update_node_bonus(self, node):
         # update the nodes bonus
-        node.bonus = node.score >= 90
+        node.bonus = node.score >= 85
 
         # add node properties 4 and 5 to ppt object
         ppt = node.participant

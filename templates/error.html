@@ -9,7 +9,7 @@
                 <p id="error-text">{{ error_text }}</p>
                 <p style="font-size: 130%"> As we stated in the instructions, this is a group game, so everyone has to complete the game in time with their group.</p>
                 <p style="font-size: 130%"> You may have caused an error by taking over 2 minutes to respond to a question, delaying the rest of your group.</p>
-                <p style="font-size: 130%"> Please let us know how you arrived at this error by briefly describing what happened below.</p>
+                <p style="font-size: 130%"> If you don't think this is what happened, please let us know what happened by filling out the form below. We will get back to you and compensate you if necessary. </p>
                 <form id="error-response" action="/handle-error" method="POST">
                     <input type="hidden" name="error_type" value="{{ error_type }}" />
                     <input type="hidden" name="error_text" value="{{ error_text }}" />
@@ -25,7 +25,6 @@
                     <input type="submit" value="SUBMIT" />
                 </form>
                 {% if compensate == True %}
-                <p>This HIT will be marked as completed and you should be compensated automatically once the above form is submitted.</p>
                 <p>
                     Error type: {{ error_type }}<br>
                     HIT id: {{ hit_id }}<br>
