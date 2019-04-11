@@ -1,14 +1,5 @@
 // variables
-var condition = "C";
 seconds_per_question = 15;
-
-
-if ((condition == "A") || (condition == "B")) {
-    check_info = 'their Player ID, or, the number of times they were chosen by others in Round 1.'
-} else {
-    check_info = 'their total score in Round 1, or, the number of times they were chosen by others in Round 1.'
-}
-
 
 // this function runs immediately once the page is loaded
 $(document).ready(function() {
@@ -173,6 +164,7 @@ create_agent = function() {
         my_network_id = resp.node.network_id;
         $("#welcome").html("Welcome to our quiz, you are player " +
                            JSON.parse(resp.node.property1).name);
+        condition = JSON.parse(resp.node.property1).condition;
         get_source();
     })
     .fail(function (rejection) {
@@ -352,6 +344,11 @@ display_round_warning = function(round) {
         $("#practiceInfo").html('The first four questions were practice questions. <br> <br> You are now starting Round 1 of the real quiz and your score will be counted. <br> <br> Round 1 consists of 40 questions. <br> <br> <br> REMEMBER: You will still score a point for yourself if you choose to "Ask Someone Else" and the person you choose answered that question correctly');
     }
     if (round == 2) {
+        if ((condition == "A") || (condition == "B")) {
+            check_info = 'their Player ID, or, the number of times they were chosen by others in Round 1.'
+        } else {
+            check_info = 'their total score in Round 1, or, the number of times they were chosen by others in Round 1.'
+        }
         $("#round2div").show();
         $("#r2info").html('Thank you for completing Round 1. <br> <br> You are now starting Round 2 which consists of the final 60 questions.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either ' + check_info);
     }

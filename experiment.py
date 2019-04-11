@@ -11,7 +11,6 @@ from dallinger.models import Info, Node, Network
 
 
 logger = logging.getLogger(__file__)
-condition = "C"
 
 class Bartlett1932(Experiment):
     """Define the structure of the experiment."""
@@ -79,7 +78,8 @@ class Bartlett1932(Experiment):
             'bonus': False,
             'n_requests': 0
         })
-        node.property2 = condition
+        conditions = ["A", "B", "C"]
+        node.condition = conditions[(node.network.id - 1) % len(conditions)]
         return node
 
 
