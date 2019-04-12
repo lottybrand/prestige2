@@ -33,7 +33,7 @@ class Bartlett1932(Experiment):
         self.known_classes["LottyInfo"] = self.models.LottyInfo
         self.known_classes["LottyNode"] = self.models.LottyNode
         self.known_classes["QuizSource"] = self.models.QuizSource
-        self.experiment_repeats = 1
+        self.experiment_repeats = 2
         self.initial_recruitment_size = self.experiment_repeats*self.group_size
         if session:
             self.setup()
@@ -58,6 +58,10 @@ class Bartlett1932(Experiment):
             for net in self.networks():
                 self.models.QuizSource(network=net)
 
+    def set_condition(self):
+        conditions = ["A","B","C"]
+        condition = conditions[(self.experiment_repeats - 1) % len(conditions)]            
+
 
     def create_network(self):
         """Return a new network."""
@@ -78,8 +82,7 @@ class Bartlett1932(Experiment):
             'bonus': False,
             'n_requests': 0
         })
-        conditions = ["A", "B", "C"]
-        node.condition = conditions[(node.network.id - 1) % len(conditions)]
+        node.condition = condition
         return node
 
 

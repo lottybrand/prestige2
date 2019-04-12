@@ -88,25 +88,6 @@ $(document).ready(function() {
         display_question();
     });
 
-    // Check AB/C are the buttons with one of the possible info choices
-    // they are used to test participants attention to the instructions
-
-    if (condition == "A" || condition == "B") {
-        $("#check_AB").click(function() {
-            update_ui_attention_check_passed();
-        });
-        $("#check_C").click(function() {
-            update_ui_attention_check_failed();
-        });
-    } else if (condition == "C") {
-        $("#check_AB").click(function(){
-            update_ui_attention_check_failed();
-        });
-        $("#check_C").click(function() {
-            update_ui_attention_check_passed();
-        });
-    }
-
     update_ui_attention_check_passed = function() {
         $("#round2div").hide();
         $("#round2div_check").hide();
@@ -209,6 +190,25 @@ get_group = function() {
         });
     });
  };
+
+ // Check AB/C are the buttons with one of the possible info choices
+    // they are used to test participants attention to the instructions
+
+    if (condition == "A" || condition == "B") {
+        $("#check_AB").click(function() {
+            update_ui_attention_check_passed();
+        });
+        $("#check_C").click(function() {
+            update_ui_attention_check_failed();
+        });
+    } else if (condition == "C") {
+        $("#check_AB").click(function(){
+            update_ui_attention_check_failed();
+        });
+        $("#check_C").click(function() {
+            update_ui_attention_check_passed();
+        });
+    }
 
 // get any pending incoming transmissions
 // this function is called repeatedly while we are waiting for other to catch up.
