@@ -59,8 +59,8 @@ class Bartlett1932(Experiment):
                 self.models.QuizSource(network=net)
 
     def set_condition(self):
-        conditions = ["A","B","C"]
-        condition = conditions[(self.experiment_repeats - 1) % len(conditions)]            
+        conditions = ["A"]
+        return conditions[(self.experiment_repeats - 1) % len(conditions)]            
 
 
     def create_network(self):
@@ -80,9 +80,9 @@ class Bartlett1932(Experiment):
             'asoc_score': 0,
             'score': 0,
             'bonus': False,
-            'n_requests': 0
+            'n_requests': 0,
+            'condition': self.set_condition()
         })
-        node.condition = condition
         return node
 
 
