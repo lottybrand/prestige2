@@ -1,6 +1,6 @@
 // variables
 seconds_per_question = 15;
-condition = "A";
+var condition = "A";
 
 // this function runs immediately once the page is loaded
 $(document).ready(function() {
@@ -146,7 +146,6 @@ create_agent = function() {
         my_network_id = resp.node.network_id;
         $("#welcome").html("Welcome to our quiz, you are player " +
                            JSON.parse(resp.node.property1).name);
-        condition = JSON.parse(resp.node.property1).condition;
         get_source();
     })
     .fail(function (rejection) {

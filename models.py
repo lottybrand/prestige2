@@ -32,10 +32,6 @@ class LottyNode(Node):
     @property
     def n_requests(self):
         return json.loads(self.property1)["n_requests"]
-
-    @property
-    def condition(self):
-        return json.loads(self.property1)["condition"]
     
 
     @name.setter
@@ -72,12 +68,6 @@ class LottyNode(Node):
     def n_requests(self, val):
         p1 = json.loads(self.property1)
         p1["n_requests"] = val
-        self.property1 = json.dumps(p1)
-
-    @condition.setter
-    def condition(self, val):
-        p1 = json.loads(self.property1)
-        p1["condition"] = val
         self.property1 = json.dumps(p1)
 
 class LottyInfo(Info):

@@ -56,11 +56,7 @@ class Bartlett1932(Experiment):
         if not self.networks():
             super(Bartlett1932, self).setup()
             for net in self.networks():
-                self.models.QuizSource(network=net)
-
-    def set_condition(self, node):
-        conditions = ["A"]
-        return conditions[(node.network_id - 1) % len(conditions)]            
+                self.models.QuizSource(network=net)            
 
 
     def create_network(self):
@@ -80,9 +76,9 @@ class Bartlett1932(Experiment):
             'asoc_score': 0,
             'score': 0,
             'bonus': False,
-            'n_requests': 0,
-            'condition': self.set_condition(node)
+            'n_requests': 0
         })
+        node.property2 = condition
         return node
 
 
