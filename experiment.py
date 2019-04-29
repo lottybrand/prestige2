@@ -11,6 +11,7 @@ from dallinger.models import Info, Node, Network
 
 
 logger = logging.getLogger(__file__)
+condition = "A"
 
 class Bartlett1932(Experiment):
     """Define the structure of the experiment."""
