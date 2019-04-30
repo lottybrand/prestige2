@@ -11,7 +11,7 @@ from dallinger.models import Info, Node, Network
 
 
 logger = logging.getLogger(__file__)
-condition = "A"
+condition = "B"
 
 class Bartlett1932(Experiment):
     """Define the structure of the experiment."""
@@ -26,7 +26,7 @@ class Bartlett1932(Experiment):
 
         Finally, setup() is called.
         """
-        self.group_size = 2
+        self.group_size = 10
         super(Bartlett1932, self).__init__(session)
         import models
         self.models = models
@@ -35,7 +35,7 @@ class Bartlett1932(Experiment):
         self.known_classes["LottyNode"] = self.models.LottyNode
         self.known_classes["QuizSource"] = self.models.QuizSource
         self.experiment_repeats = 2
-        self.initial_recruitment_size = self.experiment_repeats*self.group_size
+        self.initial_recruitment_size = int(self.experiment_repeats*self.group_size*1.3)
         if session:
             self.setup()
 

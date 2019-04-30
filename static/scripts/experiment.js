@@ -1,6 +1,6 @@
 // variables
 seconds_per_question = 15;
-var condition = "A";
+var condition = "B";
 
 // this function runs immediately once the page is loaded
 $(document).ready(function() {
