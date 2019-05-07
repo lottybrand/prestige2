@@ -42,7 +42,7 @@ class Bartlett1932(Experiment):
     def public_properties(self):
         return {
             'group_size': self.group_size,
-            'condition': "B"
+            'condition': "A"
         }
 
 
@@ -79,7 +79,7 @@ class Bartlett1932(Experiment):
             'bonus': False,
             'n_requests': 0
         })
-        node.property2 = condition
+        node.property2 = self.public_properties["condition"]
         return node
 
 
