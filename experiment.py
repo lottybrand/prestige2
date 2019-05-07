@@ -11,7 +11,6 @@ from dallinger.models import Info, Node, Network
 
 
 logger = logging.getLogger(__file__)
-condition = "B"
 
 class Bartlett1932(Experiment):
     """Define the structure of the experiment."""
@@ -42,7 +41,8 @@ class Bartlett1932(Experiment):
     @property
     def public_properties(self):
         return {
-            'group_size': self.group_size
+            'group_size': self.group_size,
+            'condition': "B"
         }
 
 
