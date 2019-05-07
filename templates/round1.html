@@ -1,36 +1,6 @@
-{% extends "layout.html" %}
+{% extends "exp_shared.html" %}
 
 {% block libs %}
     {{ super() }}
     <script src="/static/scripts/round1.js" type="text/javascript"> </script>
-{% endblock %}
-
-{% block body %}
-    <div class="main_div">
-        <div id="welcome_div">
-            <h2 id="welcome"></h2>
-            <br>
-            <h4 id="question_number"><font color="blue"></font></h4>
-            <img id = "pics" src="/static/images/1.png" alt="q1" height="320" width="450">
-            <h3 id="question">Please wait for the other players to catch up.</h3>
-            <h4 id="question1"></h4>
-        </div>
-        <div id= "submit_div">
-            <div>
-            <button id="submit-a" type="button" class="btn btn-primary">Answer A</button>
-            <button id="submit-b" type="button" class="btn btn-primary">Answer B</button>
-            </div>
-            <br>
-            <div>
-            <button id="submit-copy" type="button" style="background-color:#8b0000" class="btn btn-primary">Ask Someone Else</button>
-            <h2 id="countdown"></h2>
-            </div>
-        </div>
-        <div id="neighbor_buttons">
-        </div>
-        <div id ="warning_div">
-            <h4 id ="warning_info"></h4>
-            <button id="warning_button" type="button" class="btn btn-primary">OK</button>
-        </div>  
-    </div>
 {% endblock %}
