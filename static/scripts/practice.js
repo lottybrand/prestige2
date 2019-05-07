@@ -30,17 +30,6 @@ $(document).ready(function() {
         submit_response(response=$(answer).text());
     }
 
-    // Add functionality to the practice button
-    // this button starts the practice rounds
-
-    $("#practiceButton").click(function() {
-        $("#welcome_div").show();
-        $("#submit_div").show();
-        $("#neighbor_buttons").show();
-        $("#practice").hide();
-        display_question();
-    });
-
     // initially hide the buttons
     disable_answer_buttons();
     hide_pics();
