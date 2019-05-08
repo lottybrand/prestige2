@@ -1,0 +1,26 @@
+{% extends "exp_shared.html" %}
+
+{% block libs %}
+    {{ super() }}
+    <script src="/static/scripts/round2.js" type="text/javascript"> </script>
+{% endblock %}
+
+{% block extra_divs %}
+<div id="info_choice_div" style="display: none">
+    <h3>What information do you want to see about the other players?</h3>
+    <div id="info-choice-buttons">
+        <button id="info-choice-a" type="button" class="btn btn-primary"></button>
+        <button id="info-choice-b" type="button" class="btn btn-primary"></button>
+    </div>
+</div>
+<div id="round2div_check" style="display: none">
+    <h4 id="r2_check"> What information will you be able to choose from if you click "Ask someone else"?</h4>
+    <button id="check_AB" type="button" class="btn btn-primary"> Player ID or Times Chosen in Round 1 </button>
+    <button id="check_C" type="button" class="btn btn-primary"> Total Score or Times Chosen in Round 1 </button>
+    <h4 id="wrong_check"></h4>
+</div>
+<div id ="warning_div" style="display: none">
+    <h4 id ="warning_info"></h4>
+    <button id="warning_button" type="button" class="btn btn-primary">OK I understand</button>
+</div>
+{% endblock %}
