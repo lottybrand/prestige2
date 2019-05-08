@@ -179,7 +179,7 @@ submit_response = function(response, copy=false, info_chosen="NA", human=true) {
             "human": human
         })
     }).done(function (resp) {
-        response_submitted();
+        response_submitted(resp);
     })
     .fail(function (rejection) {
         dallinger.error(rejection);

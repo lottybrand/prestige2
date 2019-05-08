@@ -1,6 +1,6 @@
 // what to do when an answer is submitted.
-response_submitted = function() {
-    if (number == "practice 4") {
+response_submitted = function(resp) {
+    if (resp.info.contents != "Ask Someone Else" && number == "practice 4") {
         dallinger.allowExit();
         dallinger.goToPage("round1");
     } else {

@@ -57,8 +57,8 @@ $(document).ready(function() {
     });
 });
 
-response_submitted = function() {
-    if (number == "100") {
+response_submitted = function(resp) {
+    if (resp.info.contents != "Ask Someone Else" && number == "100") {
         dallinger.allowExit();
         dallinger.goToPage("questionnaire");
     } else {
