@@ -102,81 +102,61 @@ class Bartlett1932(Experiment):
             source.transmit()
 
 
-    def info_post_request(self, node, info):
-        """Run when a request to create an info is complete."""
-        self.reset_request_counters(node.network)
 
-        
-        # Process info, copying as necessary and updating scores.
+    def info_post_request(self, node, info):
         if info.copying:
             info = self.copy_neighbor(node, info)
         else:
+            # update node asoc score in round 1
             if info.round == 1:
-                # update node property3 which is the asocial score in round 1
                 node.asoc_score = node.asoc_score + info.score
-                self.save()
 
         # as long as its not a practice question update total score.
         if info.round != 0:
             node.score = node.score + info.score
-            self.save()
-        
+
         self.update_node_bonus(node)
 
-        self.advance_group(node, info)
-        
-
-    def advance_group(self, node, info):
-        # Check to see if the source needs to send anything out.
         group = node.network.nodes(type=self.models.LottyNode)
-        group.sort(key=attrgetter("id"))
-        other_nodes = [n for n in group if n.id != node.id]
-        group_infos = [i for i in node.network.infos(type=self.models.LottyInfo) if i.number == info.number]
-        group_infos.sort(key=attrgetter("origin_id"))
-        group_answers = [i.contents for i in group_infos]
-        import json
-        q = node.network.nodes(type=self.models.QuizSource)[0]
-        q = q.infos()
-        q = [i for i in q if i.contents not in ["Good Luck", "Bad Luck"]]
-        q = max(q, key=attrgetter('id'))
-        q = q.contents
-        q = json.loads(q)
-        Rwer = q["Rwer"]
-        Wwer = q["Wwer"]
-
-        if self.everyone_waiting(group_infos, info, group_answers, Rwer, Wwer):
-            # if everyone copied
-            if all([a == "Ask Someone Else" for a in group_answers]):
-                self.notify_bad_luck(group_infos)
-
-            # if no-one copied
-            elif not "Ask Someone Else" in group_answers:
-                self.send_next_question(node.network)
-                
-            # if some copied
-            else:
-                self.notify_good_luck(group, group_infos, group_answers)
+        infos = []
+        for g in group:
+            if g.infos():
+                infos.append(max(g.infos(), key=attrgetter("id")))
+        if self.group_ready_to_advance(info, infos):
+            self.advance_group(group, infos);
 
 
-    def everyone_waiting(self, group_infos, info, group_answers, Rwer, Wwer):
-        # is everyone waiting for the server to do something?
-        # only return true if everyone has answered and the current
-        # answer is the last in the group.
-        everyone_answered = len(group_infos) == (info.network.size() - 1)
-        if not everyone_answered:
-            return False
+    def group_ready_to_advance(self, info, infos):
+        # the network is ready to advance only if:
+        # 1 - every node has at least 1 info
+        # 2 - everyone's most recent info is from the same question
+        # 3 - the current submitter is the most recent of these
+        return (
+            len(infos) == info.network.size() - 1 and
+            len(set([i.number for i in infos])) == 1 and
+            info.id == max([i.id for i in infos])
+        )
 
-        if all([a in [Rwer, Wwer, "Ask Someone Else", "Bad Luck"] for a in group_answers]):
-            if info == max(group_infos, key=attrgetter("id")):
-                return True
-        
-        return False
+
+    def advance_group(self, group, infos):
+        answers = [i.contents for i in infos]
+
+        # if everyone copied
+        if all([a == "Ask Someone Else" for a in answers]):
+            self.notify_bad_luck(infos)
+
+        # if no-one copied
+        elif not "Ask Someone Else" in answers:
+            self.send_next_question(group[0].network)
+            
+        # if some copied
+        else:
+            self.notify_good_luck(group, infos, answers)
 
 
     def copy_neighbor(self, node, info):
         # Find the neighbor
-        neighbors = [n for n in node.network.nodes(type=self.models.LottyNode) if n.id != node.id]
-        neighbor = [n for n in neighbors if n.id == int(info.contents)][0]
+        neighbor = [n for n in node.network.nodes(type=self.models.LottyNode) if n.id == int(info.contents)][0]
 
         # increase their number of copies, but only if we're in round 1
         if info.round == 1:
@@ -209,7 +189,7 @@ class Bartlett1932(Experiment):
         # update the nodes bonus
         node.bonus = node.score >= 85
 
-        # add node properties 4 and 5 to ppt object
+        # add node properties to ppt object
         ppt = node.participant
         ppt.property1 = node.score
         ppt.property2 = node.bonus
@@ -226,8 +206,7 @@ class Bartlett1932(Experiment):
     def send_next_question(self, network):
         # delete all old vectors
         source = network.nodes(type=Source)[0]
-        vectors = network.vectors()
-        for v in vectors:
+        for v in network.vectors():
             if v.origin_id != source.id:
                 v.fail()
         
