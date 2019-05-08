@@ -2,11 +2,10 @@
 $(document).ready(function() {
 
     // initially hide all divs except the welcome div
-    $("#submit_div").hide();
-    $("#neighbor_buttons").hide();
-    $("#warning_div").hide();
+    $("#welcome_div").show();
+    $("#wait_div").show();
 
-    // Add functionality to buttons controlling participantss answers
+    // Add functionality to buttons controlling participants answers
     // either option a, option b, or copy someone else.
     $("#submit-a").click(function() {
         submit_answer("#submit-a")
@@ -21,24 +20,27 @@ $(document).ready(function() {
     });
 
     submit_answer = function(answer) {
-        clearTimeout(answer_timeout);
-        $("#countdown").hide();
-        $("#countdown").html("");
-        disable_answer_buttons();
+        stop_countdown();
+        $("#question_div").hide();
+        $("#wait_div").show();
         submit_response(response=$(answer).text());
     }
 
-    disable_answer_buttons();
-    hide_pics();
     add_neighbor_buttons();
     get_details_from_store();
     get_transmissions();
 });
 
+stop_countdown = function() {
+    clearTimeout(answer_timeout);
+    $("#countdown").html("");
+}
+
 // allows variables to be passed between pages
 get_details_from_store = function() {
     my_node_id = store.get("node_id");
     my_network_id = store.get("network_id");
+    $("#welcome").html("Welcome to our quiz, you are player " + store.get("node_name"));
 }
 
 // get any pending incoming transmissions
@@ -61,7 +63,7 @@ get_transmissions = function() {
                 get_info(transmissions[0].info_id);
             }
         } else {
-            console.log("*** Got 0 transmissions, waiting 1 s and repeating");
+            console.log("*** Got 0 transmissions, waiting 1s and repeating");
             setTimeout(function(){
                 get_transmissions();
             }, 1000);
@@ -92,11 +94,13 @@ var get_info = function(info_id) {
 var process_info = function(info) {
     // a contents of "Bad Luck" indicates that everyone copied.
     // participants are forced to answer "Bad Luck" which is always wrong.
-    console.log("*** Processing ingo");
+    console.log("*** Processing info");
     if (info.contents == "Bad Luck") {
         console.log("*** info was bad luck");
-        $("#question").html("Sorry, everyone chose to Ask Someone Else, so no one can score points for this question");
+        $("#wait_div").hide();
+        $("#bad_luck_div").show();
         setTimeout(function() {
+            $("#bad_luck_div").hide();
             submit_response(response="Bad Luck",
                             copy=undefined,
                             info_chosen=undefined,
@@ -136,15 +140,16 @@ parse_question = function(question) {
 // display the question
 display_question = function() {
     console.log("*** Displaying question");
-    $("#welcome_div").show();
-    $("#submit_div").show();
+    
     $("#question").html(question_text);
-    $("#question_number").html("You are in the " + topic + " Round, on question " + number + "/4");
+    update_question_number_text()
+    
     if (pic == true) {
         show_pics(number);
     } else {
         hide_pics();
     }
+
     if (Math.random() <0.5) {
         $("#submit-a").html(Wwer);
         $("#submit-b").html(Rwer);
@@ -152,8 +157,12 @@ display_question = function() {
         $("#submit-b").html(Wwer);
         $("#submit-a").html(Rwer);
     }
-    enable_answer_buttons();
+    
     countdown = 15;
+    $("#countdown").html(countdown);
+
+    $("#wait_div").hide();
+    $("#question_div").show();
     start_answer_timeout();
 }
 
@@ -178,14 +187,15 @@ submit_response = function(response, copy=false, info_chosen="NA", human=true) {
 }
 
 start_answer_timeout = function() {
-    $("#countdown").show();
     answer_timeout = setTimeout(function() {
         countdown = countdown - 1;
         $("#countdown").html(countdown);
         if (countdown <= 0) {
-            disable_answer_buttons();
-            $("#countdown").hide();
+
+            $("#question_div").hide();
             $("#countdown").html("");
+            $("#wait_div").show();
+
             submit_response(Wwer,
                             copy=undefined,
                             info_chosen=undefined,
@@ -211,24 +221,28 @@ var check_neighbors = function(info_chosen) {
 }
 
 process_neighbors = function() {
-    // update question text
+    // update neighbor prompt
     if (neighbors.length == 1) {
-        $("#question").html("You have " + neighbors.length + " player to copy from, please select a player to copy");
+        part1 = ("You have " + neighbors.length + " player to copy from, ");
+        if (info_chosen == "Player ID") { 
+            part2 = "below is their Player ID.";
+        } else if (info_chosen == "Times chosen in Round 1") {
+            part2 = "below is how many times they were chosen in Round 1 by other players.";
+        } else if (info_chosen == "Total Score in Round 1") {
+            part2 = "below is the number of questions they have answered correctly themselves.";
+        }
     } else {
-        $("#question").html("You have " + neighbors.length + " players to copy from, please select a player to copy");
+        part1 = ("You have " + neighbors.length + " players to copy from, ");
+        if (info_chosen == "Player ID") { 
+            part2 = "below are their Player IDs.";
+        } else if (info_chosen == "Times chosen in Round 1") {
+            part2 = "below are how many times they were chosen in Round 1 by other players.";
+        } else if (info_chosen == "Total Score in Round 1") {
+            part2 = "below are the number of questions they have answered correctly themselves.";
+        }
     }
 
-    // update question1 text
-    if (info_chosen == "Player ID") { 
-        $("#question1").html("Below are their Player IDs");
-
-    } else if (info_chosen == "Times chosen in Round 1") {
-        $("#question1").html("Below are how many times they were chosen in Round 1 by other players");
-
-    } else if (info_chosen == "Total Score in Round 1") {
-        $("#question1").html("Below is how many questions they have answered correctly themselves");
-    }
-    $("#question1").show();
+    $("#neighbor_prompt").html(part1 + part2 + " Please select a player to copy.")    
 
     // update neighbor buttons
     current_button = 1;
@@ -237,8 +251,9 @@ process_neighbors = function() {
         current_button = current_button + 1;
     });
 
-    // show the buttons
-    $("#neighbor_buttons").show()
+    // show the div
+    $("#wait_div").hide()
+    $("#neighbor_div").show()
 };
 
 update_neighbor_button = function(number, neighbor) {
@@ -264,24 +279,13 @@ update_neighbor_button = function(number, neighbor) {
                         copy=true,
                         info_chosen=info_chosen);
         disable_neighbor_buttons();
-        $("#question1").hide();
+        $("#neighbor_prompt").hide();
     });
     $(button_id).prop("disabled", false);
     $(button_id).show();
 };
 
-disable_answer_buttons = function() {
-    $("#submit-a").addClass('disabled');
-    $("#submit-b").addClass('disabled');
-    $("#submit-copy").addClass('disabled');
-    $("#submit-a").hide();
-    $("#submit-b").hide();
-    $("#submit-copy").hide();
-    $("#question").html("Waiting for other players to catch up.");
-}
-
 disable_neighbor_buttons = function() {
-    $("#neighbor_buttons").hide();
     for (i = 1; i <= group_size-1; i++) {
         button_string = "#neighbor_button_" + i;
         $(button_string).html("");
@@ -292,12 +296,6 @@ disable_neighbor_buttons = function() {
     $("#question").html("Waiting for other players to catch up.");
 }
 
-disable_all_buttons = function() {
-    disable_answer_buttons();
-    disable_choice_buttons();
-    disable_neighbor_buttons();
-}
-
 hide_pics = function() {
     $("#pics").hide();
 }
@@ -305,15 +303,6 @@ hide_pics = function() {
 show_pics = function(number) {
     $("#pics").attr("src", "/static/images/" + number + ".png");
     $("#pics").show();
-}
-
-enable_answer_buttons = function() {
-    $("#submit-a").removeClass('disabled');
-    $("#submit-b").removeClass('disabled');
-    $("#submit-copy").removeClass('disabled');
-    $("#submit-a").show();
-    $("#submit-b").show();
-    $("#submit-copy").show();
 }
 
 
@@ -332,7 +321,6 @@ add_neighbor_buttons = function() {
             button_string = button_string.concat(stop);
         }
         $("#neighbor_buttons").html(button_string);
-        $("#neighbor_buttons").hide();
         for (i = 1; i <= group_size-1; i++) {
             button_string = "#neighbor_button_" + i;
             $(button_string).css({
