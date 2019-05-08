@@ -7,7 +7,7 @@ from operator import attrgetter
 
 from dallinger.experiment import Experiment
 from dallinger.nodes import Source
-from dallinger.models import Info, Node, Network
+from dallinger.models import Info, Node
 
 
 logger = logging.getLogger(__file__)
@@ -62,7 +62,7 @@ class Bartlett1932(Experiment):
 
     def create_network(self):
         """Return a new network."""
-        return Star(max_size=self.group_size+1)
+        return self.models.LottyStar(max_size=self.group_size+1)
 
 
     def create_node(self, participant, network):
@@ -307,25 +307,4 @@ class Bartlett1932(Experiment):
         for n in nodes:
             n.n_requests = 0
 
-
-
-class Star(Network):
-    """A star network.
-
-    A star newtork has a central node with a pair of vectors, incoming and
-    outgoing, with all other nodes.
-    """
-
-    __mapper_args__ = {"polymorphic_identity": "star"}
-
-    def add_node(self, node):
-        """Add a node and connect it to the center."""
-        nodes = self.nodes()
-
-        if len(nodes) > 1:
-            first_node = min(nodes, key=attrgetter('creation_time'))
-            if isinstance(first_node, Source):
-                first_node.connect(direction="to", whom=node)
-            else:
-                first_node.connect(direction="both", whom=node)
 

@@ -1,7 +1,9 @@
 import json
 
 from dallinger.nodes import Source
-from dallinger.models import Node, Info
+from dallinger.models import Node, Info, Network
+
+from operator import attrgetter
 
 class LottyNode(Node):
 
@@ -135,6 +137,29 @@ class LottyInfo(Info):
         p1 = json.loads(self.property1)
         p1["human"] = val
         self.property1 = json.dumps(p1)
+
+
+
+class LottyStar(Network):
+    """A star network.
+
+    A star newtork has a central node with a pair of vectors, incoming and
+    outgoing, with all other nodes.
+    """
+
+    __mapper_args__ = {"polymorphic_identity": "lotty_star"}
+
+    def add_node(self, node):
+        """Add a node and connect it to the center."""
+        nodes = self.nodes()
+
+        if len(nodes) > 1:
+            first_node = min(nodes, key=attrgetter('creation_time'))
+            if isinstance(first_node, Source):
+                first_node.connect(direction="to", whom=node)
+            else:
+                first_node.connect(direction="both", whom=node)
+
 
 class QuizSource(Source):
     """A Source that reads in a question from a file and transmits it."""
