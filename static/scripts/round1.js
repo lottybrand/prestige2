@@ -1,5 +1,6 @@
 // this function runs immediately once the page is loaded
 $(document).ready(function() {
+
     // add functionality to warning acknowledge button
     $("#warning_button").click(function() {
         $("#welcome_div").show();
@@ -33,10 +34,8 @@ display_question_or_warning = function() {
 // show participants the warning that they are starting the experiment proper
 display_round_warning = function() {
     $("#welcome_div").hide();
-    $("#submit_div").hide();
-    $("#neighbor_buttons").hide();
+    $("#wait_div").hide();
     $("#warning_div").show();
-    $("#warning_info").html('The first four questions were practice questions. <br> <br> You are now starting Round 1 of the real quiz and your score will be counted. <br> <br> Round 1 consists of 40 questions. <br> <br> <br> REMEMBER: You will still score a point for yourself if you choose to "Ask Someone Else" and the person you choose answered that question correctly');
 }
 
 process_good_luck = function() {
