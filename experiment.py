@@ -4,6 +4,7 @@ import logging
 import json
 
 from operator import attrgetter
+from datetime import datetime
 
 from dallinger.experiment import Experiment
 from dallinger.nodes import Source
@@ -77,7 +78,7 @@ class Bartlett1932(Experiment):
             'asoc_score': 0,
             'score': 0,
             'bonus': False,
-            'n_requests': 0
+            'last_request': str(datetime.now())
         })
         node.property2 = self.public_properties["condition"]
         return node
@@ -104,6 +105,8 @@ class Bartlett1932(Experiment):
 
 
     def info_post_request(self, node, info):
+        node.last_request = datetime.now()
+
         if info.copying:
             info = self.copy_neighbor(node, info)
         else:
@@ -251,39 +254,22 @@ class Bartlett1932(Experiment):
             return 0
 
     def transmission_get_request(self, node, transmissions):
-        """Run when a request to get transmissions is complete."""
-        if node.network.full:
-            node.n_requests = node.n_requests + 1
-            self.save()
+        node.last_request = datetime.now()
+        
+        failing = False
+        for n in node.network.nodes(type=self.models.LottyNode):
+            if (node.last_request - n.last_request).total_seconds() > 45:
+                failing = True
+                node.network.max_size -= 1
+                n.fail()
 
-            if node.n_requests > 60:
-                self.check_node_activity(node)
-
-
-    def check_node_activity(self, node):
-        nodes = node.network.nodes(type=self.models.LottyNode)
-        requests = [n.n_requests for n in nodes]
-        max_requests = max(requests)
-
-        players = [n for n in nodes if max_requests - n.n_requests < 30]
-        abandoners = [n for n in nodes if max_requests - n.n_requests >= 30]
-
-        player_ids = [n.id for n in players]
-        max_player_id = max(player_ids)
-
-        if node.id == max_player_id:
-            for a in abandoners:
-                a.network.max_size = a.network.max_size - 1
-                a.fail()
-            
-            self.reset_request_counters(node.network)
+        if failing:
             most_recent_info = max(node.network.infos(type=self.models.LottyInfo), key=attrgetter("id"))
-            self.advance_group(most_recent_info.origin, most_recent_info)
-
-
-    def reset_request_counters(self, network):
-        nodes = network.nodes(type=self.models.LottyNode)
-        for n in nodes:
-            n.n_requests = 0
-
+            group = node.network.nodes(type=self.models.LottyNode)
+            infos = []
+            for g in group:
+                if g.infos():
+                    infos.append(max(g.infos(), key=attrgetter("id")))
+            if self.group_ready_to_advance(most_recent_info, infos):
+                self.advance_group(group, infos);
 

@@ -4,6 +4,7 @@ from dallinger.nodes import Source
 from dallinger.models import Node, Info, Network
 
 from operator import attrgetter
+from datetime import datetime
 
 class LottyNode(Node):
 
@@ -32,9 +33,8 @@ class LottyNode(Node):
         return json.loads(self.property1)["bonus"]
 
     @property
-    def n_requests(self):
-        return json.loads(self.property1)["n_requests"]
-    
+    def last_request(self):
+        return datetime.strptime(json.loads(self.property1)["last_request"], "%Y-%m-%d %H:%M:%S.%f")
 
     @name.setter
     def name(self, val):
@@ -66,10 +66,10 @@ class LottyNode(Node):
         p1["bonus"] = val
         self.property1 = json.dumps(p1)
 
-    @n_requests.setter
-    def n_requests(self, val):
+    @last_request.setter
+    def last_request(self, val):
         p1 = json.loads(self.property1)
-        p1["n_requests"] = val
+        p1["last_request"] = str(val)
         self.property1 = json.dumps(p1)
 
 class LottyInfo(Info):
