@@ -38,3 +38,15 @@ display_round_warning = function() {
     $("#warning_div").show();
     $("#warning_info").html('The first four questions were practice questions. <br> <br> You are now starting Round 1 of the real quiz and your score will be counted. <br> <br> Round 1 consists of 40 questions. <br> <br> <br> REMEMBER: You will still score a point for yourself if you choose to "Ask Someone Else" and the person you choose answered that question correctly');
 }
+
+process_good_luck = function() {
+    if (condition == "A") {
+        console.log("*** Getting neighbors by player id");
+        info_chosen = "Player ID";
+    } else if (condition == "B" || condition == "C") {
+        info_chosen = "Total Score in Round 1";
+        console.log("*** Getting neighbors by total score");
+    }
+    check_neighbors(info_chosen);
+}
+

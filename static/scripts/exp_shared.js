@@ -107,15 +107,7 @@ var process_info = function(info) {
     // depending on the round and condition different things will happen
     } else if (info.contents == "Good Luck") {
         console.log("*** Info was good luck");
-        if (condition == "A") {
-            console.log("*** Getting neighbors by player id");
-            info_chosen = "Player ID";
-            check_neighbors(info_chosen);
-        } else if (condition == "B" || condition == "C") {
-            info_chosen = "Total Score in Round 1";
-            console.log("*** Getting neighbors by total score");
-            check_neighbors(info_chosen);
-        }
+        process_good_luck();
 
     // Any other contents indicates its a question from the source.
     } else {
