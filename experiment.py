@@ -257,15 +257,21 @@ class Bartlett1932(Experiment):
         node.last_request = datetime.now()
         
         # does anyone need kicking out?
-        failing = False
+        good_nodes = []
+        bad_nodes = []
         for n in node.network.nodes(type=self.models.LottyNode):
             if (node.last_request - n.last_request).total_seconds() > 45:
-                failing = True
+                bad_nodes.append(n)
+            else:
+                good_nodes.append(n)
+
+        if bad_nodes and node.id == max(good_nodes, key=attrgetter("id")).id:        
+            for n in bad_nodes:
                 node.network.max_size -= 1
                 n.fail()
 
         # if someone has been failed then advance the group again.
-        if failing:
+        if bad_nodes:
             most_recent_info = max(node.network.infos(type=self.models.LottyInfo), key=attrgetter("id"))
             group = node.network.nodes(type=self.models.LottyNode)
             infos = []
