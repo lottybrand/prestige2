@@ -290,3 +290,6 @@ class Bartlett1932(Experiment):
                     most_recent_transmission.origin.transmit(what=most_recent_transmission.info, to_whom=node)
 
 
+    def node_get_request(self, node, nodes):
+        if node.type == "lotty_node":
+            node.last_request = datetime.now()

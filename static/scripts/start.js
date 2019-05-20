@@ -45,7 +45,7 @@ get_group = function() {
                     dallinger.allowExit();
                     dallinger.goToPage('practice');
                 } else {
-                    get_group();
+                    get_source();
                 }
             }, 1000);
         });
