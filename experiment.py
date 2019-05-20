@@ -277,14 +277,14 @@ class Bartlett1932(Experiment):
 
         # fix for hanging issue.
         if not transmissions:
-            all_transmissions = node.transmissions(direction="incoming", status="all")
+            all_transmissions = node.transmissions(direction="incoming", status="received")
             if all_transmissions:
-                most_recent_transmission = max(node.transmissions(direction="incoming", status="all"), key=attrgetter("id"))
+                most_recent_transmission = max(node.transmissions(direction="incoming", status="received"), key=attrgetter("id"))
                 responses = node.infos()
                 transmission_newer_than_response = False
                 if responses:
                     most_recent_response = max(node.infos(), key=attrgetter("id"))
-                    if most_recent_transmission.creation_time > most_recent_response.creation_time:
+                    if most_recent_transmission.receive_time > most_recent_response.creation_time:
                         transmission_newer_than_response = True
                 if transmission_newer_than_response or not responses:
                     most_recent_transmission.origin.transmit(what=most_recent_transmission.info, to_whom=node)
