@@ -286,7 +286,7 @@ class Bartlett1932(Experiment):
         if not transmissions:
             if received_transmissions:
                 most_recent_transmission = max(received_transmissions, key=attrgetter("id"))
-                responses = node.infos()
+                responses = node.infos(failed="all")
                 transmission_newer_than_response = False
                 if responses:
                     most_recent_response = max(responses, key=attrgetter("id"))
