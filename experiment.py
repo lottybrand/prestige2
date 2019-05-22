@@ -293,7 +293,8 @@ class Bartlett1932(Experiment):
                     if most_recent_transmission.receive_time > most_recent_response.creation_time:
                         transmission_newer_than_response = True
                 if transmission_newer_than_response or not responses:
-                    most_recent_transmission.origin.transmit(what=most_recent_transmission.info, to_whom=node)
+                    if not node.transmissions(direction="incoming", status="pending"):
+                        most_recent_transmission.origin.transmit(what=most_recent_transmission.info, to_whom=node)
 
 
     def node_get_request(self, node, nodes):
