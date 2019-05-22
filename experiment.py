@@ -220,16 +220,16 @@ class Bartlett1932(Experiment):
     def notify_good_luck(self, nodes, group_infos, answers):
         copiers = [n for n, a in zip(nodes, answers) if a == "Ask Someone Else"]
         not_copiers = [n for n, a in zip(nodes, answers) if a != "Ask Someone Else"]
-        for i in group_infos:
-            if i.contents == "Ask Someone Else":
-                i.fail()
-
         for n in not_copiers:
             #connect the not copiers to the copiers
             n.connect(whom=copiers)
 
         source = nodes[0].network.nodes(type=Source)[0]
         source.transmit(what=Info(origin=source, contents="Good Luck"), to_whom=copiers)
+
+        for i in group_infos:
+            if i.contents == "Ask Someone Else":
+                i.fail()
 
 
     def recruit(self):
