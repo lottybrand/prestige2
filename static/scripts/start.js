@@ -15,6 +15,15 @@ create_agent = function() {
         store.set("network_id", my_network_id);
         store.set("node_name", JSON.parse(resp.node.property1).name);
         get_source();
+    })
+    .fail(function (rejection) {
+      // A 403 is our signal that it's time to go to the questionnaire
+        if (rejection.status === 403) {
+            dallinger.allowExit();
+            dallinger.goToPage('questionnaire');
+        } else {
+            dallinger.error(rejection);
+        }
     });
 };
 
