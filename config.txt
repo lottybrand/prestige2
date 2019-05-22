@@ -1,6 +1,6 @@
 [Experiment]
 mode = sandbox
-auto_recruit = true
+auto_recruit = false
 webdriver_type = phantomjs
 
 [MTurk]
