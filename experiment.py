@@ -231,14 +231,6 @@ class Bartlett1932(Experiment):
             if i.contents == "Ask Someone Else":
                 i.fail()
 
-
-    def recruit(self):
-        """Recruit one participant at a time until all networks are full."""
-        if self.networks(full=False):
-            self.recruiter().recruit(n=1)
-
-        else:
-            self.recruiter().close_recruitment()
     
     def bonus(self, participant):
         """Calculate a participants bonus."""
