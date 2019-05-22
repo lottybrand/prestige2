@@ -282,14 +282,14 @@ class Bartlett1932(Experiment):
                 self.advance_group(group, infos);
 
         # fix for hanging issue.
+        received_transmissions = node.transmissions(direction="incoming", status="received")
         if not transmissions:
-            all_transmissions = node.transmissions(direction="incoming", status="received")
-            if all_transmissions:
-                most_recent_transmission = max(node.transmissions(direction="incoming", status="received"), key=attrgetter("id"))
+            if received_transmissions:
+                most_recent_transmission = max(received_transmissions, key=attrgetter("id"))
                 responses = node.infos()
                 transmission_newer_than_response = False
                 if responses:
-                    most_recent_response = max(node.infos(), key=attrgetter("id"))
+                    most_recent_response = max(responses, key=attrgetter("id"))
                     if most_recent_transmission.receive_time > most_recent_response.creation_time:
                         transmission_newer_than_response = True
                 if transmission_newer_than_response or not responses:
