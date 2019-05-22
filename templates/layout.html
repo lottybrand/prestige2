@@ -10,6 +10,7 @@
         $(document).ready(function() {
 			dallinger.getExperimentProperty("condition").done(function (resp) {
 				condition = resp.condition;
+				store.set("condition", condition);
 			});
 		});
 	</script>
