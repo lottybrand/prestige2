@@ -252,7 +252,7 @@ class Bartlett1932(Experiment):
         good_nodes = []
         bad_nodes = []
         for n in node.network.nodes(type=self.models.LottyNode):
-            if (node.last_request - n.last_request).total_seconds() > 45:
+            if (node.last_request - n.last_request).total_seconds() > 60:
                 bad_nodes.append(n)
             else:
                 good_nodes.append(n)

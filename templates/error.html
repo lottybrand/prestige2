@@ -8,8 +8,8 @@
             <div>
                 <p id="error-text">{{ error_text }}</p>
                 <p style="font-size: 130%"> As we stated in the instructions, this is a group game, so everyone has to complete the game in time with their group.</p>
-                <p style="font-size: 130%"> You may have caused an error by taking over 2 minutes to respond to a question, delaying the rest of your group.</p>
-                <p style="font-size: 130%"> If you don't think this is what happened, please let us know what happened by filling out the form below. We will review this information and get back to you. </p>
+                <p style="font-size: 130%"> You may have caused an error by taking over a minute to respond to a question, delaying the rest of your group.</p>
+                <p style="font-size: 130%"> If you don't think this is what happened, please let us know what happened by filling out the form below. We will review this information and get back to you. (If you took over a minute to respond to information about the start of a new Round, you will have been sent to this page after answering the first question of that round, even if that response was in time) </p>
                 <form id="error-response" action="/handle-error" method="POST">
                     <input type="hidden" name="error_type" value="{{ error_type }}" />
                     <input type="hidden" name="error_text" value="{{ error_text }}" />
