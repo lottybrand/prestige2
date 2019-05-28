@@ -50,5 +50,5 @@ process_good_luck = function() {
 }
 
 update_question_number_text = function() {
-    $("#question_number").html("You are in the " + topic + " Round, on question " + number + "/100");
+    $("#question_number").html("You are in the " + topic + " Topic, on question " + number + "/100");
 }
