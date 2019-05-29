@@ -265,7 +265,7 @@ update_neighbor_button = function(number, neighbor) {
 
     // update button and question display according to info_chosen
     if (info_chosen == "Player ID") { 
-        $(button_id).html(neighbor_image + "player ID: " + neighbor_properties.name);
+        $(button_id).html(neighbor_image + "Player ID: " + neighbor_properties.name);
 
     } else if (info_chosen == "Times chosen in Round 1") {
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times");
