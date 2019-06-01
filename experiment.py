@@ -134,10 +134,12 @@ class Bartlett1932(Experiment):
         # 1 - every node has at least 1 info
         # 2 - everyone's most recent info is from the same question
         # 3 - the current submitter is the most recent of these
+        # 4 - none of the infos are simply decisions of who to copy
         return (
             len(infos) == info.network.size() - 1 and
             len(set([i.number for i in infos])) == 1 and
-            info.id == max([i.id for i in infos])
+            info.id == max([i.id for i in infos]) and
+            all([i.copying == False for i in infos])
         )
 
 
@@ -182,7 +184,6 @@ class Bartlett1932(Experiment):
         # get the newly made info, and copy its properties over as well.
         new_info = max(node.infos(), key=attrgetter("id"))
         new_info.property1 = copied_info.property1
-        new_info.copying = info.copying
         new_info.info_chosen = info.info_chosen
 
         return new_info
