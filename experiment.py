@@ -142,7 +142,7 @@ class Bartlett1932(Experiment):
             i for i in info.network.nodes(type=self.models.QuizSource)[0].infos()
             if i.contents not in ["Good Luck", "Bad Luck"]
         ]
-        question = json.loads(max(q, key=attrgetter('id')).contents)
+        question = json.loads(max(questions, key=attrgetter('id')).contents)
         Rwer = question["Rwer"]
         Wwer = question["Wwer"]
 
@@ -151,7 +151,7 @@ class Bartlett1932(Experiment):
             len(infos) == info.network.size() - 1 and
             len(set([i.number for i in infos])) == 1 and
             info.id == max([i.id for i in infos]) and 
-            all([i.contents in [Rwer, Wwer, "Ask Someone Else", "Bad Luck"] for i in infos]):
+            all([i.contents in [Rwer, Wwer, "Ask Someone Else", "Bad Luck"] for i in infos])
         )
 
 
