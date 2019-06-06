@@ -134,10 +134,24 @@ class Bartlett1932(Experiment):
         # 1 - every node has at least 1 info
         # 2 - everyone's most recent info is from the same question
         # 3 - the current submitter is the most recent of these
+        # 4 - everyone's info is an actual answer, not just saying who to copy
+
+        # work out the Rwer and Wwer
+        import json
+        questions = [
+            i for i in info.network.nodes(type=self.models.QuizSource)[0].infos()
+            if i.contents not in ["Good Luck", "Bad Luck"]
+        ]
+        question = json.loads(max(q, key=attrgetter('id')).contents)
+        Rwer = question["Rwer"]
+        Wwer = question["Wwer"]
+
+        # apply the checks
         return (
             len(infos) == info.network.size() - 1 and
             len(set([i.number for i in infos])) == 1 and
-            info.id == max([i.id for i in infos])
+            info.id == max([i.id for i in infos]) and 
+            all([i.contents in [Rwer, Wwer, "Ask Someone Else", "Bad Luck"] for i in infos]):
         )
 
 
