@@ -276,16 +276,16 @@ class Bartlett1932(Experiment):
                 node.network.max_size -= 1
                 n.fail()
 
-        # if someone has been failed then advance the group again.
-        if bad_nodes:
-            most_recent_info = max(node.network.infos(type=self.models.LottyInfo), key=attrgetter("id"))
-            group = node.network.nodes(type=self.models.LottyNode)
-            infos = []
-            for g in group:
-                if g.infos():
-                    infos.append(max(g.infos(), key=attrgetter("id")))
-            if self.group_ready_to_advance(most_recent_info, infos):
-                self.advance_group(group, infos);
+            # if someone has been failed then advance the group again.
+            if bad_nodes:
+                most_recent_info = max(node.network.infos(type=self.models.LottyInfo), key=attrgetter("id"))
+                group = node.network.nodes(type=self.models.LottyNode)
+                infos = []
+                for g in group:
+                    if g.infos():
+                        infos.append(max(g.infos(), key=attrgetter("id")))
+                if self.group_ready_to_advance(most_recent_info, infos):
+                    self.advance_group(group, infos)
 
         # fix for hanging issue.
         received_transmissions = node.transmissions(direction="incoming", status="received")
