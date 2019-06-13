@@ -280,7 +280,7 @@ update_neighbor_button = function(number, neighbor) {
                         copy=true,
                         info_chosen=info_chosen);
         disable_neighbor_buttons();
-        $("#neighbor_prompt").hide();
+        $("#neighbor_div").hide()
     });
     $(button_id).prop("disabled", false);
     $(button_id).show();
