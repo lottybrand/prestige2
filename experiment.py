@@ -120,13 +120,10 @@ class Bartlett1932(Experiment):
 
         self.update_node_bonus(node)
 
-        group = node.network.nodes(type=self.models.LottyNode)
-        infos = []
-        for g in group:
-            if g.infos():
-                infos.append(max(g.infos(), key=attrgetter("id")))
-        if self.group_ready_to_advance(info, infos):
-            self.advance_group(group, infos);
+        group = node.network
+        if node == self.group_leader(group):
+            if self.group_ready_to_advance(group):
+                self.advance_group(group)
 
 
     def group_leader(self, network):
