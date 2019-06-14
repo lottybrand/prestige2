@@ -273,7 +273,6 @@ class Bartlett1932(Experiment):
 
         if bad_nodes and node.id == max(good_nodes, key=attrgetter("id")).id:        
             for n in bad_nodes:
-                node.network.max_size -= 1
                 n.fail()
 
             # if someone has been failed then advance the group again.

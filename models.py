@@ -72,6 +72,32 @@ class LottyNode(Node):
         p1["last_request"] = str(val)
         self.property1 = json.dumps(p1)
 
+    def fail(self):
+
+        # don't allow multiple failings
+        if self.failed is True:
+            raise AttributeError(
+                "Cannot fail {} - it has already failed.".format(self))
+        else:
+
+            # if the group has started, shrink the network.
+            if self.network.infos():
+                self.network.max_size -= 1
+
+            # fail the node
+            self.failed = True
+            self.time_of_death = timenow()
+            self.network.calculate_full()
+
+            for v in self.vectors():
+                v.fail()
+            for i in self.infos():
+                i.fail()
+            for t in self.transmissions(direction="all"):
+                t.fail()
+            for t in self.transformations():
+                t.fail()
+
 class LottyInfo(Info):
 
     __mapper_args__ = {
