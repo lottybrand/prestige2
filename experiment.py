@@ -178,11 +178,13 @@ class Bartlett1932(Experiment):
 
         # if everyone copied
         if all([a == "Ask Someone Else" for a in answers]):
-            self.notify_bad_luck(infos)
+            for i in infos:
+                i.fail()
+            self.notify_bad_luck(network)
 
         # if no-one copied
         elif not "Ask Someone Else" in answers:
-            self.send_next_question(group[0].network)
+            self.send_next_question(network)
             
         # if some copied
         else:
@@ -230,11 +232,8 @@ class Bartlett1932(Experiment):
         ppt.property2 = node.bonus
 
 
-    def notify_bad_luck(self, infos):
-        for i in infos:
-            i.fail()
-
-        source = infos[0].network.nodes(type=Source)[0]
+    def notify_bad_luck(self, network):
+        source = network.nodes(type=Source)[0]
         source.transmit(what=Info(origin=source, contents="Bad Luck"))
 
 
