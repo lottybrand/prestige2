@@ -313,6 +313,17 @@ class Bartlett1932(Experiment):
         if self.group_ready_to_advance(network):
             self.advance_group(network)
 
+    def assignment_abandoned(self, participant):
+        networks = [n.network for n in participant.nodes()]
+        self.fail_participant(participant)
+        for n in networks:
+            readvance_group(n)
+
+    def assignment_returned(self, participant):
+        networks = [n.network for n in participant.nodes()]
+        self.fail_participant(participant)
+        for n in networks:
+            readvance_group(n)
 
     def node_get_request(self, node, nodes):
         if node.type == "lotty_node":
