@@ -86,7 +86,7 @@ class LottyNode(Node):
 
             # fail the node
             self.failed = True
-            self.time_of_death = timenow()
+            self.time_of_death = datetime.now()
             self.network.calculate_full()
 
             for v in self.vectors():
