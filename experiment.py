@@ -129,33 +129,54 @@ class Bartlett1932(Experiment):
             self.advance_group(group, infos);
 
 
-    def group_ready_to_advance(self, info, infos):
+    def group_leader(self, network):
+        # returns the node in the network that most recently created an info
+        infos = network.infos(type=self.models.LottyInfo)
+        if infos:
+            return max(infos, key=attrgetter("id")).origin
+        else:
+            return None
+
+
+
+    def group_ready_to_advance(self, network):
         # the network is ready to advance only if:
         # 1 - every node has at least 1 info
         # 2 - everyone's most recent info is from the same question
-        # 3 - the current submitter is the most recent of these
-        # 4 - everyone's info is an actual answer, not just saying who to copy
+        # 3 - everyone's info is an actual answer, not just saying who to copy
 
         # work out the Rwer and Wwer
         import json
         questions = [
-            i for i in info.network.nodes(type=self.models.QuizSource)[0].infos()
+            i for i in network.nodes(type=self.models.QuizSource)[0].infos()
             if i.contents not in ["Good Luck", "Bad Luck"]
         ]
         question = json.loads(max(questions, key=attrgetter('id')).contents)
         Rwer = question["Rwer"]
         Wwer = question["Wwer"]
 
+        # get the current group answers
+        group = network.nodes(type=self.models.LottyNode)
+        infos = []
+        for g in group:
+            if g.infos():
+                infos.append(max(g.infos(), key=attrgetter("id")))
+
         # apply the checks
         return (
-            len(infos) == info.network.size() - 1 and
+            len(infos) == network.size() - 1 and
             len(set([i.number for i in infos])) == 1 and
-            info.id == max([i.id for i in infos]) and 
             all([i.contents in [Rwer, Wwer, "Ask Someone Else", "Bad Luck"] for i in infos])
         )
 
 
-    def advance_group(self, group, infos):
+    def advance_group(self, network):
+        # get the current group answers
+        group = network.nodes(type=self.models.LottyNode)
+        infos = []
+        for g in group:
+            if g.infos():
+                infos.append(max(g.infos(), key=attrgetter("id")))
         answers = [i.contents for i in infos]
 
         # if everyone copied
