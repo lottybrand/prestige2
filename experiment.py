@@ -148,6 +148,8 @@ class Bartlett1932(Experiment):
             i for i in network.nodes(type=self.models.QuizSource)[0].infos()
             if i.contents not in ["Good Luck", "Bad Luck"]
         ]
+        if not questions:
+            return False
         question = json.loads(max(questions, key=attrgetter('id')).contents)
         Rwer = question["Rwer"]
         Wwer = question["Wwer"]
