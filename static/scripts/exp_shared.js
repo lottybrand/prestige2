@@ -58,7 +58,14 @@ get_transmissions = function() {
         console.log("*** Resp:" + resp);
         if (transmissions.length > 0) {
             if (transmissions.length > 1) {
-                console.log("More than one transmission - unexpected!");
+                t = transmissions[0];
+                transmissions.forEach(function(transmission) {
+                    if (transmission.id > t.id) {
+                        t = transmission;
+                    }
+                });
+                console.log("*** Got multiple transmissions, newest has info id: " + t.info_id);
+                get_infos(t.info_id);
             } else {
                 console.log("*** Got one transmission, info id: " + transmissions[0].info_id);
                 get_info(transmissions[0].info_id);
