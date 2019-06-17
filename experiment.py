@@ -34,8 +34,8 @@ class Bartlett1932(Experiment):
         self.known_classes["LottyInfo"] = self.models.LottyInfo
         self.known_classes["LottyNode"] = self.models.LottyNode
         self.known_classes["QuizSource"] = self.models.QuizSource
-        self.experiment_repeats = 1
-        self.initial_recruitment_size = int(self.experiment_repeats*self.group_size*1.3)
+        self.experiment_repeats = 2
+        self.initial_recruitment_size = int(self.experiment_repeats*self.group_size)
         if session:
             self.setup()
 
@@ -121,8 +121,8 @@ class Bartlett1932(Experiment):
         self.update_node_bonus(node)
 
         group = node.network
-        if node == self.group_leader(group):
-            if self.group_ready_to_advance(group):
+        if self.group_ready_to_advance(group):
+            if node == self.group_leader(group):
                 self.advance_group(group)
 
 
