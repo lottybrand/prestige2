@@ -57,6 +57,11 @@ get_group = function() {
                     get_source();
                 }
             }, 1000);
+        })
+        .fail(function(rejection) {
+            setTimeout(function() {
+                get_source();
+            }, 5000);
         });
     });
  };
