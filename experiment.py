@@ -35,7 +35,7 @@ class Bartlett1932(Experiment):
         self.known_classes["LottyNode"] = self.models.LottyNode
         self.known_classes["QuizSource"] = self.models.QuizSource
         self.experiment_repeats = 2
-        self.initial_recruitment_size = int(self.experiment_repeats*self.group_size)
+        self.initial_recruitment_size = int(self.experiment_repeats*self.group_size*1.3)
         if session:
             self.setup()
 
@@ -226,7 +226,7 @@ class Bartlett1932(Experiment):
 
     def update_node_bonus(self, node):
         # update the nodes bonus
-        node.bonus = node.score >= 85
+        node.bonus = node.score >85
 
         # add node properties to ppt object
         ppt = node.participant
