@@ -214,6 +214,7 @@ class Bartlett1932(Experiment):
         # the current player receives it and copies it.
         node.receive()
         node.replicate(info_in=copied_info)
+        self.save()
         
         # get the newly made info, and copy its properties over as well.
         new_info = max(node.infos(), key=attrgetter("id"))
