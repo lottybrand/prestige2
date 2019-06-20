@@ -340,6 +340,16 @@ add_neighbor_buttons = function() {
     });
 }
 
+get_source = function() {
+    url = "/node/" + my_node_id + "/neighbors"
+    data = {
+        connection: "from",
+        node_type: "QuizSource"
+    }
+    dallinger.get(url, data).done(function(resp) {
+        console.log("pinged server");
+    });
+}
 
 
 

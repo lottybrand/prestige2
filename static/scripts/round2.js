@@ -41,6 +41,7 @@ $(document).ready(function() {
     // they are used to test participants attention to the instructions
 
     $("#check_AB").click(function() {
+        get_source();
     	if (condition == "C") {
     		update_ui_attention_check_failed();
     	} else {
@@ -49,6 +50,7 @@ $(document).ready(function() {
     });
 
     $("#check_C").click(function() {
+        get_source();
     	if (condition == "C") {
     		update_ui_attention_check_passed();
     	} else {
