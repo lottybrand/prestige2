@@ -131,3 +131,25 @@ info_choice = function() {
     assign_choice_buttons();
     $("#info_choice_div").show();
 };
+
+process_neighbors = function() {
+    // update neighbor prompt
+    if (neighbors.length == 1) {
+        part1 = ("You have " + neighbors.length + " player to copy from, ");
+        if (info_chosen == "Player ID") { 
+            part2 = "below is their Player ID.";
+        } else if (info_chosen == "Times chosen in Round 1") {
+            part2 = "below is how many times they were chosen in Round 1 by other players.";
+        } else if (info_chosen == "Total Score in Round 1") {
+            part2 = "below is the number of questions they answered correctly themselves in Round 1.";
+        }
+    } else {
+        part1 = ("You have " + neighbors.length + " players to copy from, ");
+        if (info_chosen == "Player ID") { 
+            part2 = "below are their Player IDs.";
+        } else if (info_chosen == "Times chosen in Round 1") {
+            part2 = "below are how many times they were chosen in Round 1 by other players.";
+        } else if (info_chosen == "Total Score in Round 1") {
+            part2 = "below are the number of questions they answered correctly themselves in Round 1.";
+        }
+    }
