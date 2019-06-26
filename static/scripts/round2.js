@@ -153,3 +153,17 @@ process_neighbors = function() {
             part2 = "below are the number of questions they answered correctly themselves in Round 1.";
         }
     }
+
+    $("#neighbor_prompt").html(part1 + part2 + " Please select a player to copy.")    
+
+    // update neighbor buttons
+    current_button = 1;
+    neighbors.forEach(function(entry) {
+        update_neighbor_button(current_button, entry)        
+        current_button = current_button + 1;
+    });
+
+    // show the div
+    $("#wait_div").hide()
+    $("#neighbor_div").show()
+};
