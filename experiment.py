@@ -122,6 +122,10 @@ class Bartlett1932(Experiment):
             if info.round == 1:
                 node.asoc_score = node.asoc_score + info.score
 
+        # as long as it is the right topic, update that topic's score
+        if info.topic == "Geography":
+            node.asoc_score_geog = node.asoc_score_geog + info.score
+
         # as long as its not a practice question update total score.
         if info.round != 0:
             node.score = node.score + info.score
