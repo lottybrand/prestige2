@@ -184,7 +184,8 @@ submit_response = function(response, copy=false, info_chosen="NA", human=true) {
             "score": (response == Rwer)*1,
             "info_chosen": info_chosen,
             "round": round,
-            "human": human
+            "human": human,
+            "topic": topic
         })
     }).done(function (resp) {
         response_submitted(resp);

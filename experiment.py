@@ -43,7 +43,7 @@ class Bartlett1932(Experiment):
     def public_properties(self):
         return {
             'group_size': self.group_size,
-            'condition': "C"
+            'condition': "A"
         }
 
 
@@ -75,7 +75,15 @@ class Bartlett1932(Experiment):
         node.property1 = json.dumps({
             'name': name,
             'n_copies': 0,
+            'n_copies_geog':0,
+            'n_copies_weight':0,
+            'n_copies_lang':0,
+            'n_copies_art':0,
             'asoc_score': 0,
+            'asoc_score_geog':0,
+            'asoc_score_weight':0,
+            'asoc_score_lang':0,
+            'asoc_score_art':0,
             'score': 0,
             'bonus': False,
             'last_request': str(datetime.now())

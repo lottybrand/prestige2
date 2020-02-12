@@ -21,8 +21,40 @@ class LottyNode(Node):
         return json.loads(self.property1)["n_copies"]
 
     @property
+    def n_copies_geog(self):
+        return json.loads(self.property1)["n_copies_geog"]
+
+    @property
+    def n_copies_weight(self):
+        return json.loads(self.property1)["n_copies_weight"]
+
+    @property
+    def n_copies_lang(self):
+        return json.loads(self.property1)["n_copies_lang"]
+
+    @property
+    def n_copies_art(self):
+        return json.loads(self.property1)["n_copies_art"]
+
+    @property
     def asoc_score(self):
         return json.loads(self.property1)["asoc_score"]
+
+    @property
+    def asoc_score_geog(self):
+        return json.loads(self.property1)["asoc_score_geog"]
+
+    @property
+    def asoc_score_weight(self):
+        return json.loads(self.property1)["asoc_score_weight"]
+
+    @property
+    def asoc_score_lang(self):
+        return json.loads(self.property1)["asoc_score_lang"]
+
+    @property
+    def asoc_score_art(self):
+        return json.loads(self.property1)["asoc_score_art"]
 
     @property
     def score(self):
@@ -128,6 +160,10 @@ class LottyInfo(Info):
     def human(self):
         return json.loads(self.property1)["human"]
 
+    @property
+    def topic(self):
+        return json.loads(self.property1)["topic"]
+
     @number.setter
     def number(self, val):
         p1 = json.loads(self.property1)
@@ -164,6 +200,11 @@ class LottyInfo(Info):
         p1["human"] = val
         self.property1 = json.dumps(p1)
 
+    @topic.setter
+    def topic(Self, val):
+        p1 = json.loads(self.property1)
+        p1["topic"] = val
+        self.property1 = json.dumps(p1)
 
 
 class LottyStar(Network):
