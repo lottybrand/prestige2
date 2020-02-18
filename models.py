@@ -86,6 +86,30 @@ class LottyNode(Node):
         p1["asoc_score"] = val
         self.property1 = json.dumps(p1)
 
+    @asoc_score_geog.setter
+    def asoc_score_geog(self, val):
+        p1 = json.loads(self.property1)
+        p1["asoc_score_geog"] = val
+        self.property1 = json.dumps(p1)
+
+    @asoc_score_weight.setter
+    def asoc_score_weight(self, val):
+        p1 = json.loads(self.property1)
+        p1["asoc_score_weight"] = val
+        self.property1 = json.dumps(p1)
+
+    @asoc_score_lang.setter
+    def asoc_score_lang(self, val):
+        p1 = json.loads(self.property1)
+        p1["asoc_score_lang"] = val
+        self.property1 = json.dumps(p1)
+
+    @asoc_score_art.setter
+    def asoc_score_art(self, val):
+        p1 = json.loads(self.property1)
+        p1["asoc_score_art"] = val
+        self.property1 = json.dumps(p1)
+
     @score.setter
     def score(self, val):
         p1 = json.loads(self.property1)
@@ -102,6 +126,30 @@ class LottyNode(Node):
     def last_request(self, val):
         p1 = json.loads(self.property1)
         p1["last_request"] = str(val)
+        self.property1 = json.dumps(p1)
+
+    @n_copies_geog.setter
+    def n_copies_geog(self, val):
+        p1 = json.loads(self.property1)
+        p1["n_copies_geog"] = val
+        self.property1 = json.dumps(p1)
+
+    @n_copies_weight.setter
+    def n_copies_weight(self, val):
+        p1 = json.loads(self.property1)
+        p1["n_copies_weight"] = val
+        self.property1 = json.dumps(p1)
+
+    @n_copies_lang.setter
+    def n_copies_lang(self, val):
+        p1 = json.loads(self.property1)
+        p1["n_copies_lang"] = val
+        self.property1 = json.dumps(p1)
+
+    @n_copies_art.setter
+    def n_copies_art(self, val):
+        p1 = json.loads(self.property1)
+        p1["n_copies_art"] = val
         self.property1 = json.dumps(p1)
 
     def fail(self):
