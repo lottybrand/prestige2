@@ -26,7 +26,7 @@ class Bartlett1932(Experiment):
 
         Finally, setup() is called.
         """
-        self.group_size = 3
+        self.group_size = 2
         super(Bartlett1932, self).__init__(session)
         import models
         self.models = models
@@ -121,14 +121,22 @@ class Bartlett1932(Experiment):
             # update node asoc score in round 1
             if info.round == 1:
                 node.asoc_score = node.asoc_score + info.score
-
-        # as long as it is the right topic, update that topic's score
-        if info.topic == "Geography":
-            node.asoc_score_geog = node.asoc_score_geog + info.score
-
         # as long as its not a practice question update total score.
         if info.round != 0:
             node.score = node.score + info.score
+
+        # increment per topic 
+        if info.topic == "Geography":
+            node.asoc_score_geog = node.asoc_score_geog + info.score
+
+        if info.topic == "Weight":
+            node.asoc_score_weight = node.asoc_score_weight + info.score
+        
+        if info.topic == "Language":
+            node.asoc_score_lang = node.asoc_score_lang + info.score
+
+        if info.topic == "Art":
+            node.asoc_score_art = node.asoc_score_art + info.score
 
         self.update_node_bonus(node)
 
