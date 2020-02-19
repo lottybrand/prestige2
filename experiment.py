@@ -126,16 +126,16 @@ class Bartlett1932(Experiment):
             node.score = node.score + info.score
 
         # increment per topic 
-        if info.topic == "Geography":
+        if info.round == 1 and info.topic == "Geography":
             node.asoc_score_geog = node.asoc_score_geog + info.score
 
-        if info.topic == "Weight":
+        if info.round == 1 and info.topic == "Weight":
             node.asoc_score_weight = node.asoc_score_weight + info.score
         
-        if info.topic == "Language":
+        if info.round == 1 and info.topic == "Language":
             node.asoc_score_lang = node.asoc_score_lang + info.score
 
-        if info.topic == "Art":
+        if info.round ==1 and info.topic == "Art":
             node.asoc_score_art = node.asoc_score_art + info.score
 
         self.update_node_bonus(node)
