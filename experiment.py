@@ -121,22 +121,25 @@ class Bartlett1932(Experiment):
             # update node asoc score in round 1
             if info.round == 1:
                 node.asoc_score = node.asoc_score + info.score
+
+        if info.copying:
+            info = self.copy_neighbor(node, info)
+        else:        
+            # increment per topic if not a copying instance
+            if info.round == 1 and info.topic == "Geography":
+                node.asoc_score_geog = node.asoc_score_geog + info.score
+
+            if info.round == 1 and info.topic == "Weight":
+                node.asoc_score_weight = node.asoc_score_weight + info.score
+        
+            if info.round == 1 and info.topic == "Language":
+                node.asoc_score_lang = node.asoc_score_lang + info.score
+
+            if info.round ==1 and info.topic == "Art":
+                node.asoc_score_art = node.asoc_score_art + info.score
         # as long as its not a practice question update total score.
         if info.round != 0:
             node.score = node.score + info.score
-
-        # increment per topic 
-        if info.round == 1 and info.topic == "Geography":
-            node.asoc_score_geog = node.asoc_score_geog + info.score
-
-        if info.round == 1 and info.topic == "Weight":
-            node.asoc_score_weight = node.asoc_score_weight + info.score
-        
-        if info.round == 1 and info.topic == "Language":
-            node.asoc_score_lang = node.asoc_score_lang + info.score
-
-        if info.round ==1 and info.topic == "Art":
-            node.asoc_score_art = node.asoc_score_art + info.score
 
         self.update_node_bonus(node)
 
