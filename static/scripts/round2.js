@@ -88,10 +88,15 @@ display_round_warning = function() {
     $("#welcome_div").hide();
     $("#wait_div").hide();
 
-    if ((condition == "A") || (condition == "B")) {
-        check_info = 'their Player ID, or, the number of times they were chosen by others in Round 1.'
+    if (condition == "A") {
+        check_info = 'the number of times they were chosen on this topic, or the number of times they were chosen on a different topic.'
     } else {
-        check_info = 'their total score in Round 1, or, the number of times they were chosen by others in Round 1.'
+        if (condition =="B") {
+            check_info = 'the number of times they were chosen altogether, or the number of times they were chosen on a different topic.'
+    } else {
+        if (condition =="C") {
+            check_info = 'the number of times they were chosen altogether, or the number of times they were chosen on this topic.'
+        }
     }
 
     $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting Round 2 which consists of the final 60 questions.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either ' + check_info);
@@ -114,15 +119,15 @@ enable_R2_buttons = function() {
 
 assign_choice_buttons = function() {
     if (condition == "A" || condition == "B") {
-        info_choice_a = "Player ID"
+        info_choice_a = "Times Chosen on a Different Topic"
     } else {
-        info_choice_a = "Total Score in Round 1"
+        info_choice_a = "Times Chosen Altogether"
     }
     if (Math.random() < 0.5) {
         $("#info-choice-a").html(info_choice_a);
-        $("#info-choice-b").html("Times chosen in Round 1")
+        $("#info-choice-b").html("Times chosen in this Topic")
     } else {
-        $("#info-choice-a").html("Times chosen in Round 1");
+        $("#info-choice-a").html("Times chosen in this Topic");
         $("#info-choice-b").html(info_choice_a);
     }
 }
@@ -136,21 +141,21 @@ process_neighbors = function() {
     // update neighbor prompt
     if (neighbors.length == 1) {
         part1 = ("You have " + neighbors.length + " player to copy from, ");
-        if (info_chosen == "Player ID") { 
-            part2 = "below is their Player ID.";
-        } else if (info_chosen == "Times chosen in Round 1") {
-            part2 = "below is how many times they were chosen in Round 1 by other players.";
-        } else if (info_chosen == "Total Score in Round 1") {
-            part2 = "below is the number of questions they answered correctly themselves in Round 1.";
+        if (info_chosen == "Times Chosen on a Different Topic") { 
+            part2 = "below is the times they were chosen on a Different Topic.";
+        } else if (info_chosen == "Times Chosen Altogether") {
+            part2 = "below is how many times they were chosen altogether.";
+        } else if (info_chosen == "Times chosen in This Topic") {
+            part2 = "below is how many times they were chosen in this Topic.";
         }
     } else {
         part1 = ("You have " + neighbors.length + " players to copy from, ");
-        if (info_chosen == "Player ID") { 
-            part2 = "below are their Player IDs.";
-        } else if (info_chosen == "Times chosen in Round 1") {
-            part2 = "below are how many times they were chosen in Round 1 by other players.";
-        } else if (info_chosen == "Total Score in Round 1") {
-            part2 = "below are the number of questions they answered correctly themselves in Round 1.";
+        if (info_chosen == "Times Chosen on a Different Topic") { 
+            part2 = "below are how many times they were chosen on a Different Topic.";
+        } else if (info_chosen == "Times Chosen Altogether") {
+            part2 = "below are how many times they were chosen altogether.";
+        } else if (info_chosen == "Times chosen in This Topic") {
+            part2 = "below are how many times they were chosen in this Topic.";
         }
     }
 

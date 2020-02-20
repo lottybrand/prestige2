@@ -40,11 +40,11 @@ display_round_warning = function() {
 
 process_good_luck = function() {
     if (condition == "A") {
-        console.log("*** Getting neighbors by player id");
-        info_chosen = "Player ID";
+        console.log("*** Getting neighbors by topic score");
+        info_chosen = "Topic Score";
     } else if (condition == "B" || condition == "C") {
-        info_chosen = "Total Score in Round 1";
-        console.log("*** Getting neighbors by total score");
+        info_chosen = "Topic Score";
+        console.log("*** Getting neighbors by topic score");
     }
     check_neighbors(info_chosen);
 }

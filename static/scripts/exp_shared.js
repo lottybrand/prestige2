@@ -234,17 +234,17 @@ process_neighbors = function() {
     // update neighbor prompt
     if (neighbors.length == 1) {
         part1 = ("You have " + neighbors.length + " player to copy from, ");
-        if (info_chosen == "Player ID") { 
-            part2 = "below is their Player ID.";
-        } else if (info_chosen == "Times chosen in Round 1") {
+        if (info_chosen == "Topic Score") { 
+            part2 = "below is their Topic Score.";
+        } else if (info_chosen == "Times chosen in This Topic") {
             part2 = "below is how many times they were chosen in Round 1 by other players.";
-        } else if (info_chosen == "Total Score in Round 1") {
+        } else if (info_chosen == "Times chosen altogether") {
             part2 = "below is the number of questions they have answered correctly themselves.";
         }
     } else {
         part1 = ("You have " + neighbors.length + " players to copy from, ");
-        if (info_chosen == "Player ID") { 
-            part2 = "below are their Player IDs.";
+        if (info_chosen == "Topic Score") { 
+            part2 = "below are their topic scores.";
         } else if (info_chosen == "Times chosen in Round 1") {
             part2 = "below are how many times they were chosen in Round 1 by other players.";
         } else if (info_chosen == "Total Score in Round 1") {
@@ -273,13 +273,13 @@ update_neighbor_button = function(number, neighbor) {
     neighbor_image = "<img src='/static/images/stick.png' height='90' width='50'><br>";
 
     // update button and question display according to info_chosen
-    if (info_chosen == "Player ID") { 
-        $(button_id).html(neighbor_image + "Player ID: " + neighbor_properties.name);
+    if (info_chosen == "Topic Score") { 
+        $(button_id).html(neighbor_image + "Topic Score: " + neighbor_properties.asoc_score_geog);
 
-    } else if (info_chosen == "Times chosen in Round 1") {
+    } else if (info_chosen == "Topic Score") {
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times");
 
-    } else if (info_chosen == "Total Score in Round 1") {
+    } else if (info_chosen == "Topic Score") {
         $(button_id).html(neighbor_image + neighbor_properties.asoc_score + " correct");
     }
     
