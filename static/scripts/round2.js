@@ -95,11 +95,11 @@ display_round_warning = function() {
             check_info = 'the number of times they were chosen altogether, or the number of times they were chosen on a different topic.'
     } else {
         if (condition =="C") {
-            check_info = 'the number of times they were chosen altogether, or the number of times they were chosen on this topic.'
+            check_info = 'the number of times they were chosen altogether, or the number of times they were chosen on the topic you are answering.'
         }
     }
 
-    $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting Round 2 which consists of the final 60 questions.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either ' + check_info);
+    $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting Round 2 which consists of the final 40 questions.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either ' + check_info);
     $("#warning_div").show();
 }
 
@@ -125,9 +125,9 @@ assign_choice_buttons = function() {
     }
     if (Math.random() < 0.5) {
         $("#info-choice-a").html(info_choice_a);
-        $("#info-choice-b").html("Times chosen in this Topic")
+        $("#info-choice-b").html("Times Chosen on This Topic")
     } else {
-        $("#info-choice-a").html("Times chosen in this Topic");
+        $("#info-choice-a").html("Times Chosen on This Topic");
         $("#info-choice-b").html(info_choice_a);
     }
 }
@@ -145,7 +145,7 @@ process_neighbors = function() {
             part2 = "below is the times they were chosen on a Different Topic.";
         } else if (info_chosen == "Times Chosen Altogether") {
             part2 = "below is how many times they were chosen altogether.";
-        } else if (info_chosen == "Times chosen in This Topic") {
+        } else if (info_chosen == "Times Chosen on This Topic") {
             part2 = "below is how many times they were chosen in this Topic.";
         }
     } else {
@@ -154,7 +154,7 @@ process_neighbors = function() {
             part2 = "below are how many times they were chosen on a Different Topic.";
         } else if (info_chosen == "Times Chosen Altogether") {
             part2 = "below are how many times they were chosen altogether.";
-        } else if (info_chosen == "Times chosen in This Topic") {
+        } else if (info_chosen == "Times Chosen on This Topic") {
             part2 = "below are how many times they were chosen in this Topic.";
         }
     }

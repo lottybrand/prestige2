@@ -237,18 +237,18 @@ process_neighbors = function() {
         if (info_chosen == "Topic Score") { 
             part2 = "below is their Topic Score.";
         } else if (info_chosen == "Times chosen in This Topic") {
-            part2 = "below is how many times they were chosen in Round 1 by other players.";
-        } else if (info_chosen == "Times chosen altogether") {
-            part2 = "below is the number of questions they have answered correctly themselves.";
+            part2 = "below is how many times they were chosen in Round 1 in this topic.";
+        } else if (info_chosen == "Times chosen Altogether") {
+            part2 = "below is how many times they were chosen in Round 1.";
         }
     } else {
         part1 = ("You have " + neighbors.length + " players to copy from, ");
         if (info_chosen == "Topic Score") { 
             part2 = "below are their topic scores.";
-        } else if (info_chosen == "Times chosen in Round 1") {
-            part2 = "below are how many times they were chosen in Round 1 by other players.";
-        } else if (info_chosen == "Total Score in Round 1") {
-            part2 = "below are the number of questions they have answered correctly themselves.";
+        } else if (info_chosen == "Times chosen in This Topic") {
+            part2 = "below are how many times they were chosen in Round 1 in this topic.";
+        } else if (info_chosen == "Total chosen Altogether") {
+            part2 = "below are how many times they were chosen in Round 1.";
         }
     }
 
@@ -285,10 +285,10 @@ update_neighbor_button = function(number, neighbor) {
     } else if (info_chosen == "Topic Score" && topic =="Art"){
         $(button_id).html(neighbor_image + "Art Score: " + neighbor_properties.asoc_score_art);
 
-    } else if (info_chosen == "Number of times copied in this topic") {
+    } else if (info_chosen == "Times Chosen on a Different Topic") {
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_geog + " times");
 
-    } else if (info_chosen == "Number of times copied overall") {
+    } else if (info_chosen == "Times Chosen Altogether") {
         $(button_id).html(neighbor_image + neighbor_properties.n_copies + " correct");
     }
     
