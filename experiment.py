@@ -217,6 +217,14 @@ class Bartlett1932(Experiment):
             neighbor.n_copies = neighbor.n_copies + 1
             self.save()
             self.log("n_copies of node {} has been incremented, its now {}".format(neighbor.id, neighbor.n_copies))
+            if info.topic == "Geography":
+                neighbor.n_copies_geog = neighbor.n_copies_geog + 1
+            elif info.topic == "Weight":
+                 neighbor.n_copies_weight = neighbor.n_copies_weight + 1
+            elif info.topic == "Language":
+                 neighbor.n_copies_lang = neighbor.n_copies_lang + 1
+            elif info.topic == "Art":
+                 neighbor.n_copies_art = neighbor.n_copies_art + 1
 
         # fail the original info
         info.fail()
