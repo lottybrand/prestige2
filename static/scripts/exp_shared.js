@@ -273,14 +273,23 @@ update_neighbor_button = function(number, neighbor) {
     neighbor_image = "<img src='/static/images/stick.png' height='90' width='50'><br>";
 
     // update button and question display according to info_chosen
-    if (info_chosen == "Topic Score") { 
-        $(button_id).html(neighbor_image + "Topic Score: " + neighbor_properties.asoc_score_geog);
+    if (info_chosen == "Topic Score" && topic == "Geography") { 
+        $(button_id).html(neighbor_image + "Geography Score: " + neighbor_properties.asoc_score_geog);
 
-    } else if (info_chosen == "Topic Score") {
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times");
+    } else if (info_chosen == "Topic Score" && topic =="Weight"){
+        $(button_id).html(neighbor_image + "Weight Score: " + neighbor_properties.asoc_score_weight);
+    
+    } else if (info_chosen == "Topic Score" && topic =="Language"){
+        $(button_id).html(neighbor_image + "Language Score: " + neighbor_properties.asoc_score_lang);
 
-    } else if (info_chosen == "Topic Score") {
-        $(button_id).html(neighbor_image + neighbor_properties.asoc_score + " correct");
+    } else if (info_chosen == "Topic Score" && topic =="Art"){
+        $(button_id).html(neighbor_image + "Art Score: " + neighbor_properties.asoc_score_art);
+
+    } else if (info_chosen == "Number of times copied in this topic") {
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_geog + " times");
+
+    } else if (info_chosen == "Number of times copied overall") {
+        $(button_id).html(neighbor_image + neighbor_properties.n_copies + " correct");
     }
     
     // add button functionality
