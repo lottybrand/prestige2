@@ -126,7 +126,7 @@ class Bartlett1932(Experiment):
                     node.asoc_score_weight = node.asoc_score_weight + info.score
                 elif info.topic == "Language":
                     node.asoc_score_lang = node.asoc_score_lang + info.score
-                elif topic == "Art":
+                elif info.topic == "Art":
                     node.asoc_score_art = node.asoc_score_art + info.score
         # as long as its not a practice question update total score.
         if info.round != 0:
