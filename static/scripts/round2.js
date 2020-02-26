@@ -85,7 +85,7 @@ process_good_luck = function() {
 }
 
 display_question_or_warning = function() {
-    if (number == 3) {
+    if (number == 41) {
         display_round_warning();
     } else {
         display_question();
@@ -98,9 +98,9 @@ display_round_warning = function() {
     $("#wait_div").hide();
 
     if (condition == "A") {
-        check_info = 'the number of times they were chosen on this topic, or the number of times they were chosen on a different topic.'
+        check_info = 'the number of times they were chosen on a different topic, or the number of times they were chosen on the topic you are answering.'
     } else if (condition =="B") {
-            check_info = 'the number of times they were chosen altogether, or the number of times they were chosen on a different topic.'
+            check_info = 'the number of times they were chosen on a different topic, or the number of times they were chosen altogether.'
     } else if (condition =="C") {
             check_info = 'the number of times they were chosen altogether, or the number of times they were chosen on the topic you are answering.'
     }
@@ -126,16 +126,21 @@ enable_R2_buttons = function() {
 }
 
 assign_choice_buttons = function() {
-    if (condition == "A" || condition == "B") {
+    if (condition == "A") {
         info_choice_a = "Times Chosen on a Different Topic"
-    } else {
+        info_choice_b = "Times Chosen on This Topic"
+    } else if (condition == "B") {
+        info_choice_a = "Times Chosen on a Different Topic"
+        info_choice_b = "Times Chosen Altogether"
+    } else if (condition =="C") {
         info_choice_a = "Times Chosen Altogether"
+        info_choice_b = "Times Chosen on This Topic"
     }
     if (Math.random() < 0.5) {
         $("#info-choice-a").html(info_choice_a);
-        $("#info-choice-b").html("Times Chosen on This Topic")
+        $("#info-choice-b").html(info_choice_b)
     } else {
-        $("#info-choice-a").html("Times Chosen on This Topic");
+        $("#info-choice-a").html(info_choice_b);
         $("#info-choice-b").html(info_choice_a);
     }
 }

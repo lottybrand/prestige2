@@ -235,20 +235,24 @@ process_neighbors = function() {
     if (neighbors.length == 1) {
         part1 = ("You have " + neighbors.length + " player to copy from, ");
         if (info_chosen == "Topic Score") { 
-            part2 = "below is their Topic Score.";
-        } else if (info_chosen == "Times chosen in This Topic") {
-            part2 = "below is how many times they were chosen in Round 1 in this topic.";
-        } else if (info_chosen == "Times chosen Altogether") {
-            part2 = "below is how many times they were chosen in Round 1.";
+            part2 = "below is their topic score.";
+        } else if (info_chosen == "Times Chosen on This Topic") {
+            part2 = "below is how many times they were chosen in Round 1 on this topic.";
+        } else if (info_chosen == "Times Chosen Altogether") {
+            part2 = "below is how many times they were chosen in Round 1 altogether.";
+        } else if (info_chosen =="Times Chosen on a Different Topic") {
+            part2 = "below is how many times they were chosen in Round 1 on a different topic"
         }
     } else {
         part1 = ("You have " + neighbors.length + " players to copy from, ");
         if (info_chosen == "Topic Score") { 
             part2 = "below are their topic scores.";
-        } else if (info_chosen == "Times chosen in This Topic") {
-            part2 = "below are how many times they were chosen in Round 1 in this topic.";
-        } else if (info_chosen == "Total chosen Altogether") {
-            part2 = "below are how many times they were chosen in Round 1.";
+        } else if (info_chosen == "Times Chosen on This Topic") {
+            part2 = "below are how many times they were chosen in Round 1 on this topic.";
+        } else if (info_chosen == "Times Chosen Altogether") {
+            part2 = "below are how many times they were chosen in Round 1 altogether.";
+        } else if (info_chosen == "Times Chosen on a Different Topic") {
+            part2 = "below are how many times they were chosen in Round 1 on a different topic"
         }
     }
 
@@ -274,22 +278,34 @@ update_neighbor_button = function(number, neighbor) {
 
     // update button and question display according to info_chosen
     if (info_chosen == "Topic Score" && topic == "Geography") { 
-        $(button_id).html(neighbor_image + "Geography Score: " + neighbor_properties.asoc_score_geog);
+        $(button_id).html(neighbor_image + "Geography Score: " + neighbor_properties.asoc_score_geog + " correct");
 
     } else if (info_chosen == "Topic Score" && topic =="Weight"){
-        $(button_id).html(neighbor_image + "Weight Score: " + neighbor_properties.asoc_score_weight);
+        $(button_id).html(neighbor_image + "Weight Score: " + neighbor_properties.asoc_score_weight + " correct");
     
     } else if (info_chosen == "Topic Score" && topic =="Language"){
-        $(button_id).html(neighbor_image + "Language Score: " + neighbor_properties.asoc_score_lang);
+        $(button_id).html(neighbor_image + "Language Score: " + neighbor_properties.asoc_score_lang + " correct");
 
     } else if (info_chosen == "Topic Score" && topic =="Art"){
-        $(button_id).html(neighbor_image + "Art Score: " + neighbor_properties.asoc_score_art);
+        $(button_id).html(neighbor_image + "Art Score: " + neighbor_properties.asoc_score_art + " correct");
+
+    } else if (info_chosen == "Times Chosen on This Topic" && topic =="Geography"){
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_geog + " times");
+    
+    } else if (info_chosen == "Times Chosen on This Topic" && topic =="Weight"){
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_weight + " times");
+
+    } else if (info_chosen == "Times Chosen on This Topic" && topic =="Language"){
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_lang + " times");
+
+    } else if (info_chosen == "Times Chosen on This Topic" && topic =="Art"){
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_art + " times");
 
     } else if (info_chosen == "Times Chosen on a Different Topic") {
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_geog + " times");
 
     } else if (info_chosen == "Times Chosen Altogether") {
-        $(button_id).html(neighbor_image + neighbor_properties.n_copies + " correct");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times");
     }
     
     // add button functionality
