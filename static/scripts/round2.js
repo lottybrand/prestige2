@@ -40,13 +40,22 @@ $(document).ready(function() {
     // Check AB/C are the buttons with one of the possible info choices
     // they are used to test participants attention to the instructions
 
-    $("#check_AB").click(function() {
+    $("#check_A").click(function() {
         get_source();
-    	if (condition == "C") {
-    		update_ui_attention_check_failed();
-    	} else {
+    	if (condition == "A") {
     		update_ui_attention_check_passed();
+    	} else {
+    		update_ui_attention_check_failed();
     	}
+    });
+
+    $("#check_B").click(function() {
+        get_source();
+        if (condition == "B") {
+            update_ui_attention_check_passed();
+        } else {
+            update_ui_attention_check_failed();
+        }
     });
 
     $("#check_C").click(function() {
@@ -105,12 +114,14 @@ update_question_number_text = function() {
 }
 
 disable_R2_buttons = function() {
-    $("#check_AB").addClass('disabled');
+    $("#check_A").addClass('disabled');
+    $("#check_B").addClass('disabled');
     $("#check_C").addClass('disabled');
 }
 
 enable_R2_buttons = function() {
-    $("#check_AB").removeClass('disabled');
+    $("#check_A").removeClass('disabled');
+    $("#check_B").removeClass('disabled');
     $("#check_C").removeClass('disabled');
 }
 
