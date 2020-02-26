@@ -76,7 +76,7 @@ process_good_luck = function() {
 }
 
 display_question_or_warning = function() {
-    if (number == 41) {
+    if (number == 3) {
         display_round_warning();
     } else {
         display_question();
@@ -90,13 +90,10 @@ display_round_warning = function() {
 
     if (condition == "A") {
         check_info = 'the number of times they were chosen on this topic, or the number of times they were chosen on a different topic.'
-    } else {
-        if (condition =="B") {
+    } else if (condition =="B") {
             check_info = 'the number of times they were chosen altogether, or the number of times they were chosen on a different topic.'
-    } else {
-        if (condition =="C") {
+    } else if (condition =="C") {
             check_info = 'the number of times they were chosen altogether, or the number of times they were chosen on the topic you are answering.'
-        }
     }
 
     $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting Round 2 which consists of the final 40 questions.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either ' + check_info);

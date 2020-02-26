@@ -12,7 +12,7 @@ $(document).ready(function() {
 });
 
 response_submitted = function(resp) {
-    if (resp.info.contents != "Ask Someone Else" && number == "40") {
+    if (resp.info.contents != "Ask Someone Else" && number == "2") {
         dallinger.allowExit();
         dallinger.goToPage("round2");
     } else {
