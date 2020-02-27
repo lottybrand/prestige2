@@ -301,11 +301,11 @@ update_neighbor_button = function(number, neighbor) {
     } else if (info_chosen == "Times Chosen on This Topic" && topic =="Art"){
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_art + " times in the Art topic");
 
-    } else if (info_chosen == "Times Chosen on a Different Topic") {
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_geog + " times in the " + topic + " topic");
-
     } else if (info_chosen == "Times Chosen Altogether") {
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times altogether in Round 1");
+
+    } else if (info_chosen == "Times Chosen on a Different Topic") {
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_geog + " times in the " + topic + " topic");
     }
     
     // add button functionality

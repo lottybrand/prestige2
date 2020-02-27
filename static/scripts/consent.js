@@ -9,11 +9,7 @@ $(document).ready(function() {
         store.set("mode", dallinger.getUrlParameter("mode"));
 
         dallinger.allowExit();
-        if (condition == "A") {
             window.location.href = '/instructions';
-        } else { 
-            window.location.href= '/instructionsB';
-        }
     });
 
 });

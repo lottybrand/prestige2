@@ -98,11 +98,11 @@ display_round_warning = function() {
     $("#wait_div").hide();
 
     if (condition == "A") {
-        check_info = 'the number of times they were chosen on a different topic, or the number of times they were chosen on the topic you are answering.'
+        check_info = 'the number of times they were chosen in Round 1 on  the topic you are answering, or the number of times they were chosen in Round 1 on a different topic.'
     } else if (condition =="B") {
-            check_info = 'the number of times they were chosen on a different topic, or the number of times they were chosen altogether.'
+            check_info = 'the number of times they were chosen in Round 1 on a different topic to the one you are answering, or the number of times they were chosen in Round 1 altogether.'
     } else if (condition =="C") {
-            check_info = 'the number of times they were chosen altogether, or the number of times they were chosen on the topic you are answering.'
+            check_info = 'the number of times they were chosen in Round 1 altogether, or the number of times they were chosen in Round 1 on the topic you are answering.'
     }
 
     $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting Round 2 which consists of the final 40 questions.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either ' + check_info);
