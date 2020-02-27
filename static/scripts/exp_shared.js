@@ -276,6 +276,14 @@ update_neighbor_button = function(number, neighbor) {
     button_id = "#neighbor_button_" + current_button;
     neighbor_image = "<img src='/static/images/stick.png' height='90' width='50'><br>";
 
+    // map the n_copies to their topic name so it's pretty for the buttons
+    name_map = {
+    "n_copies_geog": "Geography",
+    "n_copies_weight": "Weight",
+    "n_copies_lang": "Language",
+    "n_copies_art": "Art"
+    }
+
     // update button and question display according to info_chosen
     if (info_chosen == "Topic Score" && topic == "Geography") { 
         $(button_id).html(neighbor_image + "Geography Score: " + neighbor_properties.asoc_score_geog + " correct");
@@ -308,25 +316,25 @@ update_neighbor_button = function(number, neighbor) {
         const topicCopies = ['n_copies_weight', 'n_copies_lang', 'n_copies_art'];
         const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
         console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + randomCopy + " topic");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + name_map[randomCopy] + " topic");
 
     } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Weight") {
         const topicCopies = ['n_copies_geog', 'n_copies_lang', 'n_copies_art'];
         const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
         console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + randomCopy + " topic");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + name_map[randomCopy] + " topic");
 
     } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Language") {
         const topicCopies = ['n_copies_geog', 'n_copies_weight', 'n_copies_art'];
         const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
         console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + randomCopy + " topic");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + name_map[randomCopy] + " topic");
 
     } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Art") {
         const topicCopies = ['n_copies_geog', 'n_copies_weight', 'n_copies_lang'];
         const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
         console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + randomCopy + " topic");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + name_map[randomCopy] + " topic");
     }
 
     // add button functionality
