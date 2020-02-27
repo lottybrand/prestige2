@@ -43,7 +43,7 @@ class Bartlett1932(Experiment):
     def public_properties(self):
         return {
             'group_size': self.group_size,
-            'condition': "C"
+            'condition': "A"
         }
 
 
