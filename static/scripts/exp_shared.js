@@ -290,22 +290,22 @@ update_neighbor_button = function(number, neighbor) {
         $(button_id).html(neighbor_image + "Art Score: " + neighbor_properties.asoc_score_art + " correct");
 
     } else if (info_chosen == "Times Chosen on This Topic" && topic =="Geography"){
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_geog + " times");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_geog + " times in the Geography topic");
     
     } else if (info_chosen == "Times Chosen on This Topic" && topic =="Weight"){
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_weight + " times");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_weight + " times in the Weight topic");
 
     } else if (info_chosen == "Times Chosen on This Topic" && topic =="Language"){
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_lang + " times");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_lang + " times in the Language topic");
 
     } else if (info_chosen == "Times Chosen on This Topic" && topic =="Art"){
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_art + " times");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_art + " times in the Art topic");
 
     } else if (info_chosen == "Times Chosen on a Different Topic") {
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_geog + " times");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_geog + " times in the " + topic + " topic");
 
     } else if (info_chosen == "Times Chosen Altogether") {
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times altogether in Round 1");
     }
     
     // add button functionality
