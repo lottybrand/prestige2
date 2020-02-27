@@ -308,25 +308,25 @@ update_neighbor_button = function(number, neighbor) {
         const topicCopies = ['n_copies_weight', 'n_copies_lang', 'n_copies_art'];
         const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
         console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.randomCopy + " times in the " + randomCopy + " topic");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + randomCopy + " topic");
 
     } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Weight") {
         const topicCopies = ['n_copies_geog', 'n_copies_lang', 'n_copies_art'];
         const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
         console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.randomCopy + " times in the " + randomCopy + " topic");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + randomCopy + " topic");
 
     } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Language") {
         const topicCopies = ['n_copies_geog', 'n_copies_weight', 'n_copies_art'];
         const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
         console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.randomCopy + " times in the " + randomCopy + " topic");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + randomCopy + " topic");
 
     } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Art") {
         const topicCopies = ['n_copies_geog', 'n_copies_weight', 'n_copies_lang'];
         const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
         console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.randomCopy + " times in the " + randomCopy + " topic");
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + randomCopy + " topic");
     }
 
     // add button functionality
