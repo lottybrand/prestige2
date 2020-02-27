@@ -304,8 +304,26 @@ update_neighbor_button = function(number, neighbor) {
     } else if (info_chosen == "Times Chosen Altogether") {
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times altogether in Round 1");
 
-    } else if (info_chosen == "Times Chosen on a Different Topic") {
-        const topicCopies = ['n_copies_geog', 'n_copies_weight', 'n_copies_lang', 'n_copies_art'];
+    } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Geography") {
+        const topicCopies = ['n_copies_weight', 'n_copies_lang', 'n_copies_art'];
+        const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
+        console.log("random copy =>", randomCopy);
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.randomCopy + " times in the " + randomCopy + " topic");
+
+    } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Weight") {
+        const topicCopies = ['n_copies_geog', 'n_copies_lang', 'n_copies_art'];
+        const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
+        console.log("random copy =>", randomCopy);
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.randomCopy + " times in the " + randomCopy + " topic");
+
+    } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Language") {
+        const topicCopies = ['n_copies_geog', 'n_copies_weight', 'n_copies_art'];
+        const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
+        console.log("random copy =>", randomCopy);
+        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.randomCopy + " times in the " + randomCopy + " topic");
+
+    } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Art") {
+        const topicCopies = ['n_copies_geog', 'n_copies_weight', 'n_copies_lang'];
         const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
         console.log("random copy =>", randomCopy);
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.randomCopy + " times in the " + randomCopy + " topic");
