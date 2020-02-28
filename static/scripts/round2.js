@@ -85,7 +85,7 @@ process_good_luck = function() {
 }
 
 display_question_or_warning = function() {
-    if (number == 41) {
+    if (number == 61) {
         display_round_warning();
     } else {
         display_question();
