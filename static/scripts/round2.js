@@ -155,20 +155,20 @@ process_neighbors = function() {
     if (neighbors.length == 1) {
         part1 = ("You have " + neighbors.length + " player to copy from, ");
         if (info_chosen == "Times Chosen on a Different Topic") { 
-            part2 = "below is the times they were chosen on a Different Topic.";
+            part2 = "below is the times they were chosen in Round 1 on a Different Topic.";
         } else if (info_chosen == "Times Chosen Altogether") {
-            part2 = "below is how many times they were chosen altogether.";
+            part2 = "below is how many times they were chosen in Round 1 altogether.";
         } else if (info_chosen == "Times Chosen on This Topic") {
-            part2 = "below is how many times they were chosen in this Topic.";
+            part2 = "below is how many times they were chosen in Round 1 on this Topic.";
         }
     } else {
         part1 = ("You have " + neighbors.length + " players to copy from, ");
         if (info_chosen == "Times Chosen on a Different Topic") { 
-            part2 = "below are how many times they were chosen on a Different Topic.";
+            part2 = "below are how many times they were chosen in Round 1 on a Different Topic.";
         } else if (info_chosen == "Times Chosen Altogether") {
-            part2 = "below are how many times they were chosen altogether.";
+            part2 = "below are how many times they were chosen in Round 1 altogether.";
         } else if (info_chosen == "Times Chosen on This Topic") {
-            part2 = "below are how many times they were chosen in this Topic.";
+            part2 = "below are how many times they were chosen in Round 1 on this Topic.";
         }
     }
 
