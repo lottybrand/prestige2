@@ -272,71 +272,33 @@ process_neighbors = function() {
 update_neighbor_button = function(number, neighbor) {
     // get neighbor properties, and button details
     neighbor_properties = JSON.parse(neighbor.property1);
+    var scores = {
+        "Geography": neighbor_properties.asoc_score_geog,
+        "Weight": neighbor_properties.asoc_score_weight,
+        "Language": neighbor_properties.asoc_score_lang,
+        "Art": neighbor_properties.asoc_score_art
+    };
+    var copies = {
+        "Geography": neighbor_properties.n_copies_geog,
+        "Weight": neighbor_properties.n_copies_weight,
+        "Language": neighbor_properties.n_copies_lang,
+        "Art": neighbor_properties.n_copies_art
+    };
     button_id = "#neighbor_button_" + current_button;
     neighbor_image = "<img src='/static/images/stick.png' height='90' width='50'><br>";
 
-    // map the n_copies to their topic name so it's pretty for the buttons
-    name_map = {
-    "n_copies_geog": "Geography",
-    "n_copies_weight": "Weight",
-    "n_copies_lang": "Language",
-    "n_copies_art": "Art"
-    }
-
     // update button and question display according to info_chosen
-    if (info_chosen == "Topic Score" && topic == "Geography") { 
-        $(button_id).html(neighbor_image + "Geography Score: " + neighbor_properties.asoc_score_geog + " correct");
-
-    } else if (info_chosen =="Topic Score" && topic == "Practice") {
-        $(button_id).html(neighbor_image + "Practice Score: 0 Correct so far");
-
-    } else if (info_chosen == "Topic Score" && topic =="Weight"){
-        $(button_id).html(neighbor_image + "Weight Score: " + neighbor_properties.asoc_score_weight + " correct");
-    
-    } else if (info_chosen == "Topic Score" && topic =="Language"){
-        $(button_id).html(neighbor_image + "Language Score: " + neighbor_properties.asoc_score_lang + " correct");
-
-    } else if (info_chosen == "Topic Score" && topic =="Art"){
-        $(button_id).html(neighbor_image + "Art Score: " + neighbor_properties.asoc_score_art + " correct");
-
-    } else if (info_chosen == "Times Chosen on This Topic" && topic =="Geography"){
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_geog + " times in the Geography topic");
-    
-    } else if (info_chosen == "Times Chosen on This Topic" && topic =="Weight"){
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_weight + " times in the Weight topic");
-
-    } else if (info_chosen == "Times Chosen on This Topic" && topic =="Language"){
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_lang + " times in the Language topic");
-
-    } else if (info_chosen == "Times Chosen on This Topic" && topic =="Art"){
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies_art + " times in the Art topic");
-
+    if (info_chosen == "Topic Score") {
+        $(button_id).html(neighbor_image + topic + " Score: " + scores[topic] + " correct");
+    } else if (info_chosen == "Times Chosen on This Topic") {
+        $(button_id).html(neighbor_image + "chosen " + copies[topic] + " times in the " + topic + " topic");
     } else if (info_chosen == "Times Chosen Altogether") {
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times altogether in Round 1");
-
-    } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Geography") {
-        const topicCopies = ['n_copies_weight', 'n_copies_lang', 'n_copies_art'];
-        const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
-        console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + name_map[randomCopy] + " topic");
-
-    } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Weight") {
-        const topicCopies = ['n_copies_geog', 'n_copies_lang', 'n_copies_art'];
-        const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
-        console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + name_map[randomCopy] + " topic");
-
-    } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Language") {
-        const topicCopies = ['n_copies_geog', 'n_copies_weight', 'n_copies_art'];
-        const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
-        console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + name_map[randomCopy] + " topic");
-
-    } else if (info_chosen == "Times Chosen on a Different Topic" && topic == "Art") {
-        const topicCopies = ['n_copies_geog', 'n_copies_weight', 'n_copies_lang'];
-        const randomCopy = topicCopies[Math.floor(Math.random() * topicCopies.length)];
-        console.log("random copy =>", randomCopy);
-        $(button_id).html(neighbor_image + "chosen " + neighbor_properties[randomCopy] + " times in the " + name_map[randomCopy] + " topic");
+    } else if (info_chosen == "Times Chosen on a Different Topic") {
+        var topics = ["Geography", "Art", "Language", "Weight"];
+        var other_topics = topics.filter(function(t, index, arr){ return t != topic; });
+        var random_topic = other_topics[Math.floor(Math.random() * other_topics.length)];
+        $(button_id).html(neighbor_image + "chosen " + copies[random_topic] + " times in the " + random_topic + " topic");
     }
 
     // add button functionality
@@ -345,7 +307,7 @@ update_neighbor_button = function(number, neighbor) {
                         copy=true,
                         info_chosen=info_chosen);
         disable_neighbor_buttons();
-        $("#neighbor_div").hide()
+        $("#neighbor_div").hide();
     });
     $(button_id).prop("disabled", false);
     $(button_id).show();
