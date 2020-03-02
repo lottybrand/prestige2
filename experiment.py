@@ -26,7 +26,7 @@ class Bartlett1932(Experiment):
 
         Finally, setup() is called.
         """
-        self.group_size = 3
+        self.group_size = 2
         super(Bartlett1932, self).__init__(session)
         import models
         self.models = models

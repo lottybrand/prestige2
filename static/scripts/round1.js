@@ -7,6 +7,7 @@ $(document).ready(function() {
         $("#submit_div").show();
         $("#neighbor_buttons").show();
         $("#warning_div").hide();
+        $("#topic_div").hide();
         display_question();
     });
 });
@@ -26,8 +27,9 @@ display_question_or_warning = function() {
     // if its q1, show the round 1 warning
     if (number == 1) {
         display_round_warning();
-    } else {
-        display_question();
+    } else if (number ==16) {
+        display_topic_warning();
+    } else { display_question();
     }
 }
 
@@ -36,6 +38,13 @@ display_round_warning = function() {
     $("#welcome_div").hide();
     $("#wait_div").hide();
     $("#warning_div").show();
+}
+
+display_topic_warning = function() {
+    $("#welcome_div").hide();
+    $("#wait_div").hide();
+    $("#warning_div").hide();
+    $("#topic_div").show();
 }
 
 process_good_luck = function() {
