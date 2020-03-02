@@ -17,13 +17,8 @@ display_question_or_warning = function() {
 }
 
 process_good_luck = function() {
-    if (condition == "A") {
-        console.log("*** Getting neighbors by player id");
-        info_chosen = "Player ID";
-    } else if (condition == "B" || condition == "C") {
-        info_chosen = "Total Score in Round 1";
-        console.log("*** Getting neighbors by total score");
-    }
+    console.log("*** Getting neighbors by topic score");
+    info_chosen = "Topic Score";
     check_neighbors(info_chosen);
 }
 

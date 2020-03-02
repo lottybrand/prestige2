@@ -287,6 +287,9 @@ update_neighbor_button = function(number, neighbor) {
     if (info_chosen == "Topic Score" && topic == "Geography") { 
         $(button_id).html(neighbor_image + "Geography Score: " + neighbor_properties.asoc_score_geog + " correct");
 
+    } else if (info_chosen =="Topic Score" && topic == "Practice") {
+        $(button_id).html(neighbor_image + "Practice Score: 0 Correct so far");
+
     } else if (info_chosen == "Topic Score" && topic =="Weight"){
         $(button_id).html(neighbor_image + "Weight Score: " + neighbor_properties.asoc_score_weight + " correct");
     
