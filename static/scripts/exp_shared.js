@@ -112,8 +112,7 @@ var process_info = function(info) {
             submit_response(response="Bad Luck",
                             copy=undefined,
                             info_chosen=undefined,
-                            human=false,
-                            topic=undefined);
+                            human=false);
         }, 3000);
 
     // a contents of "Good luck" indicates you chose to copy, but not everyone else did.
