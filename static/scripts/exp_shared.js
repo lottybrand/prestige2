@@ -295,9 +295,11 @@ update_neighbor_button = function(number, neighbor) {
     } else if (info_chosen == "Times Chosen Altogether") {
         $(button_id).html(neighbor_image + "chosen " + neighbor_properties.n_copies + " times altogether in Round 1");
     } else if (info_chosen == "Times Chosen on a Different Topic") {
-        var topics = ["Geography", "Art", "Language", "Weight"];
-        var other_topics = topics.filter(function(t, index, arr){ return t != topic; });
-        var random_topic = other_topics[Math.floor(Math.random() * other_topics.length)];
+        if (number == 1) {
+            var topics = ["Geography", "Art", "Language", "Weight"];
+            var other_topics = topics.filter(function(t, index, arr){ return t != topic; });
+            random_topic = other_topics[Math.floor(Math.random() * other_topics.length)];
+        }
         $(button_id).html(neighbor_image + "chosen " + copies[random_topic] + " times in the " + random_topic + " topic");
     }
 
