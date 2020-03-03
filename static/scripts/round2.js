@@ -14,8 +14,9 @@ $(document).ready(function() {
         check_neighbors(info_chosen);
     }
 
-    $("#warning_button").click(function() {
+    $(".warning_button").click(function() {
     	$("#warning_div").hide();
+        $("#topic_div").hide();
         $("#round2div_check").show();
     });
 
@@ -87,6 +88,8 @@ process_good_luck = function() {
 display_question_or_warning = function() {
     if (number == 61) {
         display_round_warning();
+    } else if (number == 71 || 81 || 91) {
+        display_topic_warning();
     } else {
         display_question();
     }

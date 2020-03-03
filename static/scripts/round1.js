@@ -2,7 +2,7 @@
 $(document).ready(function() {
 
     // add functionality to warning acknowledge button
-    $("#warning_button").click(function() {
+    $(".warning_button").click(function() {
         $("#welcome_div").show();
         $("#submit_div").show();
         $("#neighbor_buttons").show();
@@ -27,9 +27,10 @@ display_question_or_warning = function() {
     // if its q1, show the round 1 warning
     if (number == 1) {
         display_round_warning();
-    } else if (number ==16) {
+    } else if (number ==16||31||46) {
         display_topic_warning();
-    } else { display_question();
+    } else { 
+        display_question();
     }
 }
 
