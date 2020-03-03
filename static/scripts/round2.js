@@ -88,7 +88,7 @@ process_good_luck = function() {
 display_question_or_warning = function() {
     if (number == 61) {
         display_round_warning();
-    } else if (number == 71 || 81 || 91) {
+    } else if ([71, 81, 91].includes(number)) {
         display_topic_warning();
     } else {
         display_question();
