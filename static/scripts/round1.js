@@ -47,6 +47,10 @@ display_topic_warning = function() {
     $("#wait_div").hide();
     $("#warning_div").hide();
     $("#topic_div").show();
+    setTimeout(function() {
+            $("#topic_div").hide();
+            display_question();
+        }, 3000);
 }
 
 process_good_luck = function() {

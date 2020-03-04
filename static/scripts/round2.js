@@ -112,6 +112,17 @@ display_round_warning = function() {
     $("#warning_div").show();
 }
 
+display_topic_warning = function() {
+    $("#welcome_div").hide();
+    $("#wait_div").hide();
+    $("#warning_div").hide();
+    $("#topic_div").show();
+    setTimeout(function() {
+            $("#topic_div").hide();
+            display_question();
+        }, 3000);
+}
+
 update_question_number_text = function() {
 	$("#question_number").html("You are in the " + topic + " Topic, on question " + number + "/100");
 }
