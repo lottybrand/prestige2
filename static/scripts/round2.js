@@ -37,36 +37,6 @@ $(document).ready(function() {
             $("#warning_div").show();
         }, 2000);
     }
-
-    // Check AB/C are the buttons with one of the possible info choices
-    // they are used to test participants attention to the instructions
-
-    $("#check_A").click(function() {
-        get_source();
-    	if (condition == "A") {
-    		update_ui_attention_check_passed();
-    	} else {
-    		update_ui_attention_check_failed();
-    	}
-    });
-
-    $("#check_B").click(function() {
-        get_source();
-        if (condition == "B") {
-            update_ui_attention_check_passed();
-        } else {
-            update_ui_attention_check_failed();
-        }
-    });
-
-    $("#check_C").click(function() {
-        get_source();
-    	if (condition == "C") {
-    		update_ui_attention_check_passed();
-    	} else {
-    		update_ui_attention_check_failed();
-    	}
-    });
 });
 
 response_submitted = function(resp) {
@@ -100,30 +70,63 @@ display_round_warning = function() {
     $("#welcome_div").hide();
     $("#wait_div").hide();
 
-    if (condition == "A") {
-        check_info = '<br><br> 1) the number of times they were chosen in Round 1 on the topic you are answering, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on a different topic.'
-    } else if (condition =="B") {
-            check_info = '<br><br> 1) the number of times they were chosen in Round 1 on a different topic to the one you are answering, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 altogether.'
-    } else if (condition =="C") {
-            check_info = '<br><br> 1) the number of times they were chosen in Round 1 altogether, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on the topic you are answering.'
-    }
+    var button_a_html = '<button id="check_A" type="button" class="btn btn-primary"> Times chosen on the topic you are answering, or times chosen on a different topic </button>';
+    var button_b_html = '<button id="check_B" type="button" class="btn btn-primary"> Times chosen on a different topic, or times chosen altogether </button>';
+    var button_c_html = '<button id="check_C" type="button" class="btn btn-primary"> Times chosen altogether, or times chosen on the topic you are answering </button>';
+    var buttons = [button_a_html, button_b_html, button_c_html];
+    shuffle(buttons);
+    button_html = buttons[0] + buttons[1] + buttons[2];
+    $("#r2_check_button_div").html(button_html);
 
-    if (Math.random() <0.3) {
-        $("#check_A").html("");
-        $("#check_B").html("");
-        $("#check_C").html("");
-    } else if (Math.random() >0.3 && Math.random() <0.6){
-        $("#check_B").html("");
-        $("#check_C").html("");
-        $("#check_A").html("");
-    } else if (Math.random() >0.9) {
-        $("#check_C").html("");
-        $("#check_B").html("");
-        $("#check_A").html("");
+    $("#check_A").click(function() {
+        get_source();
+        if (condition == "A") {
+            update_ui_attention_check_passed();
+        } else {
+            update_ui_attention_check_failed();
+        }
+    });
+
+    $("#check_B").click(function() {
+        get_source();
+        if (condition == "B") {
+            update_ui_attention_check_passed();
+        } else {
+            update_ui_attention_check_failed();
+        }
+    });
+
+    $("#check_C").click(function() {
+        get_source();
+        if (condition == "C") {
+            update_ui_attention_check_passed();
+        } else {
+            update_ui_attention_check_failed();
+        }
+    });
+
+
+    if (condition == "A") {
+        check_info = '<br><br> 1) the number of times they were chosen in Round 1 on the topic you are answering, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on a different topic.';
+    } else if (condition =="B") {
+        check_info = '<br><br> 1) the number of times they were chosen in Round 1 on a different topic to the one you are answering, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 altogether.';
+    } else if (condition =="C") {
+        check_info = '<br><br> 1) the number of times they were chosen in Round 1 altogether, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on the topic you are answering.';
     }
 
     $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting Round 2 which consists of the final 40 questions.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either: ' + check_info);
     $("#warning_div").show();
+};
+
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
 }
 
 display_topic_warning = function() {
