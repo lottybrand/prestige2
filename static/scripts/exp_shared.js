@@ -289,7 +289,7 @@ update_neighbor_button = function(number, neighbor) {
 
     // update button and question display according to info_chosen
     if (info_chosen == "Topic Score") {
-        $(button_id).html(neighbor_image + topic + " Score: " + scores[topic] + " correct");
+        $(button_id).html(neighbor_image + topic + " Score: " + "<font color='red'>" + scores[topic] + "</font>" + " correct");
     } else if (info_chosen == "Times Chosen on This Topic") {
         $(button_id).html(neighbor_image + "chosen " + copies[topic] + " times in the " + topic + " topic");
     } else if (info_chosen == "Times Chosen Altogether") {

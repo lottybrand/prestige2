@@ -108,6 +108,20 @@ display_round_warning = function() {
             check_info = '<br><br> 1) the number of times they were chosen in Round 1 altogether, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on the topic you are answering.'
     }
 
+    if (Math.random() <0.3) {
+        $("#check_A").html("");
+        $("#check_B").html("");
+        $("#check_C").html("");
+    } else if (Math.random() >0.3 && Math.random() <0.6){
+        $("#check_B").html("");
+        $("#check_C").html("");
+        $("#check_A").html("");
+    } else if (Math.random() >0.9) {
+        $("#check_C").html("");
+        $("#check_B").html("");
+        $("#check_A").html("");
+    }
+
     $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting Round 2 which consists of the final 40 questions.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either: ' + check_info);
     $("#warning_div").show();
 }
