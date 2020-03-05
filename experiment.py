@@ -26,7 +26,7 @@ class Bartlett1932(Experiment):
 
         Finally, setup() is called.
         """
-        self.group_size = 4
+        self.group_size = 3
         super(Bartlett1932, self).__init__(session)
         import models
         self.models = models
@@ -43,7 +43,7 @@ class Bartlett1932(Experiment):
     def public_properties(self):
         return {
             'group_size': self.group_size,
-            'condition': "C"
+            'condition': "A"
         }
 
 
