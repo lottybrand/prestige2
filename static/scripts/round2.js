@@ -22,7 +22,6 @@ $(document).ready(function() {
 
     update_ui_attention_check_passed = function() {
         $("#round2div_check").hide();
-        $("#welcome_div").show();
         $("#wait_div").show();
         display_question();
     }
@@ -70,9 +69,9 @@ display_round_warning = function() {
     $("#welcome_div").hide();
     $("#wait_div").hide();
 
-    var button_a_html = '<button id="check_A" type="button" class="btn btn-primary"> Times chosen on the topic you are answering, or times chosen on a different topic </button>';
-    var button_b_html = '<button id="check_B" type="button" class="btn btn-primary"> Times chosen on a different topic, or times chosen altogether </button>';
-    var button_c_html = '<button id="check_C" type="button" class="btn btn-primary"> Times chosen altogether, or times chosen on the topic you are answering </button>';
+    var button_a_html = '<button id="check_A" type="button" class="btn btn-primary"> Times chosen on the topic you are answering, or, times chosen on a different topic </button>';
+    var button_b_html = '<button id="check_B" type="button" class="btn btn-primary"> Times chosen on a different topic, or, times chosen altogether </button>';
+    var button_c_html = '<button id="check_C" type="button" class="btn btn-primary"> Times chosen altogether, or, times chosen on the topic you are answering </button>';
     var buttons = [button_a_html, button_b_html, button_c_html];
     shuffle(buttons);
     button_html = buttons[0] + buttons[1] + buttons[2];
@@ -114,7 +113,7 @@ display_round_warning = function() {
         check_info = '<br><br> 1) the number of times they were chosen in Round 1 altogether, <br><br> or <br><br> 2) the number of times they were chosen in Round 1 on the topic you are answering.';
     }
 
-    $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting Round 2 which consists of the final 40 questions.<br><br>You will now be given two choices each time you choose to "Ask Someone Else".<br><br>You will be able to choose between seeing either: ' + check_info);
+    $("#warning_info").html('Thank you for completing Round 1. <br> <br> You are now starting <font color="red"> Round 2 </font> which consists of the final 40 questions.<br><br>You will now be given <font color = "red"> two </font> choices each time you choose to <font color = "red"> "Ask Someone Else" </font> <br><br>You will be able to choose between seeing either: ' + check_info);
     $("#warning_div").show();
 };
 
@@ -141,7 +140,15 @@ display_topic_warning = function() {
 }
 
 update_question_number_text = function() {
-	$("#question_number").html("You are in the " + topic + " Topic, on question " + number + "/100");
+    if (topic =="Geography") {
+        $("#question_number").html("You are in the <font size='5' color='green'> Geography </font> topic on question " + number + "/100");
+    } else if (topic =="Weight") {
+        $("#question_number").html("You are in the <font size='5' color='blue'> Weight </font> topic on question " + number + "/100");
+    } else if (topic =="Language") {
+        $("#question_number").html("You are in the <font size='5' color='purple'> Language </font> topic on question " + number + "/100");
+    } else if (topic =="Art") {
+        $("#question_number").html("You are in the <font size='5' color='orange'> Art </font> topic on question " + number + "/100");
+    } 
 }
 
 disable_R2_buttons = function() {

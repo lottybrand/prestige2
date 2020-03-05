@@ -23,5 +23,5 @@ process_good_luck = function() {
 }
 
 update_question_number_text = function() {
-    $("#question_number").html("You are in the " + topic + " Round, on practice question " + number[number.length - 1] + "/4");
+    $("#question_number").html("You are in the <font size = '5' color = 'red'> Practice </font> Round, on practice question " + number[number.length - 1] + "/4");
 }

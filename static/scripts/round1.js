@@ -59,5 +59,22 @@ process_good_luck = function() {
 }
 
 update_question_number_text = function() {
-    $("#question_number").html("You are in the " + topic + " Topic, on question " + number + "/100");
+    if (topic =="Geography") {
+        $("#question_number").html("You are in the <font size='5' color='green'> Geography </font> topic on question " + number + "/100");
+    } else if (topic =="Weight") {
+        $("#question_number").html("You are in the <font size='5' color='blue'> Weight </font> topic on question " + number + "/100");
+    } else if (topic =="Language") {
+        $("#question_number").html("You are in the <font size='5' color='purple'> Language </font> topic on question " + number + "/100");
+    } else if (topic =="Art") {
+        $("#question_number").html("You are in the <font size='5' color='orange'> Art </font> topic on question " + number + "/100");
+    } 
 }
+
+
+
+
+
+
+
+
+
