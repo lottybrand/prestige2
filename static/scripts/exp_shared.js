@@ -2,7 +2,6 @@
 $(document).ready(function() {
 
     // initially hide all divs except the welcome div
-    $("#welcome_div").show();
     $("#wait_div").show();
 
     // Add functionality to buttons controlling participants answers
